@@ -1,0 +1,7 @@
+.sidenav{
+  background-color: grey;
+  height: 100%;
+}
+.row.content{
+  height: 450px;
+}
