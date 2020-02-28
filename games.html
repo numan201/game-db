@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Games - GameDB</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <link href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black;">
+    <a class="navbar-brand" href="/">GameDB</a>
+
+    <div class="navbar-nav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/games">Games</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/developers">Developers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/publishers">Publishers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/news">News</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="navbar-nav mx-auto">
+      <form class="form-inline">
+        <input style="width:600px;" class="form-control mr-sm-2" type="search" placeholder="Search for your favorite games!" aria-label="Search">
+      </form>
+    </div>
+
+    <div class="navbar-nav ml-auto">
+      <a href="/login"><button class="btn btn-light"><i class="fas fa-sign-in-alt"></i> Log In </button></a>
+    <div>
+  </nav>
+
+  <div class="container-fluid text-center">
+    <div class="row content">
+      <div class="col-sm-1">
+
+      </div>
+
+      <div class="col-sm-10">
+
+            <h1 class="mt-4">Games</h1>
+            <hr>
+            <div class="card-deck">
+              <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="https://media.rawg.io/media/games/b11/b115b2bc6a5957a917bc7601f4abdda2.jpg">
+                <div class="card-body">
+                  <h5 class="card-title">Grand Theft Auto V</h5>
+                  <p class="card-text">A game about driving very badly</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+              <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="https://media.rawg.io/media/games/328/3283617cb7d75d67257fc58339188742.jpg">
+                <div class="card-body">
+                  <h5 class="card-title">Portal 2</h5>
+                  <p class="card-text">Make portals</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+              <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="https://media.rawg.io/media/games/088/088b41ca3f9d22163e43be07acf42304.jpg">
+                <div class="card-body">
+                  <h5 class="card-title">The Witcher 3: Wild Hunt</h5>
+                  <p class="card-text">Gerault taking a bath</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+              <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="https://media.rawg.io/media/games/e9c/e9cbc91e2090638ddab6ae0b3d334f90.jpg">
+                <div class="card-body">
+                  <h5 class="card-title">The Elder Scrolls V: Skyrim</h5>
+                  <p class="card-text">FUS-RO-DAH</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+              <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="https://media.rawg.io/media/games/c25/c25ebb8eb08790277ae2e2dce0d62174.jpg">
+                <div class="card-body">
+                  <h5 class="card-title">Left 4 Dead 2</h5>
+                  <p class="card-text">Wheres Left 4 Dead 3?</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+
+            <br>
+
+            <div class="card-deck">
+              <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="https://media.rawg.io/media/games/b11/b115b2bc6a5957a917bc7601f4abdda2.jpg">
+                <div class="card-body">
+                  <h5 class="card-title">Grand Theft Auto V</h5>
+                  <p class="card-text">A game about driving very badly</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+              <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="https://media.rawg.io/media/games/328/3283617cb7d75d67257fc58339188742.jpg">
+                <div class="card-body">
+                  <h5 class="card-title">Portal 2</h5>
+                  <p class="card-text">Make portals</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+              <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="https://media.rawg.io/media/games/088/088b41ca3f9d22163e43be07acf42304.jpg">
+                <div class="card-body">
+                  <h5 class="card-title">The Witcher 3: Wild Hunt</h5>
+                  <p class="card-text">Gerault taking a bath</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+              <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="https://media.rawg.io/media/games/e9c/e9cbc91e2090638ddab6ae0b3d334f90.jpg">
+                <div class="card-body">
+                  <h5 class="card-title">The Elder Scrolls V: Skyrim</h5>
+                  <p class="card-text">FUS-RO-DAH</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+              <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="https://media.rawg.io/media/games/c25/c25ebb8eb08790277ae2e2dce0d62174.jpg">
+                <div class="card-body">
+                  <h5 class="card-title">Left 4 Dead 2</h5>
+                  <p class="card-text">Wheres Left 4 Dead 3?</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+
+      </div>
+
+      <div class="col-sm-1">
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container text-center">
+      <span class="text-muted">GameDB</span>
+    </div>
+  </footer>
+
+</body>
+
+</html>
