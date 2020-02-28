@@ -17,8 +17,8 @@
 * **Actual completion time:** (hours : int)
 
 ### John Nguyen
-* **EID:** 
-* **GitHub ID:** 
+* **EID:** jn26422
+* **GitHub ID:** johnnguyen3196
 * **Estimated completion time:** (hours : int)
 * **Actual completion time:** (hours : int)
 
