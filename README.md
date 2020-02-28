@@ -11,8 +11,8 @@
 * **Actual completion time:** (hours : int)
 
 ### Numan Habib
-* **EID:** 
-* **GitHub ID:** 
+* **EID:** nah2427
+* **GitHub ID:** numan201
 * **Estimated completion time:** (hours : int)
 * **Actual completion time:** (hours : int)
 
