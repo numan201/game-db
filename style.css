@@ -2,13 +2,20 @@
   background-color: grey;
   height: 100%;
 }
-.row.content{
-  height: 450px;
-}
+
 img.card-img-top {
     height: 250px;
     object-fit: cover;
 }
 hr {
   background: #cec8c8;
+}
+
+main {
+  min-height:700px;
+}
+
+.footer {
+  position:static;
+  margin-top:30px;
 }
