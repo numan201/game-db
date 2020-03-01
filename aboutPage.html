@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>game-db</title>
+</head>
+<body>
+    <h1>game-db About Page</h1>
+
+    <div id = "divResult">
+
+    </div>
+
+    <script>
+        nameList = ["team", "Albert Garza", "Numan Habib", "John Nguyen", "Alejandro Rodriguez", "David Wolf"]
+        commitIdList = ["teamCommits", "albertCommits", "numanCommits", "johnCommits", "alejandroCommits", "davidCommits"]
+        issueIdList = ["teamIssues", "albertIssues", "numanIssues", "johnIssues", "alejandroIssues", "davidIssues"]
+        githubIdList = ["team", "possumrapture", "numan201", "johnnguyen3196", "joe", "bill"]
+
+
+        async function getCommits() {
+            for(index = 0; index < githubIdList.length; index++) {
+                url = "https://api.github.com/search/commits?q=" 
+            
+                if(index !== 0) {
+                    url += "author:" + githubIdList[index] + " "
+                }
+                url += "repo:numan201/game-db author-date:2020-01-01..2020-06-01"
+
+                const headers = {
+                    "Accept" : "application/vnd.github.cloak-preview",
+                    "Authorization" : 'Token 7fc4768ce2b04504af15afc6bf8055069833f80e'
+                }
+
+                response = await fetch(url, {
+                "headers" : headers
+                })
+                result = await response.json()
+
+                document.getElementById(commitIdList[index]).innerHTML = result.items.length
+            }
+        }
+
+
+        async function getIssues() {
+            for(index = 0; index < githubIdList.length; index++) {
+                url = "https://api.github.com/search/issues?q="
+            
+                if(index !== 0) {
+                    url += "author:" + githubIdList[index] + " "
+                }
+                url += "repo:numan201/game-db type:issue"
+
+                const response = await fetch(url, {
+                    "Authorization" : 'Token 7fc4768ce2b04504af15afc6bf8055069833f80e'
+                })
+                const result = await response.json()
+
+                document.getElementById(issueIdList[index]).innerHTML = result.items.length
+            }
+        }
+    </script>
+
+    <!-- 
+    Description of the site, its purpose, its intended users
+    + Explains the interesting result produced by integrating disparate data sources
+    + The group name
+    + The group members
+    + For each member: name, photo, bio, major/track, primary responsibilities, number of commits, number of issues, number of unit tests
+    + Team Stats: total number of commits, total number of issues, total number of unit tests
+    + Data: links to data sources, description of how each was scraped
+    + Tools: tools used, description of how they were used
+    + Link to Github repo 
+    -->
+
+    <h2>Description</h2>
+    <h2>Purpose</h2>
+    <h2>Intended Users</h2>
+    <h2>Explains the interesting result produced by integrating disparate data sources</h2>
+    <h2>Group Name</h2>
+    <h2>Group Members</h2>
+        <body>
+            <h3>Albert Garza</h3>
+            <br>
+            photo
+            <br>
+            Bio: likes to organize and shop
+            <br>
+            Major: Electrical and Computer Engineering
+            <br>
+            Primary responsibilities: About page and ReadMe Page
+            <br>
+            # of GitHub commits: <ins id="albertCommits" style="text-decoration: none;"> </ins>
+        
+            <br>
+            # of GitHub issues: <ins id="albertIssues" style="text-decoration: none;"> </ins>
+          
+            <br>
+            # of unit tests: 
+
+            <hr>
+
+            <h3>Numan Habib</h3>
+            <br>
+            photo
+            <br>
+            Bio:
+            <br>
+            Major:
+            <br>
+            Primary responsibilities:
+            <br>
+            # of GitHub commits: <ins id="numanCommits" style="text-decoration: none;"> </ins>
+            <br>
+            # of GitHub issues: <ins id="numanIssues" style="text-decoration: none;"> </ins>
+            <br>
+            # of unit tests: 
+
+            <hr>
+
+            <h3>John Nguyen</h3>
+            <br>
+            photo
+            <br>
+            Bio:
+            <br>
+            Major:
+            <br>
+            Primary responsibilities:
+            <br>
+            # of GitHub commits: <ins id="johnCommits" style="text-decoration: none;"> </ins>
+            <br>
+            # of GitHub issues: <ins id="johnIssues" style="text-decoration: none;"> </ins>
+            <br>
+            # of unit tests: 
+
+            <hr>
+
+            <h3>Alejandro Rodriguez</h3>
+            <br>
+            photo
+            <br>
+            Bio:
+            <br>
+            Major:
+            <br>
+            Primary responsibilities:
+            <br>
+            # of GitHub commits: <ins id="alejandroCommits" style="text-decoration: none;"> </ins>
+            <br>
+            # of GitHub issues: <ins id="alejandroIssues" style="text-decoration: none;"> </ins>
+            <br>
+            # of unit tests: 
+
+            <hr>
+
+            <h3>David Wolf</h3>
+            <br>
+            photo
+            <br>
+            Bio:
+            <br>
+            Major:
+            <br>
+            Primary responsibilities:
+            <br>
+            # of GitHub commits: <ins id="davidCommits" style="text-decoration: none;"> </ins>
+            <br>
+            # of GitHub issues: <ins id="davidIssues" style="text-decoration: none;"> </ins>
+            <br>
+            # of unit tests: 
+        </body>
+
+    <h2>Team Stats</h2>
+    <body>
+        # of GitHub commits: <ins id="teamCommits" style="text-decoration: none;"> </ins>
+        <br>
+        # of GitHub issues: <ins id="teamIssues" style="text-decoration: none;"> </ins>
+        <br>
+        # of unit tests: 
+    </body>
+    <h2>Data</h2>
+    <h2>Tools</h2>
+    <h2>GitHub Repo Link</h2>
+
+    <script>
+        getCommits()
+        getIssues()
+    </script>
+    
+</body>
+</html>
