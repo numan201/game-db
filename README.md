@@ -29,7 +29,7 @@
 * **Actual completion time:** (hours : int)
 
 ### David Wolf
-* **EID:** 
-* **GitHub ID:** 
+* **EID:** drw2764 
+* **GitHub ID:** rambisco
 * **Estimated completion time:** (hours : int)
 * **Actual completion time:** (hours : int)
