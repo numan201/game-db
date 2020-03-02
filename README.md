@@ -1,6 +1,6 @@
 # game-db
 
-* [game-db](http://www.example.com) - Website link
+* [game-db](http://gamedb.us-east-1.elasticbeanstalk.com/) - Website link
 
 ## Members:
 
