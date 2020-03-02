@@ -19,7 +19,6 @@
         issueIdList = ["teamIssues", "albertIssues", "numanIssues", "johnIssues", "alejandroIssues", "davidIssues"]
         githubIdList = ["team", "possumrapture", "numan201", "johnnguyen3196", "joe", "bill"]
 
-
         async function getCommits() {
             for(index = 0; index < githubIdList.length; index++) {
                 url = "https://api.github.com/search/commits?q=" 
@@ -31,34 +30,51 @@
 
                 const headers = {
                     "Accept" : "application/vnd.github.cloak-preview",
-                    "Authorization" : 'Token 7fc4768ce2b04504af15afc6bf8055069833f80e'
+                    "Authorization" : 'Token 1234'
                 }
 
                 response = await fetch(url, {
                 "headers" : headers
                 })
-                result = await response.json()
+                const result = await response.json()
 
+                if(index > 0)
+                    while(document.getElementById(commitIdList[index - 1]).innerHTML.length == 0) {}
+                
                 document.getElementById(commitIdList[index]).innerHTML = result.items.length
+            
+                delay()
             }
         }
 
 
         async function getIssues() {
-            for(index = 0; index < githubIdList.length; index++) {
+            for(idx = 0; idx < githubIdList.length; idx++) {
                 url = "https://api.github.com/search/issues?q="
             
-                if(index !== 0) {
-                    url += "author:" + githubIdList[index] + " "
+                if(idx !== 0) {
+                    url += "author:" + githubIdList[idx] + " "
                 }
                 url += "repo:numan201/game-db type:issue"
 
                 const response = await fetch(url, {
-                    "Authorization" : 'Token 7fc4768ce2b04504af15afc6bf8055069833f80e'
+                    "Authorization" : 'Token 1234'
                 })
                 const result = await response.json()
 
-                document.getElementById(issueIdList[index]).innerHTML = result.items.length
+                if(idx > 0)
+                    while(document.getElementById(issueIdList[idx - 1]).innerHTML.length == 0) {}
+
+                document.getElementById(issueIdList[idx]).innerHTML = result.items.length
+                //setTimeout(50)
+                delay()
+            }
+        }
+
+        function delay() {
+            b = 0
+            while(b < 1000000) {
+                b++
             }
         }
     </script>
@@ -77,6 +93,9 @@
 
     <h2>Description</h2>
     <h2>Purpose</h2>
+    <script>
+        getIssues()
+    </script>
     <h2>Intended Users</h2>
     <h2>Explains the interesting result produced by integrating disparate data sources</h2>
     <h2>Group Name</h2>
@@ -187,7 +206,6 @@
 
     <script>
         getCommits()
-        getIssues()
     </script>
     
 </body>
