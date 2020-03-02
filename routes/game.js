@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var youtubeApiV3Search = require("youtube-api-v3-search");
+
 /* GET games listing. */
 router.get('/', function(req, res, next) {
     let id = require('mongodb').ObjectID(req.query.id);
@@ -18,11 +20,25 @@ router.get('/', function(req, res, next) {
                         });
                         reviewsCounts.reverse();
 
-                        res.render('game', {title: game.name, game: game, developers: developers, publishers: publishers, reviewsCounts: JSON.stringify(reviewsCounts)});
+                        options = {
+                            q:game.name,
+                            part:'snippet',
+                            type:'video'
+                        };
+                        let result = youtubeApiV3Search("AIzaSyAkzg-fJPr1Gt1Qu3o7ba_2FvpvloXQyzo", options, (err, response) => {
+                            let videos = [];
+                            console.log(response);
+                            response.items.forEach((item) =>{
+                                videos.push(item.id.videoId);
+                            })
+                            res.render('game', {title: game.name, game: game, developers: developers, publishers: publishers, reviewsCounts: JSON.stringify(reviewsCounts), videos: videos});
+                        });
+
                 });
         });
     });
 
 });
+
 
 module.exports = router;
