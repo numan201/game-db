@@ -1,6 +1,6 @@
 # game-db
 
-* [game-db](http://www.example.com) - Website link
+* [game-db](http://gamedb.us-east-1.elasticbeanstalk.com/) - Website link
 
 ## Members:
 
@@ -23,8 +23,8 @@
 * **Actual completion time:** (hours : int)
 
 ### Alejandro Rodriguez
-* **EID:** 
-* **GitHub ID:** 
+* **EID:** aar3772
+* **GitHub ID:** justalejandro
 * **Estimated completion time:** (hours : int)
 * **Actual completion time:** (hours : int)
 
