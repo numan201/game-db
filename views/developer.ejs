@@ -13,7 +13,6 @@
         <% games.forEach( (game, i) => {
             let gameUrl = "/game?id=" + game.instance._id;
         %>
-
         <div class="card" style="margin-bottom: 15px">
             <a href="<%= gameUrl %>"><img class="card-img-top" src="<%= game.instance.background_image %>"></a>
             <div class="card-body">
