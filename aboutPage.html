@@ -30,7 +30,7 @@
 
                 const headers = {
                     "Accept" : "application/vnd.github.cloak-preview",
-                    "Authorization" : 'Token 1234'
+                    "Authorization" : 'Token df0c61c53bc7f83d396cecc25843d52f4ca174c7'
                 }
 
                 response = await fetch(url, {
@@ -58,7 +58,7 @@
                 url += "repo:numan201/game-db type:issue"
 
                 const response = await fetch(url, {
-                    "Authorization" : 'Token 1234'
+                    "Authorization" : 'Token df0c61c53bc7f83d396cecc25843d52f4ca174c7'
                 })
                 const result = await response.json()
 
@@ -80,7 +80,7 @@
     </script>
 
     <!-- 
-    Description of the site, its purpose, its intended users
+    + Description of the site, its purpose, its intended users
     + Explains the interesting result produced by integrating disparate data sources
     + The group name
     + The group members
@@ -92,14 +92,20 @@
     -->
 
     <h2>Description</h2>
+    <hr>
     <h2>Purpose</h2>
+    <hr>
     <script>
         getIssues()
     </script>
     <h2>Intended Users</h2>
+    <hr>
     <h2>Explains the interesting result produced by integrating disparate data sources</h2>
+    <hr>
     <h2>Group Name</h2>
+    <hr>
     <h2>Group Members</h2>
+    <hr>
         <body>
             <h3>Albert Garza</h3>
             <br>
@@ -192,6 +198,8 @@
             # of unit tests: 
         </body>
 
+    <hr>
+
     <h2>Team Stats</h2>
     <body>
         # of GitHub commits: <ins id="teamCommits" style="text-decoration: none;"> </ins>
@@ -200,9 +208,19 @@
         <br>
         # of unit tests: 
     </body>
+
+    <hr>
+
     <h2>Data</h2>
+    <!-- links to data sources, description of how each was scraped -->
+
+    <hr>
     <h2>Tools</h2>
+    <!-- tools used, description of how they were used -->
+
+    <hr>
     <h2>GitHub Repo Link</h2>
+        <a href="https://github.com/numan201/game-db.git">game-db</a>
 
     <script>
         getCommits()
