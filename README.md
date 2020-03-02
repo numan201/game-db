@@ -23,8 +23,8 @@
 * **Actual completion time:** (hours : int)
 
 ### Alejandro Rodriguez
-* **EID:** 
-* **GitHub ID:** 
+* **EID:** aar3772
+* **GitHub ID:** justalejandro
 * **Estimated completion time:** (hours : int)
 * **Actual completion time:** (hours : int)
 
