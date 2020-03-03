@@ -21,37 +21,37 @@ class UniqueSet {
 router.get('/', function(req, res, next) {
     let id = require('mongodb').ObjectID(req.query.id);
 
-    let publisherList = new UniqueSet();
-    req.app.locals.db.collection('developers').findOne({_id : id}, (err, developer) => {
+    let developerList = new UniqueSet();
+    req.app.locals.db.collection('publishers').findOne({_id : id}, (err, publisher) => {
         //Making a promise to for synchronous
         let waitGame = new Promise((resolve, reject) => {
-            developer.games.forEach((game, i) => {
+            publisher.games.forEach((game, i) => {
                 req.app.locals.db.collection('games').findOne({id: game.id}, {name: 1, background_image: 1, released: 1, reviews_count: 1}, (err, gameFound) => {
                     game.instance = gameFound;
 
                     let promise =  new Promise(resolve1 => {
-                        req.app.locals.db.collection('publishers').aggregate([{$unwind: "$games"}, {$match: {"games.id": game.instance.id}},
-                            {$project: {"name": 1, games_count : 1, image_background: 1}}]).toArray((err, publishers) => {
+                        req.app.locals.db.collection('developers').aggregate([{$unwind: "$games"}, {$match: {"games.id": game.instance.id}},
+                            {$project: {"name": 1, games_count : 1, image_background: 1}}]).toArray((err, developers) => {
 
-                            publishers.forEach((publisher, j) => {
-                                publisherList.add(publisher);
-                                if(j == publishers.length - 1) resolve1();
+                            developers.forEach((developer, j) => {
+                                developerList.add(developer);
+                                if(j == developers.length - 1) resolve1();
                             });
-                            if(publishers.length == 0) resolve1();
+                            if(developers.length == 0) resolve1();
                         });
                     });
 
                     promise.then(() => {
-                        if(i == developer.games.length - 1) resolve();
+                        if(i == publisher.games.length - 1) resolve();
                     });
                 });
             });
         });
 
         waitGame.then(() => {
-            developer.publishers = publisherList.values();
-            console.log(developer);
-            res.render('developer', {title: developer.name, developer: developer, games: developer.games, publishers: developer.publishers});
+            publisher.developers = developerList.values();
+            console.log(publisher);
+            res.render('publisher', {title: publisher.name, publisher: publisher, games: publisher.games, developers: publisher.developers});
         });
     });
 
