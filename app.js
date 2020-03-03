@@ -9,6 +9,9 @@ var gamesRouter = require('./routes/games');
 var developersRouter = require('./routes/developers');
 var publishersRouter = require('./routes/publishers');
 var gameRouter = require('./routes/game');
+var developerRouter = require('./routes/developer');
+var publisherRouter = require('./routes/publisher');
+var aboutRouter = require('./routes/about');
 
 var app = express();
 
