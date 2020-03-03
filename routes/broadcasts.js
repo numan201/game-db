@@ -5,7 +5,7 @@ var fs = require("fs");
 const axios = require('axios');
 
 
-var num_top_games = 20;
+var num_top_games = 100;
 
 // get top 20 games
 var options = { method: 'GET',
@@ -35,15 +35,15 @@ var top_games_json = null;
     console.log(response.data);
     //top_games_json = JSON.parse(response.data);
         router.get('/', function(req, res, next) {
-            var gamesList = [];
-            response.data.data.forEach((game) => {
-                console.log(game.name);
-                req.app.locals.db.collection('games').find({name: game.name}).toArray((err, games) => {
-                    console.log(games.length + " " + gamesList.length);
-                   gamesList = gamesList.concat(games);
+            var names = [];
+            response.data.data.forEach((games) => {
+                names.push(games.name);
             });
-        });
-            res.render('games', { title: 'Games', games: gamesList });
+            console.log("names: " + names.length);
+                req.app.locals.db.collection('games').find({ name: { $in: names }}).toArray((err, games) => {
+                    console.log(" found. " + games.length);
+                    res.render('games', { title: 'Games', games: games });
+            });
         });
     });
 
