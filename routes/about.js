@@ -1,8 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const axios = require('axios');
+const { gitHubKey } = require('../keys');
 
-let githubIdList = ["team", "possumrapture", "numan201", "johnnguyen3196", "justAlejandro", "rambisco"]
+let githubIdList = ["team", "possumrapture", "numan201", "johnnguyen3196", "justAlejandro", "rambisco"];
 
 
 function getCommitNumbers() {
@@ -21,7 +22,7 @@ function getCommitNumbers() {
             method: 'get',
             headers: {
                 "Accept" : "application/vnd.github.cloak-preview",
-                "Authorization" : 'Token 54d06404e0188f3429e5400b7de03dd55d4e027d'
+                "Authorization" : 'Token ' + gitHubKey
             }
         };
 
@@ -55,7 +56,7 @@ function getIssuesNumbers() {
 
         let config = {
             method: 'get',
-            headers: {"Authorization" : 'Token 54d06404e0188f3429e5400b7de03dd55d4e027d'}
+            headers: {"Authorization" : 'Token ' + gitHubKey}
         };
 
         let request = axios.get(url, config);

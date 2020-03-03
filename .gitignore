@@ -13,3 +13,4 @@ benchmarks/graphs
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+keys.js
