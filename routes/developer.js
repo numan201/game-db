@@ -50,7 +50,7 @@ router.get('/', function(req, res, next) {
         waitGame.then(() => {
             developer.publishers = publisherList.values();
             console.log(developer);
-            res.render('developer', {title: developer.name, developer: developer, games: developer.games});
+            res.render('developer', {title: developer.name, developer: developer, games: developer.games, publishers: developer.publishers});
         });
     });
 
