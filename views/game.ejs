@@ -58,6 +58,19 @@
 
     <br>
 
+    <script src= "https://player.twitch.tv/js/embed/v1.js"></script>
+    <div id="Twitch Player"></div>
+    <script type="text/javascript">
+        var options = {
+            width: 400,
+            height: 300,
+            channel: "<%= username %>",
+            // channel: "Tfue",
+        };
+        var player = new Twitch.Player("Twitch Player", options);
+        player.setVolume(0.5);
+    </script>
+    <p><%= username %></p>
     <div class="container-fluid">
         <h2>Reviews</h2>
         <canvas id="review"></canvas>
