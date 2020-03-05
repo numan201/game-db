@@ -1,0 +1,260 @@
+<% include partials/header %>
+
+<!--
++ Description of the site, its purpose, its intended users
++ Explains the interesting result produced by integrating disparate data sources
++ The group name
++ The group members
++ For each member: name, photo, bio, major/track, primary responsibilities, number of commits, number of issues, number of Unit Tests
++ Team Stats: total number of commits, total number of issues, total number of Unit Tests
++ Data: links to data sources, description of how each was scraped
++ Tools: tools used, description of how they were used
++ Link to Github repo
+-->
+<main class="container-fluid">
+    <h1 class="mt-4">About</h1>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-4 text-center">
+            <h2>Description</h2>
+            <p> Video game, developer, and publisher database.</p>
+        </div>
+        <div class="col-4 text-center">
+            <h2>Purpose</h2>
+            <p> Find news, games, and videos related to specific games, developers, or publishers.  </p>
+        </div>
+        <div class="col-4 text-center">
+            <h2>Intended Users</h2>
+            <p> All types of gamers and people curious about gaming.</p>
+        </div>
+    </div>
+    <hr>
+
+    <div class="col text-center">
+        <h2>D.A.N.J.A.</h2>
+    </div>
+
+    <hr>
+    <div class="card-deck">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="/images/profile_pictures/anon.png" alt="Card image">
+            <h4 class ="card-title">Albert Garza</h4>
+
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="/images/profile_pictures/anon.png" alt="Card image">
+            <h4 class ="card-title">Numan Habib</h4>
+        </div>
+
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="/images/profile_pictures/D Cane.jpg" alt="Card image">
+            <h4 class ="card-title">John Nguyen</h4>
+        </div>
+
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="/images/profile_pictures/anon.png" alt="Card image">
+            <h4 class ="card-title">Alejandro Rodriguez</h4>
+        </div>
+
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="/images/profile_pictures/anon.png" alt="Card image">
+            <h4 class ="card-title">David Wolf</h4>
+        </div>
+    </div>
+
+    <hr>
+
+    <div>
+        <h4 style="text-align: left">Albert Garza</h4>
+        <p style="text-align: left">
+            <strong>Bio:</strong> Likes to play party games.
+            <br>
+            <strong>Major:</strong> Electrical and Computer Engineering (Software Engineering and Computer Architecture)
+            <br>
+            <strong>Primary responsibilities:</strong> About page and ReadMe Page
+            <br>
+            <strong>GitHub Commits:</strong> <%= commitNumbers[1] %>
+
+            <br>
+            <strong>GitHub Issues:</strong> <%= issueNumbers[1] %>
+
+            <br>
+            <strong>Unit Tests:</strong> 0
+        </p>
+        <hr>
+
+        <h4 style="text-align: left">Numan Habib</h4>
+        <p style="text-align: left">
+            <strong>Bio:</strong> Likes to program with PHP.
+            <br>
+            <strong>Major:</strong> Electrical and Computer Engineering (Software Engineering)
+            <br>
+            <strong>Primary responsibilities:</strong> Set up Express, MongoDb, and made pages dynamic. Team anchor, helped everyone debug.
+            <br>
+            <strong>GitHub Commits:</strong> <%= commitNumbers[2] %>
+            <br>
+            <strong>GitHub Issues:</strong> <%= issueNumbers[2] %>
+            <br>
+            <strong>Unit Tests:</strong> 0
+        </p>
+        <hr>
+
+        <h4 style="text-align: left">John Nguyen</h4>
+        <p style="text-align: left">
+            <strong>Bio:</strong> An actual gamer.
+            <br>
+            <strong>Major:</strong>Electrical and Computer Engineering (Software Engineering and Computer Architecture)
+            <br>
+            <strong>Primary responsibilities:</strong> Bootstrap templates for each page and Youtube extension
+            <br>
+            <strong>GitHub Commits:</strong> <%= commitNumbers[3] %>
+            <br>
+            <strong>GitHub Issues:</strong> <%= issueNumbers[3] %>
+            <br>
+            <strong>Unit Tests:</strong> 0
+        </p>
+
+        <hr>
+
+        <h4 style="text-align: left">Alejandro Rodriguez</h4>
+        <p style="text-align: left">
+            <strong>Bio:</strong> Sad man is sad.
+            <br>
+            <strong>Major:</strong> Electrical and Computer Engineering (Software Engineering and Computer Graphics)
+            <br>
+            <strong>Primary responsibilities:</strong> Develeoper page and linked developed and publisher pages.
+            <br>
+            <strong>GitHub Commits:</strong> <%= commitNumbers[4] %>
+            <br>
+            <strong>GitHub Issues:</strong> <%= issueNumbers[4] %>
+            <br>
+            <strong>Unit Tests:</strong> 0
+        </p>
+
+        <hr>
+
+        <h4 style="text-align: left">David Wolf</h4>
+        <p style="text-align: left">
+            <strong>Bio:</strong> Prefers Apple computers >>>> other computers.
+            <br>
+            <strong>Major:</strong> Electrical and Computer Engineering
+            <br>
+            <strong>Primary responsibilities:</strong> Twitch integration
+            <br>
+            <strong>GitHub Commits:</strong> <%= commitNumbers[5] %>
+            <br>
+            <strong>GitHub Issues:</strong> <%= issueNumbers[5] %>
+            <br>
+            <strong>Unit Tests:</strong> 0
+        </p>
+    </div>
+
+    <br>
+    <hr>
+
+    <canvas id="stats"></canvas>
+    <script>
+        var colors = ['#007bff','#28a745','#d6069f','#fcba03','#dc3545'];
+        var chBar = document.getElementById("stats");
+        if (chBar) {
+            new Chart(chBar, {
+                type: 'bar',
+                data: {
+                    labels: ["Albert", "Numan", "John", "Alejandro", "David"],
+                    datasets: [{
+                        data: <%= graphCommitNumbersArray %>,
+                        backgroundColor: [colors[0],colors[1],colors[2],colors[3],colors[4]]
+                    }]
+                },
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        xAxes: [{
+                            barPercentage: 0.4,
+                            categoryPercentage: 0.5,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'User',
+                                fontStyle: "bold",
+                                fontSize: 20
+                            }
+                        }],
+                        yAxes:[{
+                            ticks: { beginAtZero: true },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Commits',
+                                fontStyle: "bold",
+                                fontSize: 20
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    </script>
+
+    <hr>
+    <div style="text-align: left">
+        <h2 style="text-align: left">Team Stats</h2>
+        <strong style="text-align: left">GitHub Commits:</strong> <%= commitNumbers[0] %>
+        <br>
+        <strong style="text-align: left">GitHub Issues:</strong> <%= issueNumbers[0] %>
+        <br>
+        <strong style="text-align: left">Unit Tests:</strong> 0
+
+
+        <hr>
+
+        <h2 style="text-align: left">Data</h2>
+        <!-- links to data sources, description of how each was scraped -->
+        <p style="text-align: left">Links to data sources, description of how each was scraped</p>
+        <div class="row">
+            <div class="col-6">
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="https://rawg.io/" style="text-align: left">RAWG</a></li>
+                    <li class="list-group-item"><a href="https://github.com" style="text-align: left">GitHub</a></li>
+                </ul>
+            </div>
+            <div class="col-6">
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="https://developers.google.com/youtube/v3" style="text-align: left">Youtube</a></li>
+                    <li class="list-group-item"><a href="https://dev.twitch.tv/docs/api/" style="text-align: left">Twitch</a></li>
+                </ul>
+            </div>
+        </div>
+        <h2 style="text-align: left">Tools</h2>
+        <!-- tools used, description of how they were used -->
+        <p style="text-align: left">List of tools used:
+        <div class="row">
+            <div class="col-6">
+                <ul class="list-group">
+                    <li class="list-group-item">Amazon Web Services (AWS)</li>
+                    <li class="list-group-item">Axios</li>
+                    <li class="list-group-item">Bootstrap</li>
+                    <li class="list-group-item">draw.io</li>
+                    <li class="list-group-item">Express</li>
+                    <li class="list-group-item">GitHub</li>
+                </ul>
+            </div>
+            <div class="col-6">
+                <ul class="list-group">
+                    <li class="list-group-item">Google Chrome</li>
+                    <li class="list-group-item">MongoDB</li>
+                    <li class="list-group-item">Postman</li>
+                    <li class="list-group-item">Visual Studio Code</li>
+                    <li class="list-group-item">WebStorm</li>
+                </ul>
+            </div>
+        </div>
+        </p>
+        <hr>
+        <h2 style="text-align: left">GitHub Repo Link</h2>
+        <a href="https://github.com/numan201/game-db.git" style="text-align: left">game-db</a>
+    </div>
+
+<% include partials/footer %>

@@ -9,3 +9,10 @@ package-lock.json
 coverage
 benchmarks/graphs
 .idea
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+/.vs
+/bin/www.js
+/keys.js

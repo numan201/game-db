@@ -4,6 +4,8 @@ var youtubeApiV3Search = require("youtube-api-v3-search");
 const axios = require('axios');
 
 
+var youtubeApiV3Search = require("youtube-api-v3-search");
+
 /* GET games listing. */
 router.get('/', function(req, res, next) {
     let id = require('mongodb').ObjectID(req.query.id);
