@@ -1,3 +1,4 @@
+const {twitchKey} =  require("../keys");
 var express = require('express');
 var router = express.Router();
 var youtubeApiV3Search = require("youtube-api-v3-search");
@@ -24,7 +25,7 @@ router.get('/', function(req, res, next) {
                             name: game.name
                         },
                         headers: {
-                            'Client-ID': 'yqjk0ha999ss01nnisfcac3734ig7t'
+                            'Client-ID': twitchKey
                         }
                     })
                         .then(function (response) {
@@ -40,7 +41,7 @@ router.get('/', function(req, res, next) {
                                     first: 1 //only top stream
                                 },
                                 headers: {
-                                    'Client-ID': 'yqjk0ha999ss01nnisfcac3734ig7t'
+                                    'Client-ID': twitchKey
                                 }
                             })
                                 .then(function (response) {
