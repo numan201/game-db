@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 class UniqueSet {
     constructor() {
@@ -48,7 +48,7 @@ router.get('/', function(req, res, next) {
 
                         promise.catch(() => {
                             console.log("ERROR REQUESTING PUBLISHERS WITH DEVELOPER " + developer.name);// + " AND GAME " + gameFound.name);
-                        })
+                        });
 
                         promise.then(() => {
                             if (i == developer.games.length - 1) resolve();
