@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 class UniqueSet {
     constructor() {
@@ -23,8 +23,6 @@ router.get('/', function(req, res, next) {
 
     let publisherList = new UniqueSet();
     req.app.locals.db.collection('developers').findOne({_id : id}, (err, developer) => {
-        //Making a promise to for synchronous
-        console.log(developer);
         let waitGame = new Promise(resolve => {
             developer.games.forEach((game, i, object) => {
                 req.app.locals.db.collection('games').findOne({id: game.id}, {name: 1, background_image: 1, released: 1, reviews_count: 1}, (err, gameFound) => {
@@ -50,7 +48,7 @@ router.get('/', function(req, res, next) {
 
                         promise.catch(() => {
                             console.log("ERROR REQUESTING PUBLISHERS WITH DEVELOPER " + developer.name);// + " AND GAME " + gameFound.name);
-                        })
+                        });
 
                         promise.then(() => {
                             if (i == developer.games.length - 1) resolve();
