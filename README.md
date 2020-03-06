@@ -24,7 +24,7 @@
 
 ### Alejandro Rodriguez
 * **EID:** aar3772
-* **GitHub ID:** justalejandro
+* **GitHub ID:** JustAlejandro
 * **Estimated completion time (hours):** 10
 * **Actual completion time (hours):**  15
 
