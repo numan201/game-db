@@ -1,6 +1,6 @@
-# game-db
+# Game-DB
 
-* [game-db](http://gamedb.us-east-1.elasticbeanstalk.com/) - Website link
+* [Game-DB](http://gamedb.us-east-1.elasticbeanstalk.com/) - Website link
 
 ## Members:
 
