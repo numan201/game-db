@@ -25,9 +25,10 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
+const { mongoKey } = require('../keys');
 let MongoClient = require('mongodb').MongoClient;
 
-MongoClient.connect('mongodb+srv://gamedb:Xsa5uffG6cOg96b6@cluster0-4soli.mongodb.net/test?retryWrites=true&w=majority', { useUnifiedTopology: true },function (err, client) {
+MongoClient.connect(mongoKey, { useUnifiedTopology: true },function (err, client) {
   if (err) throw err;
   app.locals.db = client.db('game-db');
   server.listen(port);
