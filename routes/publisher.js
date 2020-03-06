@@ -29,8 +29,8 @@ router.get('/', function(req, res, next) {
                 req.app.locals.db.collection('games').findOne({id: game.id}, {name: 1, background_image: 1, released: 1, reviews_count: 1}, (err, gameFound) => {
                     if (gameFound == null) {
                         console.log("ENTRY FOR GAME " + publisher.games[i].name + " NOT FOUND");
-                        developer.games.splice(i, 1);
-                        if (i == developer.games.length) resolve();
+                        publisher.games.splice(i, 1);
+                        if (i == publisher.games.length) resolve();
                     }
                     else {
                         game.instance = gameFound;
