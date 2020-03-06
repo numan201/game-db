@@ -7,8 +7,8 @@
 ### Albert Garza
 * **EID:** asg2793
 * **GitHub ID:** possumrapture
-* **Estimated completion time (hours):** 3
-* **Actual completion time (hours):** 14.5
+* **Estimated completion time (hours):** 7
+* **Actual completion time (hours):** 20
 
 ### Numan Habib
 * **EID:** nah2427
@@ -19,8 +19,8 @@
 ### John Nguyen
 * **EID:** jn26422
 * **GitHub ID:** johnnguyen3196
-* **Estimated completion time (hours):** 
-* **Actual completion time (hours):** 
+* **Estimated completion time (hours):** 6
+* **Actual completion time (hours):** 11
 
 ### Alejandro Rodriguez
 * **EID:** aar3772
@@ -31,5 +31,5 @@
 ### David Wolf
 * **EID:** drw2764 
 * **GitHub ID:** rambisco
-* **Estimated completion time (hours):** 
-* **Actual completion time (hours):** 
+* **Estimated completion time (hours):** 6 
+* **Actual completion time (hours):** 8

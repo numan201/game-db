@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var youtubeApiV3Search = require("youtube-api-v3-search");
 const axios = require('axios');
-
+const { youtubeKey } = require('../keys');
 
 var youtubeApiV3Search = require("youtube-api-v3-search");
 
@@ -75,7 +75,7 @@ router.get('/', function(req, res, next) {
                             part:'snippet',
                             type:'video'
                         };
-                        let result = youtubeApiV3Search("AIzaSyAkzg-fJPr1Gt1Qu3o7ba_2FvpvloXQyzo", options, (err, response) => {
+                        let result = youtubeApiV3Search(youtubeKey, options, (err, response) => {
                             let videos = [];
                             //console.log(response);
                             response.items.forEach((item) =>{
