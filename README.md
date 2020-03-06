@@ -19,8 +19,8 @@
 ### John Nguyen
 * **EID:** jn26422
 * **GitHub ID:** johnnguyen3196
-* **Estimated completion time (hours):** 
-* **Actual completion time (hours):** 
+* **Estimated completion time (hours):** 6
+* **Actual completion time (hours):** 11
 
 ### Alejandro Rodriguez
 * **EID:** aar3772
