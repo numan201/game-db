@@ -13,8 +13,8 @@
 ### Numan Habib
 * **EID:** nah2427
 * **GitHub ID:** numan201
-* **Estimated completion time (hours):** 
-* **Actual completion time (hours):** 
+* **Estimated completion time (hours):** 6
+* **Actual completion time (hours):** 14
 
 ### John Nguyen
 * **EID:** jn26422
