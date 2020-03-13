@@ -33,6 +33,8 @@
             </div>
         </div>
         <div class="col-4">
+            <strong style="color:#9147ff; font-size:24px;"><%= game.steamPlayerCount %> Playing Now</strong><br><br>
+
             <p><strong>Developers:</strong>
                 <% developers.forEach( (developer, i) => { %>
                     <a href="/developer?id=<%= developer._id %>"><%= developer.name %></a><%= (i !== developers.length - 1) ? ', ' : '' %>
