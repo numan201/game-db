@@ -51,8 +51,12 @@
                 <% game.platforms.forEach( (platform) => { %>
                     <li><%= platform.platform.name %></li>
                 <% }); %>
-
             </ul>
+
+            <br>
+            <% if (user != null) { %>
+            <button class="btn btn-secondary">Add to Wishlist</button>
+            <% } %>
         </div>
     </div>
 

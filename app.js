@@ -1,5 +1,3 @@
-const { googleOAuthKeys } = require('keys');
-
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -7,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
+const logoutRouter = require('./routes/logout');
 const gamesRouter = require('./routes/games');
 const developersRouter = require('./routes/developers');
 const publishersRouter = require('./routes/publishers');
@@ -14,7 +13,7 @@ const gameRouter = require('./routes/game');
 const developerRouter = require('./routes/developer');
 const publisherRouter = require('./routes/publisher');
 const aboutRouter = require('./routes/about');
-const inRouter = require('./routes/in');
+const wishlistRouter = require('./routes/wishlist');
 
 const app = express();
 
@@ -29,6 +28,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Google OAuth
+const { googleOAuthKeys } = require('./keys');
 const passport = require('passport');
 const session = require("express-session");
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -88,6 +88,17 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
+
+function userInViews(req, res, next) {
+    res.locals.user = null;
+    if (typeof req.user !== 'undefined') {
+        res.locals.user = req.user;
+    }
+
+    next();
+}
+app.use(userInViews);
+
 app.use('/', indexRouter);
 app.use('/games', gamesRouter);
 app.use('/developers', developersRouter);
@@ -96,7 +107,8 @@ app.use('/game', gameRouter);
 app.use('/about', aboutRouter);
 app.use('/developer', developerRouter);
 app.use('/publisher', publisherRouter);
-app.use('/in', inRouter);
+app.use('/wishlist', wishlistRouter);
+app.use('/logout', logoutRouter);
 
 
 
