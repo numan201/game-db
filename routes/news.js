@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
                 }
             }
 
-            let promise = axios.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=' + steamAppId +'&count=1&maxlength=300&format=json');
+            let promise = axios.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=' + steamAppId +'&count=1&maxlength=0&format=json');
             promises.push(promise);
 
         });

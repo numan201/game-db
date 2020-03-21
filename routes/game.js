@@ -15,6 +15,22 @@ router.get('/', function(req, res, next) {
                 req.app.locals.db.collection('publishers').
                     aggregate([{$unwind: "$games"}, {$match: { "games.id" : game.id}}, {$project: {"name": 1}}]).toArray((err, publishers) => {
 
+                    let steamAppId = null;
+
+                    for (let store of game.stores) {
+                        if (store.store.name == "Steam") {
+                            let steamURLParts = store.url_en.split('/');
+                            steamAppId = steamURLParts[steamURLParts.indexOf('app') + 1];
+                            break;
+                        }
+                    }
+                    axios.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=' + steamAppId +'&count=5&maxlength=0&format=json')
+                        .then(function (resp) {
+                                if (resp.data.appnews !== null) {
+                                    game.news = resp.data.appnews.newsitems;
+                                }
+                            }
+                        );
                     axios({
                         method: 'get',
                         url: "https://api.twitch.tv/helix/games",
