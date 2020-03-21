@@ -2,15 +2,16 @@
 
 <h1 class="mt-4">News</h1>
 <hr>
-<%news.forEach((article,i) => { %>
+
+<% news.forEach((article,i) => { %>
     <div class="media">
-        <img src="<%=steamGames[i].background_image%>" class="mr-3" alt="..."/>
+        <img src="<%=steamGames[i].background_image%>" class="mr-3"/>
         <div class="media-body">
-            <h5 class="mt-0"><a></a><%=article.title%></h5>
+            <h5 class="mt-0"><a><%</a>=article.title%></h5>
             <%=article.contents%>
             <h6 class="mt-0">Written by: <%=article.author%></h6>
         </div>
     </div>
-<%});%>
+<% }); %>
 
 <% include partials/footer %>
