@@ -56,6 +56,7 @@ passport.use(
                     lastName: profile.name.familyName,
                     provider: "Google",
                     picture: profile.photos[0].value,
+                    wishlist: []
                 };
 
                 app.locals.db.collection('users').insertOne(newUser, (err, user) => {

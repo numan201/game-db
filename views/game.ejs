@@ -54,8 +54,14 @@
             </ul>
 
             <br>
-            <% if (user != null) { %>
-            <button class="btn btn-secondary">Add to Wishlist</button>
+            <% if (user != null) {
+                if (userHasInWishlist) { %>
+                    <a href="?id=<%=game._id%>&removeWishlist"><button class="btn btn-secondary">Remove from Wishlist</button></a>
+                <% } else { %>
+                    <a href="?id=<%=game._id%>&addWishlist"><button class="btn btn-secondary">Add to Wishlist</button></a>
+                <% }
+            } else { %>
+                <p>Login to Add to Wishlist</p>
             <% } %>
         </div>
     </div>
