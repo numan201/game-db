@@ -33,7 +33,7 @@ const passport = require('passport');
 const session = require("express-session");
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-app.use(session({ secret: "FXLGlQc0oDBaVDRf" }));
+app.use(session({ secret: "FXLGlQc0oDBaVDRf", resave: true, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
