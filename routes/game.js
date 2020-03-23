@@ -21,11 +21,13 @@ router.get('/', function(req, res, next) {
                     if (err) throw err;
                     res.redirect('/game?id=' + req.query.id);
                 });
+                return;
             } else if ('removeWishlist' in req.query) {
                 req.app.locals.db.collection('users').updateOne({_id: userId}, {$pull: {wishlist: game._id.toString()}}, (err, response) => {
                     if (err) throw err;
                     res.redirect('/game?id=' + req.query.id);
                 });
+                return;
             }
 
         }
@@ -36,6 +38,7 @@ router.get('/', function(req, res, next) {
             aggregate([{$unwind: "$games"}, {$match: { "games.id" : game.id}}, {$project: {"name": 1}}]).toArray((err, developers) => {
                 req.app.locals.db.collection('publishers').
                     aggregate([{$unwind: "$games"}, {$match: { "games.id" : game.id}}, {$project: {"name": 1}}]).toArray((err, publishers) => {
+
 
                     axios({
                         method: 'get',
@@ -76,11 +79,15 @@ router.get('/', function(req, res, next) {
                         type:' video'
                     };
 
+
                     youtubeApiV3Search(youtubeKey, options, (err, response) => {
                         let videos = [];
-                        response.items.forEach((item) =>{
-                            videos.push(item.id.videoId);
-                        });
+
+                        if (err == null) {
+                            response.items.forEach((item) => {
+                                videos.push(item.id.videoId);
+                            });
+                        }
 
                         res.render('game', { username: username, title: game.name, game: game, developers: developers, publishers: publishers, reviewsCounts: JSON.stringify(reviewsCounts), videos: videos, userHasInWishlist: userHasInWishlist });
                     });

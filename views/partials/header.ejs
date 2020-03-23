@@ -28,6 +28,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="/about">About</a>
             </li>
+            <% if (user) { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/wishlist">Wishlist</a>
+                </li>
+            <% } %>
         </ul>
     </div>
 
@@ -40,7 +45,6 @@
     <div class="navbar-nav ml-auto">
         <% if (user) { %>
             <a href="/logout"><button class="btn btn-light"><i class="fas fa-sign-in-alt"></i> Log Out </button></a>
-
         <% } else { %>
             <a href="/auth/google"><button class="btn btn-light"><i class="fas fa-sign-in-alt"></i> Log In </button></a>
         <% } %>

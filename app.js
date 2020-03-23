@@ -14,6 +14,7 @@ const developerRouter = require('./routes/developer');
 const publisherRouter = require('./routes/publisher');
 const aboutRouter = require('./routes/about');
 const wishlistRouter = require('./routes/wishlist');
+const domain = 'localhost:3000';
 
 const app = express();
 
@@ -41,14 +42,13 @@ passport.use(
     new GoogleStrategy({
         clientID: googleOAuthKeys.clientId,
         clientSecret: googleOAuthKeys.clientSecret,
-        callbackURL: 'http://gamedb.com:3000/auth/google/callback'
+        callbackURL: 'http://' + domain + '/auth/google/callback'
     },
     (accessToken, refreshToken, profile, done) => {
         app.locals.db.collection('users').findOne({ provider: "Google", accountId: profile.id}, (err, user) => {
             if (user) {
                 return done(err, user);
             } else {
-
                 let newUser = {
                     accountId: profile.id,
                     displayName: profile.displayName,
