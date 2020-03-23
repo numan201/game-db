@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const hltb = require('howlongtobeat');
+const hltbService = new hltb.HowLongToBeatService();
 const axios = require('axios');
 const youtubeApiV3Search = require("youtube-api-v3-search");
 const { youtubeKey, twitchKey } = require('../keys');
@@ -71,19 +73,39 @@ router.get('/', function(req, res, next) {
                     });
                     reviewsCounts.reverse();
 
+                    //How long to beat
+                    let hltbPromise = new Promise(resolve => {
+                        hltbService.search(game.name).then(result => {
+                            game.hltb = {};
+                            if(result.length == 0){
+                                game.hltb.exists = false;
+                            }
+                            else{
+                                game.hltb.exists = result[0].similarity > 0.8;
+                                game.hltb.id = result[0].id;
+                                game.hltb.main = result[0].gameplayMain;
+                                game.hltb.mainExtra = result[0].gameplayMainExtra;
+                                game.hltb.completionist = result[0].gameplayCompletionist;
+                            }
+                            resolve();
+                        }).catch(e => resolve());
+                    });
+
                     let options = {
                         q: game.name,
                         part: 'snippet',
                         type:' video'
                     };
+
                     youtubeApiV3Search(youtubeKey, options, (err, response) => {
                         let videos = [];
                         response.items.forEach((item) =>{
                             videos.push(item.id.videoId);
                         });
-                        res.render('game', {username: username, title: game.name, game: game, developers: developers, publishers: publishers, reviewsCounts: JSON.stringify(reviewsCounts), videos: videos});
+                        hltbPromise.then(() => {
+                            res.render('game', {username: username, title: game.name, game: game, developers: developers, publishers: publishers, reviewsCounts: JSON.stringify(reviewsCounts), videos: videos});
+                        });
                     });
-
             });
         });
     });
