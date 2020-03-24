@@ -55,6 +55,16 @@
                 <% }); %>
             </ul>
 
+            <% if(game.hltb && game.hltb.exists == true) {%>
+                <strong>Average Time to Complete:</strong>
+                <ul class="list-unstyled">
+                    <li>Main Story: <%= game.hltb.main%> Hours</li>
+                    <li>Main Story + Extra: <%= game.hltb.mainExtra%> Hours</li>
+                    <li>Completionist (100%): <%= game.hltb.completionist%> Hours</li>
+                    <li><a href="https://howlongtobeat.com/game?id=<%=game.hltb.id%>" rel="noopener noreferrer" target="_blank">In Depth Stats</a></li>
+                </ul>
+            <% }%>
+
             <br>
             <% if (user != null) {
                 if (userHasInWishlist) { %>
@@ -65,6 +75,7 @@
             } else { %>
                 <p>Login to Add to Wishlist</p>
             <% } %>
+
         </div>
     </div>
 
