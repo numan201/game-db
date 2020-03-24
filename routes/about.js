@@ -17,6 +17,7 @@ function getIssuesNumbers() {
             "Authorization" : 'Token ' + gitHubKey,
             "per_page" : "100"
         }
+
     };
 
     let request = axios.get(url, config);
