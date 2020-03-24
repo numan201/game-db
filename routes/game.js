@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const hltb = require('howlongtobeat');
+const hltbService = new hltb.HowLongToBeatService();
 const youtubeApiV3Search = require("youtube-api-v3-search");
 const { youtubeKey, twitchKey } = require('../keys');
 
