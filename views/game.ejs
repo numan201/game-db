@@ -80,6 +80,39 @@
     </div>
 
     <br>
+    <div class="container-fluid">
+        <h2>News</h2>
+        <ul class="list-unstyled">
+            <%var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];%>
+            <% game.news.forEach((article) => {
+                var date = new Date(article.date * 1000);
+                var month = months[date.getMonth()];
+                var day = date.getDay();
+                var year = date.getFullYear();
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                if(hours < 10){
+                    hours = '0' + hours;
+                }
+                if(minutes < 10){
+                    minutes = '0' + minutes;
+                }
+                var formattedTime = month + " " + day + ", " + year + " " + hours + ":" + minutes;
+            %>
+
+            <li class="media">
+                <div class="media-body">
+                    <a href="<%=article.url%>"><h5 class="mt-0"><%=article.title%></h5></a>
+                    <h6 class="mt-0">Written by: <%=article.author%></h6>
+                    <h6 class="mt-0"><small><i>Date: <%=formattedTime%></i></small></h6>
+                </div>
+            </li>
+            <hr>
+            <% }); %>
+        </ul>
+    </div>
+
+    <br>
 
     <div class="container-fluid">
         <h2>Reviews</h2>

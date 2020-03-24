@@ -61,6 +61,13 @@ router.get('/', function(req, res, next) {
                             }
                         }
                     );
+                axios.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=' + steamAppId +'&count=5&maxlength=0&format=json')
+                    .then(function (resp) {
+                            if (resp.data.appnews !== null) {
+                                game.news = resp.data.appnews.newsitems;
+                            }
+                        }
+                    );
 
                 axios({
                     method: 'get',

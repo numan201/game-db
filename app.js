@@ -14,6 +14,7 @@ const developerRouter = require('./routes/developer');
 const publisherRouter = require('./routes/publisher');
 const aboutRouter = require('./routes/about');
 const wishlistRouter = require('./routes/wishlist');
+const newsRouter = require('./routes/news');
 const domain = 'localhost:3000';
 
 const app = express();
@@ -110,8 +111,7 @@ app.use('/developer', developerRouter);
 app.use('/publisher', publisherRouter);
 app.use('/wishlist', wishlistRouter);
 app.use('/logout', logoutRouter);
-
-
+app.use('/news', newsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
