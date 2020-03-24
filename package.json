@@ -20,6 +20,6 @@
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
     "request": "^2.88.2",
-    "youtube-api-v3-search": "^1.2.1",
+    "youtube-api-v3-search": "^1.2.1"
   }
 }
