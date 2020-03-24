@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="col-4">
-            <strong style="color:#9147ff; font-size:24px;"><%= game.steamPlayerCount %> Playing Now</strong><br><br>
+            <strong style="color:#9147ff; font-size:24px;"><%= steamPlayerCount %> Playing on Steam</strong><br><br>
 
             <p><strong>Developers:</strong>
                 <% developers.forEach( (developer, i) => { %>
@@ -55,13 +55,13 @@
                 <% }); %>
             </ul>
 
-            <% if(game.hltb && game.hltb.exists == true) {%>
+            <% if(hltb && hltb.exists == true) {%>
                 <strong>Average Time to Complete:</strong>
                 <ul class="list-unstyled">
-                    <li>Main Story: <%= game.hltb.main%> Hours</li>
-                    <li>Main Story + Extra: <%= game.hltb.mainExtra%> Hours</li>
-                    <li>Completionist (100%): <%= game.hltb.completionist%> Hours</li>
-                    <li><a href="https://howlongtobeat.com/game?id=<%=game.hltb.id%>" rel="noopener noreferrer" target="_blank">In Depth Stats</a></li>
+                    <li>Main Story: <%= hltb.main%> Hours</li>
+                    <li>Main Story + Extra: <%= hltb.mainExtra%> Hours</li>
+                    <li>Completionist (100%): <%= hltb.completionist%> Hours</li>
+                    <li><a href="https://howlongtobeat.com/game?id=<%=hltb.id%>" rel="noopener noreferrer" target="_blank">In Depth Stats</a></li>
                 </ul>
             <% }%>
 
@@ -84,7 +84,7 @@
         <h2>News</h2>
         <ul class="list-unstyled">
             <%var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];%>
-            <% game.news.forEach((article) => {
+            <% news.forEach((article) => {
                 var date = new Date(article.date * 1000);
                 var month = months[date.getMonth()];
                 var day = date.getDay();
