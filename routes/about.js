@@ -13,7 +13,10 @@ function getIssuesNumbers() {
 
     let config = {
         method: 'get',
-        headers: {"Authorization" : 'Token ' + gitHubKey}
+        headers: {
+            "Authorization" : 'Token ' + gitHubKey,
+            "per_page" : "100"
+        }
     };
 
     let request = axios.get(url, config);
@@ -67,7 +70,8 @@ function getCommitNumbers() {
             method: 'get',
             headers: {
                 "Accept" : "application/vnd.github.cloak-preview",
-                "Authorization" : 'Token ' + gitHubKey
+                "Authorization" : 'Token ' + gitHubKey,
+                "per_page" : "100"
             }
         };
 
