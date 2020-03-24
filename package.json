@@ -7,14 +7,18 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "connect-ensure-login": "^0.1.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
+    "express-session": "^1.17.0",
     "http-errors": "~1.6.3",
     "mongodb": "latest",
     "morgan": "~1.9.1",
+    "passport": "^0.4.1",
+    "passport-google-oauth": "^2.0.0",
     "request": "^2.88.2",
-    "youtube-api-v3-search": "^1.2.1"
+    "youtube-api-v3-search": "^1.2.1",
   }
 }

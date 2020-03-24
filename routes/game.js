@@ -10,11 +10,35 @@ router.get('/', function(req, res, next) {
     let username;
 
     req.app.locals.db.collection('games').findOne({_id : id}, (err, game) => {
+
+        // Wishlist functionality
+        if (req.user) {
+            let userId = require('mongodb').ObjectID(req.user._id);
+
+            if ('addWishlist' in req.query) {
+                req.app.locals.db.collection('users').updateOne({_id: userId}, {$addToSet: {wishlist: game._id.toString()}}, (err, response) => {
+                    if (err) throw err;
+                    res.redirect('/game?id=' + req.query.id);
+                });
+                return;
+
+            } else if ('removeWishlist' in req.query) {
+                req.app.locals.db.collection('users').updateOne({_id: userId}, {$pull: {wishlist: game._id.toString()}}, (err, response) => {
+                    if (err) throw err;
+                    res.redirect('/game?id=' + req.query.id);
+                });
+                return;
+
+            }
+
+        }
+
+        let userHasInWishlist = req.user && req.user.wishlist.includes(game._id.toString());
+
         req.app.locals.db.collection('developers').
             aggregate([{$unwind: "$games"}, {$match: { "games.id" : game.id}}, {$project: {"name": 1}}]).toArray((err, developers) => {
                 req.app.locals.db.collection('publishers').
                     aggregate([{$unwind: "$games"}, {$match: { "games.id" : game.id}}, {$project: {"name": 1}}]).toArray((err, publishers) => {
-
 
                     // Steam Player Count
                     let playerCount = 0;
@@ -27,14 +51,12 @@ router.get('/', function(req, res, next) {
                             break;
                         }
                     }
-
-
                     axios.get('https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=' + steamAppId)
                         .then(function (resp) {
-                            if (resp.data.response !== null) {
-                                playerCount = resp.data.response.player_count;
-                                game.steamPlayerCount = playerCount.toLocaleString();
-                            }
+                                if (resp.data.response !== null) {
+                                    playerCount = resp.data.response.player_count;
+                                    game.steamPlayerCount = playerCount.toLocaleString();
+                                }
                         }
                     );
 
@@ -76,12 +98,17 @@ router.get('/', function(req, res, next) {
                         part: 'snippet',
                         type:' video'
                     };
+
                     youtubeApiV3Search(youtubeKey, options, (err, response) => {
                         let videos = [];
-                        response.items.forEach((item) =>{
-                            videos.push(item.id.videoId);
-                        });
-                        res.render('game', {username: username, title: game.name, game: game, developers: developers, publishers: publishers, reviewsCounts: JSON.stringify(reviewsCounts), videos: videos});
+
+                        if (err == null) {
+                            response.items.forEach((item) => {
+                                videos.push(item.id.videoId);
+                            });
+                        }
+
+                        res.render('game', { username: username, title: game.name, game: game, developers: developers, publishers: publishers, reviewsCounts: JSON.stringify(reviewsCounts), videos: videos, userHasInWishlist: userHasInWishlist });
                     });
 
             });
