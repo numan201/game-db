@@ -62,41 +62,44 @@ router.get('/', (req, res) => {
 
             return {title: game.name, game, reviewsCounts: reviewsCounts, userHasInWishlist: userHasInWishlist};
 
-        }).then( (data) => {
-        // Developers and publishers
+        })
+        .then( (data) => {
+            // Developers and publishers
 
-        let developers = req.app.locals.db.collection('developers').aggregate([{$unwind: "$games"}, {$match: { "games.id" : data.game.id}}, {$project: {"name": 1}}]).toArray();
-        let publishers = req.app.locals.db.collection('publishers').aggregate([{$unwind: "$games"}, {$match: {"games.id": data.game.id}}, {$project: {"name": 1}}]).toArray();
+            let developers = req.app.locals.db.collection('developers').aggregate([{$unwind: "$games"}, {$match: { "games.id" : data.game.id}}, {$project: {"name": 1}}]).toArray();
+            let publishers = req.app.locals.db.collection('publishers').aggregate([{$unwind: "$games"}, {$match: {"games.id": data.game.id}}, {$project: {"name": 1}}]).toArray();
 
-        return Promise.all([developers, publishers]).then(([developers, publishers]) => {
-            data.developers = developers;
-            data.publishers = publishers;
-            return data;
-        });
+            return Promise.all([developers, publishers]).then(([developers, publishers]) => {
+                data.developers = developers;
+                data.publishers = publishers;
+                return data;
+            });
 
     })
-        .then ((data) => {
-            // Steam Player Count
+    .then ((data) => {
+        // Steam Player Count
 
-            data.steamPlayerCount = 0;
-            data.steamAppId = getSteamAppId(data.game);
+        data.steamPlayerCount = 0;
+        data.steamAppId = getSteamAppId(data.game);
 
-            return axios.get('https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=' + data.steamAppId)
-                .then((resp) => {
-                        if (resp.data.response !== null) {
-                            let steamPlayerCount = resp.data.response.player_count;
-                            data.steamPlayerCount = steamPlayerCount.toLocaleString();
-                        }
-
-                        return data;
+        return axios.get('https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=' + data.steamAppId)
+            .then((resp) => {
+                    if (resp.data.response !== null) {
+                        let steamPlayerCount = resp.data.response.player_count;
+                        data.steamPlayerCount = steamPlayerCount.toLocaleString();
                     }
-                )
-                .catch(err => data);
 
-        }).then( (data) => {
+                    return data;
+                }
+            )
+            .catch(err => data);
+
+    })
+    .then( (data) => {
         // Steam News
 
-        return axios.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=' + data.steamAppId +'&count=5&maxlength=0&format=json')
+        data.news = [];
+        return axios.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=' + data.steamAppId +'&count=3&maxlength=0&format=json')
             .then( (resp) => {
                     if (resp.data.appnews !== null) {
                         data.news = resp.data.appnews.newsitems;
@@ -107,7 +110,8 @@ router.get('/', (req, res) => {
             )
             .catch(err => data);
 
-    }).then( (data) => {
+    })
+    .then( (data) => {
         // Twitch Integration
 
         return axios({
@@ -130,14 +134,15 @@ router.get('/', (req, res) => {
                     headers: {'Client-ID': twitchKey}
                 })
                     .then((response) => {
-                        data.username = response.data.data[0].user_name;
+                        data.twitchUsername = response.data.data[0].user_name;
                         return data;
                     })
                     .catch(err => data);
             })
             .catch(err => data);
 
-    }).then((data) => {
+    })
+    .then((data) => {
         // How Long to Beat
 
         return hltbService.search(data.game.name).then(result => {
@@ -157,7 +162,8 @@ router.get('/', (req, res) => {
         })
             .catch(err => data);
 
-    }).then( (data) => {
+    })
+    .then( (data) => {
         data.videos = [];
 
         let options = {
@@ -176,7 +182,8 @@ router.get('/', (req, res) => {
             })
             .catch(err => data);
 
-    }).then(data => {
+    })
+    .then(data => {
         res.render('game', data)
     });
 

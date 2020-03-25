@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 
         games.forEach((game) => {
             let steamAppId = null;
-            for (let store of game.stores){
+            for (let store of game.stores) {
                 if (store.store.name === "Steam"){
                     steamGames.push(game);
                     let steamURLParts = store.url_en.split('/');
@@ -34,7 +34,7 @@ router.get('/', function(req, res, next) {
                 }
             });
 
-            res.render('news', { title: 'news', news: news, steamGames: steamGames});
+            res.render('news', { title: 'News', news: news, steamGames: steamGames});
 
         });
 

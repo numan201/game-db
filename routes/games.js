@@ -1,10 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const {getCurrentPage, paginationObject, skipCalc, resultsPerPage} = require("../paginationHelper");
 
 /* GET games listing. */
 router.get('/', function(req, res, next) {
-    req.app.locals.db.collection('games').find().limit(20).toArray().then((games) => {
-        res.render('games', { title: 'Games', games: games });
+    let currentPage = getCurrentPage(req);
+
+    req.app.locals.db.collection('games').find().skip(skipCalc(currentPage)).limit(resultsPerPage).toArray().then((games) => {
+
+        req.app.locals.db.collection('games').countDocuments().then( (count) => {
+            res.render('games', { title: 'Games', pagination: paginationObject(currentPage, count), games: games });
+        });
+
     });
 });
 
