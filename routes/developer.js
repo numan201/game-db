@@ -36,7 +36,7 @@ router.get('/', function(req, res, next) {
 
                         let promise = new Promise(resolve1 => {
                             req.app.locals.db.collection('publishers').aggregate([{ $unwind: "$games" }, { $match: { "games.id": game.instance.id } },
-                            { $project: { "name": 1, games_count: 1, image_background: 1 } }]).toArray((err, publishers) => {
+                            { $project: { "name": 1, games_count: 1, image_background: 1 } }]).toArray().then((publishers) => {
 
                                 publishers.forEach((publisher, j) => {
                                     publisherList.add(publisher);
