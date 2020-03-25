@@ -156,7 +156,7 @@
         </script>
     </div>
 
-    <%if(user != null){ %>
+    <% if (user !== null) { %>
         <br>
         <h2>Leave a Review</h2>
         <form action="...">
@@ -242,18 +242,20 @@
             </div>
             <div class="col-6">
                 <div class = "container-fluid">
+                    <% if (user !== null) { %>
                     <script src= "https://player.twitch.tv/js/embed/v1.js"></script>
                     <div class="row" id="Twitch Player"></div>
                     <script type="text/javascript">
                         var options = {
                             width: 584,
                             height: 320,
-                            channel: "<%= username %>",
+                            channel: "<%= twitchUsername %>",
                             // channel: "Tfue",
                         };
                         var player = new Twitch.Player("Twitch Player", options);
                         player.setVolume(0.0);
                     </script>
+                    <% } %>
                 </div>
             </div>
         </div>
