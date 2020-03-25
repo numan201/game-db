@@ -1,10 +1,16 @@
 const express = require('express');
 const router = express.Router();
+const {getCurrentPage, paginationObject, skipCalc, resultsPerPage} = require("../paginationHelper");
 
 /* GET developers listing. */
 router.get('/', function(req, res, next) {
-    req.app.locals.db.collection('developers').find().limit(20).toArray().then((developers) => {
-        res.render('developers', { title: 'Developers', developers: developers });
+
+    let currentPage = getCurrentPage(req);
+
+    req.app.locals.db.collection('developers').find().skip(skipCalc(currentPage)).limit(resultsPerPage).toArray().then((developers) => {
+        req.app.locals.db.collection('developers').countDocuments().then((count) => {
+            res.render('developers', {title: 'Developers', pagination: paginationObject(currentPage, count), developers: developers});
+        });
     });
 });
 

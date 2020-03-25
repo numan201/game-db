@@ -15,7 +15,7 @@
             <a href="<%= gameUrl %>"><img class="card-img-top" src="<%= game.background_image %>"></a>
             <div class="card-body">
                 <a style="color:#000;" href="<%= gameUrl %>"><h5 class="card-title"><%= game.name %></h5></a>
-                <p class="card-text">Released <%= game.released.split('-')[0] %> | <%= game.reviews_count %> Reviews</p>
+                <p class="card-text">Released <%= (game.released !== null) ? game.released.split('-')[0] : '?'%> | <%= game.reviews_count %> Reviews</p>
                 <a href="<%= gameUrl %>" class="btn btn-primary">See More</a>
             </div>
         </div>
@@ -43,6 +43,5 @@
     <br>
 
 </main>
-
 
 <% include partials/footer %>
