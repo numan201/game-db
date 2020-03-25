@@ -159,7 +159,9 @@
     <%if(user != null){ %>
         <br>
         <h2>Leave a Review</h2>
-        <form action="...">
+        <form action="/review" method="get">
+            <label for="gameId"></label><input type="hidden" name="gameId" id="gameId" value="<%=game._id%>">
+            <label for="userId"></label><input type="hidden" name="userId" id="userId" value="<%=userId%>">
             <div class="form-group">
                 <label for="title">Title:</label>
                 <input type="text" class="form-control" placeholder="Write a title" id="title">

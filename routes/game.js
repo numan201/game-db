@@ -39,9 +39,9 @@ router.get('/', (req, res) => {
             // Wishlist functionality
 
             let userHasInWishlist = req.user && req.user.wishlist.includes(game._id.toString());
-
+            let userId;
             if (req.user) {
-                let userId = require('mongodb').ObjectID(req.user._id);
+                userId = require('mongodb').ObjectID(req.user._id);
 
                 if ('addWishlist' in req.query) {
                     req.app.locals.db.collection('users').updateOne({_id: userId}, {$addToSet: {wishlist: game._id.toString()}}).then( (result) => {
@@ -60,7 +60,7 @@ router.get('/', (req, res) => {
 
             let reviewsCounts = getReviewsCounts(game);
 
-            return {title: game.name, game, reviewsCounts: reviewsCounts, userHasInWishlist: userHasInWishlist};
+            return {title: game.name, game, reviewsCounts: reviewsCounts, userHasInWishlist: userHasInWishlist, userId: userId};
 
         }).then( (data) => {
         // Developers and publishers
@@ -181,6 +181,5 @@ router.get('/', (req, res) => {
     });
 
 });
-
 
 module.exports = router;
