@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
     let news = [];
     let steamGames = [];
 
-    req.app.locals.db.collection('games').find().limit(20).toArray((err, games) => {
+    req.app.locals.db.collection('games').find().limit(20).toArray().then((games) => {
         let promises = [];
 
         games.forEach((game) => {

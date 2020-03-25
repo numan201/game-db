@@ -17,7 +17,7 @@ router.get('/', require('connect-ensure-login').ensureLoggedIn('/'), function(re
             wishlist[i] = require('mongodb').ObjectID(wishlist[i]);
         }
 
-        req.app.locals.db.collection('games').find({_id: {$in: wishlist}}).toArray((err, games) => {
+        req.app.locals.db.collection('games').find({_id: {$in: wishlist}}).toArray().then((games) => {
             res.render('wishlist', {title: 'Wishlist', games: games});
         });
 

@@ -1,0 +1,34 @@
+.sidenav{
+    background-color: grey;
+    height: 100%;
+}
+
+img.card-img-top {
+    height: 250px;
+    object-fit: cover;
+}
+hr {
+    background: #cec8c8;
+}
+
+main {
+    min-height:700px;
+}
+
+body{
+    color:white;
+    background-color:#121212;
+}
+
+.card-body{
+    background-color: rgba(47, 47, 47, 0.82);
+}
+
+#cardtitle{
+    color:white;
+}
+
+.footer {
+    position:static;
+    margin-top:30px;
+}
