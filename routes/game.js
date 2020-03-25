@@ -96,7 +96,7 @@ router.get('/', (req, res) => {
         }).then( (data) => {
         // Steam News
 
-        return axios.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=' + data.steamAppId +'&count=5&maxlength=0&format=json')
+        return axios.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=' + data.steamAppId +'&count=3&maxlength=0&format=json')
             .then( (resp) => {
                     if (resp.data.appnews !== null) {
                         data.news = resp.data.appnews.newsitems;
