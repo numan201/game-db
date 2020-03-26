@@ -60,7 +60,7 @@ router.get('/', (req, res) => {
 
             let reviewsCounts = getReviewsCounts(game);
 
-            return {title: game.name, game, reviewsCounts: reviewsCounts, userHasInWishlist: userHasInWishlist, userId: userId};
+            return {title: game.name, game, reviewsCounts: reviewsCounts, userHasInWishlist: userHasInWishlist};
 
         }).then( (data) => {
         // Developers and publishers
@@ -176,6 +176,12 @@ router.get('/', (req, res) => {
             })
             .catch(err => data);
 
+    }).then(data => {
+        let reviews = req.app.locals.db.collection('reviews').find({gameId:id.toLocaleString()}).toArray();
+        return Promise.all([reviews]).then(([reviews]) => {
+            data.reviews = reviews;
+            return data;
+        });
     }).then(data => {
         res.render('game', data)
     });

@@ -1,16 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/review', (req, res) => {
+router.post('/', (req, res) => {
     let gameURL = "/game?id=" + req.body.gameId;
+    var time = Date.now();
     let newReview = {
-        accountId: req.body.userId,
         gameId: req.body.gameId,
         title: req.body.title,
         review: req.body.review,
-        rating: req.body.userratings
+        rating: req.body.userratings,
+        username: req.user.displayName,
+        userpicture: req.user.picture,
+        time: time
     };
-    app.locals.db.collection('reviews').insertOne(newReview);
+    req.app.locals.db.collection('reviews').insertOne(newReview);
     res.redirect(gameURL);
 });
 
