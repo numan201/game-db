@@ -33,7 +33,9 @@
             </div>
         </div>
         <div class="col-4">
-            <strong style="color:#9147ff; font-size:24px;"><%= steamPlayerCount %> Playing on Steam</strong><br><br>
+            <% if (steamAppId !== null) { %>
+                <strong style="color:#9147ff; font-size:24px;"><%= steamPlayerCount %> Playing on Steam</strong><br><br>
+            <% } %>
 
             <p><strong>Developers:</strong>
                 <% developers.forEach( (developer, i) => { %>

@@ -30,7 +30,7 @@ function getReviewsCounts(game) {
 }
 
 /* GET games listing. */
-router.get('/', (req, res) => {
+router.get('/', function(req, res) {
     let id = require('mongodb').ObjectID(req.query.id);
 
     // Get Game
