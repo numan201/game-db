@@ -1,13 +1,29 @@
-<% include partials/header %>
+<% include partials/index_header %>
 
 <style>
-    #greytext{
-        color: grey;
+    #banner_container{
+        padding-right:0;
+        padding-left:0;
+        margin-right:auto;
+        margin-left:auto;
+    }
+    .media-left{
+        padding-right:10px;
+        padding-left:10px;
     }
     #banner{
         overflow:hidden;
-        margin-left:50%;
-        transform:translateX(-50%);
+        margin-left: 50%;
+        transform: translateX(-50%);
+        height: 125px;
+        width: auto;
+    }
+    #banner_div{
+        background-color: black;
+    }
+    .carousel-control-next,
+    .carousel-control-prev {
+        filter: invert(100%);
     }
     .carousel-caption{
         color: black;
@@ -17,17 +33,15 @@
     }
     .img-fluid{
         width: auto;
-        height: 575px;
-        max-height: 575px;
+        height: 500px;
+        max-height: 500px;
     }
     #game_thumbnail{
-        width: auto;
+        width: 125px;
         height: 75px;
-        max-height: 75px;
     }
 </style>
-
-<img id="banner" src="/images/banner.png">
+<br>
 
 <div class="row">
     <div class="col-sm-12">
