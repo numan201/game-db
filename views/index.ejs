@@ -4,6 +4,11 @@
     #greytext{
         color: grey;
     }
+    #banner{
+        overflow:hidden;
+        margin-left:50%;
+        transform:translateX(-50%);
+    }
     .carousel-caption{
         color: black;
         position: relative;
@@ -15,15 +20,15 @@
         height: 575px;
         max-height: 575px;
     }
+    #game_thumbnail{
+        width: auto;
+        height: 75px;
+        max-height: 75px;
+    }
 </style>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="jumbotron">
-            <h1>Welcome to GameDB</h1>
-            <p id="greytext">The best place for gamers to get information on games</p>
-        </div>
-    </div>
-</div>
+
+<img id="banner" src="/images/banner.png">
+
 <div class="row">
     <div class="col-sm-12">
         <h2>New Releases</h2>
@@ -95,10 +100,85 @@
 </div>
 
 <div class="col-sm-6">
-    <div class="jumbotron"><h1>Top Rated Games</h1></div>
-    <% top_rated.forEach((game, i) => { %>
-        <p><%= game.name %> Score: <%= game.metacritic.toString() %> </p>
-    <% }); %>
+    <div class="jumbotron"><h1>Top Rated Games By Platform</h1></div>
+    <div class="media">
+        <div class="media-left"> <img src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/232_Nintendo_Switch_logo-512.png" class="media-object" style="width:150px"> </div>
+        <div class="media-body">
+            <h3>Nintendo Switch</h3>
+            <br>
+            <% top_rated_switch.forEach((game, i) => { %>
+            <div class="media">
+                <div class="media-left"> <img id="game_thumbnail" src="<%= game.background_image %>"></div>
+                <% let gameUrl = "/game?id=" + game._id; %>
+                <div class="media-body">
+                    <a href="<%= gameUrl%>"> <h6> <%= game.name %> </h6> </a>
+                    <p>Metacritic Score: <%= game.metacritic.toString() %></p>
+                    <br>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="media">
+        <div class="media-left"> <img src="https://1000logos.net/wp-content/uploads/2017/06/Windows-Logo-768x704.png" class="media-object" style="width:150px"> </div>
+        <div class="media-body">
+            <h3>PC</h3>
+            <br>
+            <% top_rated_pc.forEach((game, i) => { %>
+                <div class="media">
+                    <div class="media-left"> <img id="game_thumbnail" src="<%= game.background_image %>"></div>
+                    <% let gameUrl = "/game?id=" + game._id; %>
+                    <div class="media-body">
+                        <a href="<%= gameUrl%>"> <h6> <%= game.name %> </h6> </a>
+                        <p>Metacritic Score: <%= game.metacritic.toString() %></p>
+                        <br>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="media">
+        <div class="media-left"> <img src="https://logodix.com/logo/20874.png" class="media-object" style="width:150px"> </div>
+        <div class="media-body">
+            <h3>Playstation 4</h3>
+            <br>
+            <% top_rated_ps4.forEach((game, i) => { %>
+                <div class="media">
+                    <div class="media-left"> <img id="game_thumbnail" src="<%= game.background_image %>"></div>
+                    <% let gameUrl = "/game?id=" + game._id; %>
+                    <div class="media-body">
+                        <a href="<%= gameUrl%>"> <h6> <%= game.name %> </h6> </a>
+                        <p>Metacritic Score: <%= game.metacritic.toString() %></p>
+                        <br>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="media">
+        <div class="media-left"> <img src="https://i.pinimg.com/474x/79/b7/f3/79b7f3874d027f46d12c89d6051422c2--xbox-one-videogame.jpg" class="media-object" style="width:150px"> </div>
+        <div class="media-body">
+            <h3>XBox One</h3>
+            <br>
+            <% top_rated_ps4.forEach((game, i) => { %>
+                <div class="media">
+                    <div class="media-left"> <img id="game_thumbnail" src="<%= game.background_image %>"></div>
+                    <% let gameUrl = "/game?id=" + game._id; %>
+                    <div class="media-body">
+                        <a href="<%= gameUrl%>"> <h6> <%= game.name %> </h6> </a>
+                        <p>Metacritic Score: <%= game.metacritic.toString() %></p>
+                        <br>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
 </div>
 
 <% include partials/footer %>
