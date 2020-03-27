@@ -75,7 +75,7 @@
                     <a href="?id=<%=game._id%>&addWishlist"><button class="btn btn-secondary">Add to Wishlist</button></a>
                 <% }
             } else { %>
-                <p>Login to Add to Wishlist</p>
+                <a href="/auth/google">Login to Add to Wishlist</a>
             <% } %>
 
         </div>
@@ -125,7 +125,7 @@
         <h2>Reviews</h2>
         <canvas id="review"></canvas>
         <script>
-            var colors = ['#00ff00'];
+            var colors = ['#1f52ff'];
             var chBar = document.getElementById("review");
             if (chBar) {
                 new Chart(chBar, {

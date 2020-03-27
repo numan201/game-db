@@ -28,7 +28,29 @@ body{
     color:white;
 }
 
+.card{
+    background-color: rgba(47, 47, 47, 0.82);
+}
+
+.card-title{
+    color:white;
+}
+
+.list-group-item{
+    background-color: rgba(47, 47, 47, 0.82);
+    color:white;
+}
+
 .footer {
     position:static;
     margin-top:30px;
+    background-color: rgba(47, 47, 47, 0.82);
+}
+
+.page-item .page-link{
+    background-color: rgba(47, 47, 47, 0.82);
+}
+
+.page-item.disabled .page-link {
+    background-color: rgba(47, 47, 47, 0.82);
 }
