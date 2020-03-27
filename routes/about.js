@@ -95,12 +95,29 @@ function getCommitNumbers() {
 }
 
 /* GET about */
-router.get('/', async function(req, res, next) {
-    let issueNumbers = await getIssuesNumbers();
-    let commitNumbers = await getCommitNumbers();
-    let commitNumbersWithoutTeam = commitNumbers.slice(1);
+router.get('/', function(req, res, next) {
 
-    res.render('about', { title: 'About', issueNumbers: issueNumbers, commitNumbers: commitNumbers, graphCommitNumbersArray: JSON.stringify(commitNumbersWithoutTeam) });
+    req.app.locals.db.collection('cache').findOne({name: 'github'}).then(async (github) => {
+        let issueNumbers = github.issueNumbers;
+        let commitNumbers = github.commitNumbers;
+        let commitNumbersWithoutTeam = github.commitNumbersWithoutTeam;
+
+        const TWELVE_HOURS = 12 * 1000 * 60 * 60;
+        const timeElapsed = new Date() - github.updated;
+
+        // Time to refresh (after 12 hours)
+        if (timeElapsed >= TWELVE_HOURS) {
+            issueNumbers = await getIssuesNumbers();
+            commitNumbers = await getCommitNumbers();
+            commitNumbersWithoutTeam = commitNumbers.slice(1);
+
+            await req.app.locals.db.collection('cache').updateOne({name: 'github'}, {$set: {updated: new Date(), issueNumbers: issueNumbers, commitNumbers: commitNumbers, commitNumbersWithoutTeam: commitNumbersWithoutTeam}});
+        }
+
+        res.render('about', { title: 'About', issueNumbers: issueNumbers, commitNumbers: commitNumbers, graphCommitNumbersArray: JSON.stringify(commitNumbersWithoutTeam) });
+
+    });
+
 });
 
 module.exports = router;
