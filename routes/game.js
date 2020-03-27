@@ -98,7 +98,6 @@ router.get('/', function(req, res) {
     .then( (data) => {
         // Steam News
 
-        data.news = [];
         return axios.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=' + data.steamAppId +'&count=3&maxlength=0&format=json')
             .then( (resp) => {
                     if (resp.data.appnews !== null) {
@@ -184,10 +183,16 @@ router.get('/', function(req, res) {
 
     })
     .then(data => {
+        let reviews = req.app.locals.db.collection('reviews').find({gameId:id.toLocaleString()}).toArray();
+        return Promise.all([reviews]).then(([reviews]) => {
+            data.reviews = reviews;
+            return data;
+        });
+    })
+    .then(data => {
         res.render('game', data)
     });
 
 });
-
 
 module.exports = router;

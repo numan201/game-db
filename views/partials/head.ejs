@@ -14,7 +14,6 @@
 <script>
     var pageSwitch = false;
     function initializeMode(){
-        $('#test').innerText = localStorage.getItem('style');
         if(localStorage.getItem('style') === 'dark') {
             document.getElementById('stylelink').href = '/stylesheets/darkstyle.css';
             $('#mode').bootstrapToggle('off');

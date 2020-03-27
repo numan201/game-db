@@ -89,7 +89,7 @@
             <% news.forEach((article) => {
                 var date = new Date(article.date * 1000);
                 var month = months[date.getMonth()];
-                var day = date.getDay();
+                var day = date.getDate();
                 var year = date.getFullYear();
                 var hours = date.getHours();
                 var minutes = date.getMinutes();
@@ -157,18 +157,78 @@
             }
         </script>
     </div>
+    <br>
+    <div class="container-fluid">
+        <h2>User Reviews</h2>
+        <%if(reviews != null){
+            reviewslength = reviews.length;
+            if(reviewslength > 5){
+                reviewslength = 5;
+            }
+            for(var i = 0; i < reviewslength; i++){ %>
+            <div class="media">
+                <img class="mr-3" src="<%=reviews[i].userpicture%>" height="100" width="100" alt="...">
+                <div class="media-body">
+                    <h5 class="mt-0"><%=reviews[i].title%></h5>
+                    <%=reviews[i].review%>
+                    <%
+                    var rating;
+                    switch(reviews[i].rating){
+                        case "option5":
+                            rating = 5;
+                            break;
+                        case "option4":
+                            rating = 4;
+                            break;
+                        case "option3":
+                            rating = 3;
+                            break;
+                        case "option2":
+                            rating = 2;
+                            break;
+                        case "option1":
+                            rating = 1;
+                            break;
+                    }%>
+                    <h6 class="mt-0">Rating: <%=rating%>/5</h6>
+                    <h6 class="mt-0">Written by: <%=reviews[i].username%></h6>
+                    <%
+                        var reviewdate = new Date(reviews[i].time);
+                        var month = months[reviewdate.getMonth()];
+                        var day = reviewdate.getDate();
+                        var year = reviewdate.getFullYear();
+                        var hours = reviewdate.getHours();
+                        var minutes = reviewdate.getMinutes();
+                        if(hours < 10){
+                        hours = '0' + hours;
+                        }
+                        if(minutes < 10){
+                        minutes = '0' + minutes;
+                        }
+                        var formattedTime = month + " " + day + ", " + year + " " + hours + ":" + minutes;
+                    %>
+                    <h6 class="mt-0"><small><i>Date: <%=formattedTime%></i></small></h6>
+                </div>
+            </div>
+            <%}
+        %>
+        <%} else {%>
+            <h6>There are currently no user reviews. Own the game? Be the first to put a review!</h6>
+        <%}%>
+    </div>
 
     <% if (user !== null) { %>
         <br>
         <h2>Leave a Review</h2>
-        <form action="...">
+        <form action="/review" method="post">
+            <label for="gameId"></label><input type="hidden" name="gameId" id="gameId" value="<%=game._id%>">
             <div class="form-group">
                 <label for="title">Title:</label>
-                <input type="text" class="form-control" placeholder="Write a title" id="title">
+                <input type="text" class="form-control" placeholder="Write a title" name="title" id="title">
             </div>
             <div class="form-group">
                 <label for="review">Review:</label>
-                <textarea class="form-control" placeholder="Own the game? Leave a review!" id="review" rows="5"></textarea>
+                <textarea class="form-control" placeholder="Own the game? Leave a review!" name="review" id="review" rows="5"></textarea>
             </div>
             <div class="form-group">
                 <div class="row">
