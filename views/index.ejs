@@ -10,6 +10,11 @@
         left: auto;
         right: auto;
     }
+    .img-fluid{
+        width: auto;
+        height: 575px;
+        max-height: 575px;
+    }
 </style>
 <div class="row">
     <div class="col-sm-12">
@@ -71,14 +76,29 @@
     </div>
 </div>
 
-    <div class="col-sm-6">
-        <h1>News</h1>
-            <% news.forEach((article, i) => { %>
-            <p>
-                <%= article.title %>
-            </p>
-            <% }); %>
-    </div>
+<div class="col-sm-6">
+    <div class="jumbotron"><h1>   News   </h1></div>
+        <% news.forEach((article, i) => { %>
+        <div class="media">
+            <div class="media-left">
+                <img src="<%=article.urlToImage %>" class="media-object" style="width:150px">
+            </div>
+            <div class="media-body">
+                <a href="<%= article.url %>"><h4><%= article.title%></h4></a>
+                <h6>From: <%= article.source.name %></h6>
+                <br>
+                <p style="size:8px"> <%= article.description %> </p>
+                <br>
+            </div>
+        </div>
+        <% }); %>
+</div>
 
+<div class="col-sm-6">
+    <div class="jumbotron"><h1>Top Rated Games</h1></div>
+    <% top_rated.forEach((game, i) => { %>
+        <p><%= game.name %> Score: <%= game.metacritic.toString() %> </p>
+    <% }); %>
+</div>
 
 <% include partials/footer %>

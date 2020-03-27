@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 let new_releases = [];
+let top_rated = [];
 const axios = require('axios');
 const { youtubeKey, newsKey } = require('../keys');
 
@@ -20,16 +21,29 @@ router.get('/', function(req, res, next) {
         }
       }
     });
-  }).then(news => {
-    return axios({
-      method: 'get',
-      url: 'http://newsapi.org/v2/everything',
-      params: {q: "videogames", pageSize: 10, ApiKey: newsKey},
+  }).then(not_sure => {
+    req.app.locals.db.collection('games').find().limit(100).sort({metacritic: -1}).toArray().then(top_rated_promise => {
+      top_rated_promise.forEach((game, i) => {
+        top_rated.push(game);
+      });
     })
-        .then((response) => {
-          res.render('index', {title: 'Home', new_releases: new_releases, news: response.data.articles});
+      .then(news => {
+
+        return axios({
+          method: 'get',
+          url: 'http://newsapi.org/v2/everything',
+          params: {q: "videogames", pageSize: 10, ApiKey: newsKey},
         })
-        .catch(err => news);
+            .then((response) => {
+              res.render('index', {
+                title: 'Home',
+                new_releases: new_releases,
+                news: response.data.articles,
+                top_rated: top_rated
+              });
+            })
+            .catch(err => news);
+      });
   });
 });
 
