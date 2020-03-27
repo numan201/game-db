@@ -13,7 +13,7 @@
 
 <ul class="list-unstyled">
 <%var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];%>
-<% news.forEach((article,i) => {
+<%  news.forEach((article,i) => {
     let gameUrl = "/game?id=" + steamGames[i]._id;
     var date = new Date(article.date * 1000);
     var month = months[date.getMonth()];
