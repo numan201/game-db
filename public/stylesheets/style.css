@@ -22,3 +22,9 @@ main {
   position:static;
   margin-top:30px;
 }
+.carousel-caption{
+    color: black;
+    position: relative;
+    left: auto;
+    right: auto;
+}
