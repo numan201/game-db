@@ -7,8 +7,8 @@
 ### Albert Garza
 * **EID:** asg2793
 * **GitHub ID:** possumrapture
-* **Estimated completion time (hours):** 7
-* **Actual completion time (hours):** 20
+* **Estimated completion time (hours):** 10
+* **Actual completion time (hours):** 28
 
 ### Numan Habib
 * **EID:** nah2427
