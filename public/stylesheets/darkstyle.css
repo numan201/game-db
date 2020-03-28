@@ -47,7 +47,8 @@ body{
     right: auto;
 }
 .jumbotron{
-    color:black;
+    background-color: rgba(47, 47, 47, 0.82);;
+    color: white;
 }
 
 .footer {
