@@ -40,6 +40,15 @@ body{
     background-color: rgba(47, 47, 47, 0.82);
     color:white;
 }
+.carousel-caption{
+    color: white;
+    position: relative;
+    left: auto;
+    right: auto;
+}
+.jumbotron{
+    color:black;
+}
 
 .footer {
     position:static;

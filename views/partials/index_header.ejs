@@ -43,6 +43,9 @@
     </div>
 
     <div class="navbar-nav ml-auto">
+        <label for="mode"></label><input id="mode" type="checkbox" checked data-toggle="toggle" data-on="Default" data-off="Dark Mode" data-onstyle="light" data-offstyle="primary">
+    </div>
+    <div class="navbar-nav ml-auto">
         <% if (user) { %>
             <a href="/logout"><button class="btn btn-light"><i class="fas fa-sign-in-alt"></i> Log Out </button></a>
         <% } else { %>
