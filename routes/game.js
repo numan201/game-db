@@ -81,8 +81,8 @@ router.get('/', function(req, res) {
 
         data.steamPlayerCount = 0;
         data.steamAppId = getSteamAppId(data.game);
-
-        return axios.get('https://api.steampowered..com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=' + data.steamAppId)
+        
+        return axios.get('https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=' + data.steamAppId)
             .then((resp) => {
                     if (resp.data.response !== null) {
                         let steamPlayerCount = resp.data.response.player_count;
