@@ -9,11 +9,12 @@
 <link href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
-<link id="stylelink" href="" rel="stylesheet">
+<link id="stylelink" href="/stylesheets/style.css" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
     var pageSwitch = false;
     function initializeMode(){
+        return;
         if(localStorage.getItem('style') === 'dark') {
             document.getElementById('stylelink').href = '/stylesheets/darkstyle.css';
             $('#mode').bootstrapToggle('off');
@@ -27,6 +28,7 @@
     $(function() {
         //switch toggle
         $('#mode').change(function() {
+            return;
             if(pageSwitch === true) {
                 var style = localStorage.getItem('style');
                 var element = document.getElementById('stylelink');
