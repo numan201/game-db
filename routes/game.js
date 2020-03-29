@@ -95,6 +95,17 @@ router.get('/', function(req, res) {
             .catch(err => data);
 
     })
+    .then((data) =>{
+        // Steam Price
+        return axios.get('http://store.steampowered.com/api/appdetails?appids=' + data.steamAppId)
+            .then((resp) => {
+                data.steamPrice = {};
+                data.steamPrice = resp.data[data.steamAppId].data.price_overview;
+                data.steamPrice.link = 'http://store.steampowered.com/app/' + data.steamAppId + '/';
+                return data;
+            })
+            .catch(err => data);
+    })
     .then( (data) => {
         // Steam News
         data.news = null;
