@@ -22,7 +22,7 @@ import org.openqa.selenium.Keys;
 import java.util.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-public class AllSeleniumTestsTest {
+public class AllTestsTest {
   private WebDriver driver;
   private Map<String, Object> vars;
   JavascriptExecutor js;
@@ -413,5 +413,99 @@ public class AllSeleniumTestsTest {
   public void wishlistTabLoggedIn() {
     // Test name: wishlist Tab_(Logged In)
     // Step # | name | target | value
+  }
+  @Test
+  public void publishersGamesElectronicArts() {
+    // Test name: publishers -> Games (Electronic Arts)
+    // Step # | name | target | value
+    // 1 | open | /publisher?id=5e7ac43ae4464f1993258e22 | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/publisher?id=5e7ac43ae4464f1993258e22");
+    // 2 | setWindowSize | 1280x800 | 
+    driver.manage().window().setSize(new Dimension(1280, 800));
+    // 3 | click | css=.card-deck:nth-child(9) > .card:nth-child(1) .btn | 
+    driver.findElement(By.cssSelector(".card-deck:nth-child(9) > .card:nth-child(1) .btn")).click();
+  }
+  @Test
+  public void publishersDevelopersElectronicArts() {
+    // Test name: publishers -> Developers (Electronic Arts)
+    // Step # | name | target | value
+    // 1 | open | /publisher?id=5e7ac43ae4464f1993258e22 | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/publisher?id=5e7ac43ae4464f1993258e22");
+    // 2 | setWindowSize | 1280x800 | 
+    driver.manage().window().setSize(new Dimension(1280, 800));
+    // 3 | click | linkText=See More | 
+    driver.findElement(By.linkText("See More")).click();
+  }
+  @Test
+  public void homepageCarouselLinks() {
+    // Test name: homepage Carousel Links
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x800 | 
+    driver.manage().window().setSize(new Dimension(1280, 800));
+    // 3 | click | css=.active .img-fluid | 
+    driver.findElement(By.cssSelector(".active .img-fluid")).click();
+  }
+  @Test
+  public void gamesPublishersGTA() {
+    // Test name: games -> Publishers (GTA)
+    // Step # | name | target | value
+    // 1 | open | /game?id=5e7ab0b26b5b29159f027d84 | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/game?id=5e7ab0b26b5b29159f027d84");
+    // 2 | setWindowSize | 1280x800 | 
+    driver.manage().window().setSize(new Dimension(1280, 800));
+    // 3 | click | css=p:nth-child(5) > a | 
+    driver.findElement(By.cssSelector("p:nth-child(5) > a")).click();
+  }
+  @Test
+  public void gamesDevelopersGTA() {
+    // Test name: games -> Developers (GTA)
+    // Step # | name | target | value
+    // 1 | open | /game?id=5e7ab0b26b5b29159f027d84 | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/game?id=5e7ab0b26b5b29159f027d84");
+    // 2 | setWindowSize | 1280x800 | 
+    driver.manage().window().setSize(new Dimension(1280, 800));
+    // 3 | click | linkText=Rockstar Games | 
+    driver.findElement(By.linkText("Rockstar Games")).click();
+  }
+  @Test
+  public void fakeSearchBaralwaysleadstohomepage() {
+    // Test name: fake Search Bar (always leads to homepage)
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x800 | 
+    driver.manage().window().setSize(new Dimension(1280, 800));
+    // 3 | click | css=.form-control | 
+    driver.findElement(By.cssSelector(".form-control")).click();
+    // 4 | type | css=.form-control | test
+    driver.findElement(By.cssSelector(".form-control")).sendKeys("test");
+    // 5 | sendKeys | css=.form-control | ${KEY_ENTER}
+    driver.findElement(By.cssSelector(".form-control")).sendKeys(Keys.ENTER);
+    // 6 | type | css=.form-control | test
+    driver.findElement(By.cssSelector(".form-control")).sendKeys("test");
+  }
+  @Test
+  public void developersPublishersSony() {
+    // Test name: developers -> Publishers (Sony)
+    // Step # | name | target | value
+    // 1 | open | /developer?id=5e7abdffbd80cf188df37652 | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/developer?id=5e7abdffbd80cf188df37652");
+    // 2 | setWindowSize | 1280x800 | 
+    driver.manage().window().setSize(new Dimension(1280, 800));
+    // 3 | click | css=.card-deck:nth-child(9) > .card:nth-child(1) .btn | 
+    driver.findElement(By.cssSelector(".card-deck:nth-child(9) > .card:nth-child(1) .btn")).click();
+  }
+  @Test
+  public void developersGamesSony() {
+    // Test name: developers -> Games (Sony)
+    // Step # | name | target | value
+    // 1 | open | /developer?id=5e7abdffbd80cf188df37652 | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/developer?id=5e7abdffbd80cf188df37652");
+    // 2 | setWindowSize | 1280x800 | 
+    driver.manage().window().setSize(new Dimension(1280, 800));
+    // 3 | click | linkText=See More | 
+    driver.findElement(By.linkText("See More")).click();
   }
 }
