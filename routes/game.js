@@ -5,6 +5,7 @@ const hltb = require('howlongtobeat');
 const hltbService = new hltb.HowLongToBeatService();
 const youtubeApiV3Search = require("youtube-api-v3-search");
 const { youtubeKey, twitchKey } = require('../keys');
+const stringSimilarity = require('string-similarity');
 
 function getSteamAppId(game) {
     let steamAppId = null;
@@ -107,6 +108,29 @@ router.get('/', function(req, res) {
                 return data;
             })
             .catch(err => data);
+    })
+    .then((data) => {
+        data.ps4Price = null;
+        let ps4NameSimilarity = 0.5;
+        return axios.get('https://store.playstation.com/store/api/chihiro/00_09_000/tumbler/US/en/99/'+ escape(data.game.name) +'?suggested_size=10')
+            .then((resp) => {
+                let similarity = stringSimilarity.compareTwoStrings(resp.data.links[0].name, data.game.name);
+                if(resp.data.links[0].playable_platform.includes("PS4™") && similarity > ps4NameSimilarity){
+                    data.ps4Price = {};
+                    ps4NameSimilarity = similarity;
+                    //checking if it's on sale
+                    if(resp.data.links[0].default_sku.rewards.length > 0){
+                        data.ps4Price.price = resp.data.links[0].default_sku.rewards[0].display_price;
+                    }
+                    else{
+                        data.ps4Price.price = resp.data.links[0].default_sku.display_price;
+                    }
+                    data.ps4Price.link = 'https://store.playstation.com/en-us/product/' + resp.data.links[0].default_sku.id;
+                }
+                console.log(data);
+                return data;
+            })
+            .catch(err => data)
     })
     .then( (data) => {
         // Steam News
