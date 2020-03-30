@@ -13,8 +13,8 @@
 ### Numan Habib
 * **EID:** nah2427
 * **GitHub ID:** numan201
-* **Estimated completion time (hours):** 6
-* **Actual completion time (hours):** 14
+* **Estimated completion time (hours):** 15
+* **Actual completion time (hours):** 28
 
 ### John Nguyen
 * **EID:** jn26422
@@ -25,8 +25,8 @@
 ### Alejandro Rodriguez
 * **EID:** aar3772
 * **GitHub ID:** JustAlejandro
-* **Estimated completion time (hours):** 10
-* **Actual completion time (hours):**  15
+* **Estimated completion time (hours):** 14
+* **Actual completion time (hours):**  22
 
 ### David Wolf
 * **EID:** drw2764 
