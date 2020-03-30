@@ -127,7 +127,6 @@ router.get('/', function(req, res) {
                     }
                     data.ps4Price.link = 'https://store.playstation.com/en-us/product/' + resp.data.links[0].default_sku.id;
                 }
-                console.log(data);
                 return data;
             })
             .catch(err => data)
