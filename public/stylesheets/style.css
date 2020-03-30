@@ -28,6 +28,6 @@ main {
     left: auto;
     right: auto;
 }
-#theme-switcher, #reviews {
+#theme-switcher, #reviews, #leaveReview {
     display:none;
 }
