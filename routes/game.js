@@ -131,6 +131,25 @@ router.get('/', function(req, res) {
             })
             .catch(err => data)
     })
+    .then((data) => {
+        data.xb1Price = null;
+        return axios.get('https://www.microsoft.com/services/api/v3/suggest?market=en-us&clientId=7F27B536-CF6B-4C65-8638-A0F8CBDFCA65&sources=Iris-Products%2CDCatAll-Products%2CMicrosoft-Terms&filter=%2BClientType%3AStoreWeb&counts=1%2C5%2C5&query=' + escape(data.game.name))
+            .then((resp) =>{
+                let xb1NameSimilarity = 0.5;
+                data.xb1Price = {};
+                resp.data.ResultSets[0].Suggests.forEach((xb) => {
+                   let similarity = stringSimilarity.compareTwoStrings(xb.Title, data.game.name);
+                   if(similarity > xb1NameSimilarity){
+                       xb1NameSimilarity = similarity;
+                       data.xb1Price.link = 'https:' + xb.Url;
+                       //Now we have a link to the page that has the price, but not easy way to get the price.
+                   }
+                });
+                console.log(resp.data.ResultSets[0].Suggests);
+                console.log(data.xb1Price);
+                return data;
+            })
+    })
     .then( (data) => {
         // Steam News
         data.news = null;
