@@ -97,6 +97,8 @@ router.get('/', function(req, res) {
     })
     .then((data) =>{
         // Steam Price
+        data.steamPrice = null;
+        if(data.steamAppId == null) return data;
         return axios.get('http://store.steampowered.com/api/appdetails?appids=' + data.steamAppId)
             .then((resp) => {
                 data.steamPrice = {};
@@ -123,7 +125,7 @@ router.get('/', function(req, res) {
     })
     .then( (data) => {
         // Twitch Integration
-
+        data.twitchUsername = null;
         return axios({
             method: 'get',
             url: 'https://api.twitch.tv/helix/games',

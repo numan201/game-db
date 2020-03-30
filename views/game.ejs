@@ -53,7 +53,7 @@
 
             <ul class="list-unstyled">
                 <% game.platforms.forEach( (platform) => { %>
-                    <% if(platform.platform.name == 'PC' && steamPrice){%>
+                    <% if(platform.platform.name == 'PC' && steamPrice != null){%>
                         <li><%= platform.platform.name %> <a href="<%=steamPrice.link%>" rel="noopener noreferrer" target="_blank"><%=steamPrice.final_formatted%></a></li>
                     <%} else {%>
                         <li><%= platform.platform.name %></li>
