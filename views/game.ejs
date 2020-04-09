@@ -90,7 +90,7 @@
         <h2>News</h2>
         <ul class="list-unstyled">
             <%var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];%>
-            <% if (news != null) {
+            <% if (news !== null) {
                     news.forEach((article) => {
                     var date = new Date(article.date * 1000);
                     var formattedTime = date.toLocaleDateString() + " " + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
@@ -99,6 +99,11 @@
             <li class="media">
                 <div class="media-body">
                     <a href="<%=article.url%>"><h5 class="mt-0"><%=article.title%></h5></a>
+                    <%if(article.author != null){%>
+                        <h6 class="mt-0">Written by: <%=article.author%></h6>
+                    <%} else{%>
+                        <h6 class="mt-0">Written by: Unknown Author</h6>
+                    <%}%>
                     <h6 class="mt-0">Written by: <%=article.author%></h6>
                     <h6 class="mt-0"><small><i>Date: <%=formattedTime%></i></small></h6>
                 </div>
@@ -158,7 +163,7 @@
     <br>
     <div class="container-fluid" id="reviews">
         <h2>User Reviews</h2>
-        <% if (reviews != null) {
+        <% if (reviews !== null) {
             reviewslength = reviews.length;
             if(reviewslength > 5){
                 reviewslength = 5;
