@@ -1,33 +1,41 @@
-<% include partials/header %>
+<% include partials/filter_header %>
 
-<h1 class="mt-4">Games</h1>
-<hr>
 
-<% games.forEach( (game, i) => {
-    let gameUrl = "/game?id=" + game._id;
-%>
+<div class="col-sm-2">
+    <h1 class="mt-4">Filter</h1>
+    <hr>
+</div>
 
-    <% if (i % 5 === 0) { %>
-        <div class="card-deck">
-    <% } %>
+<div class="col-sm-9">
 
-    <div class="card" style="width: 18rem;">
-        <a href="<%= gameUrl %>"><img class="card-img-top" src="<%= game.background_image %>"></a>
-        <div class="card-body">
-            <a id="cardtitle" href="<%= gameUrl %>"><h5 class="card-title"><%= game.name %></h5></a>
-            <p class="card-text">Released <%= (game.released !== null) ? game.released.split('-')[0] : '?'%> | <%= game.reviews_count %> Reviews</p>
-            <a href="<%= gameUrl %>" class="btn btn-primary">See More</a>
+    <h1 class="mt-4">Games</h1>
+    <hr>
+
+    <% games.forEach( (game, i) => {
+        let gameUrl = "/game?id=" + game._id;
+    %>
+
+        <% if (i % 5 === 0) { %>
+            <div class="card-deck">
+        <% } %>
+
+        <div class="card" style="width: 18rem;">
+            <a href="<%= gameUrl %>"><img class="card-img-top" src="<%= game.background_image %>"></a>
+            <div class="card-body">
+                <a id="cardtitle" href="<%= gameUrl %>"><h5 class="card-title"><%= game.name %></h5></a>
+                <p class="card-text">Released <%= (game.released !== null) ? game.released.split('-')[0] : '?'%> | <%= game.reviews_count %> Reviews</p>
+                <a href="<%= gameUrl %>" class="btn btn-primary">See More</a>
+            </div>
         </div>
-    </div>
 
-    <% if ((i + 1) % 5 === 0) { %>
-        </div>
-        <br>
-    <% } %>
+        <% if ((i + 1) % 5 === 0) { %>
+            </div>
+            <br>
+        <% } %>
 
-<% }); %>
+    <% }); %>
 
-<% include partials/pagination.ejs %>
+    <% include partials/pagination %>
 
 <% include partials/footer %>
 
