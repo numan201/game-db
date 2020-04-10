@@ -15,18 +15,24 @@ router.get('/', function(req, res, next) {
             genres = [req.query.genres];
         }
 
-        filtersQuery.push({$unwind: "$genres"}, {$match: {"genres.name": { $in : genres }}});
+        filtersQuery.push({$match: {'genres.name': { $in : genres }}});
     }
 
     let paginatedQuery = filtersQuery.concat(paginationQuery);
+    let countQuery = filtersQuery.concat( { $count: 'totalCount' });
 
+    let gamesPromise = req.app.locals.db.collection('games').aggregate(paginatedQuery).toArray();
+    let gamesCountPromise = req.app.locals.db.collection('games').aggregate(countQuery).toArray();
 
-    req.app.locals.db.collection('games').aggregate(paginatedQuery).toArray().then((games) => {
-        req.app.locals.db.collection('games').aggregate(filtersQuery.concat({$count: 'count'})).toArray().then( (result) => {
-            res.render('games', { title: 'Games', pagination: paginationObject(currentPage, result[0].count, req.query), games: games });
+    Promise.all([gamesPromise, gamesCountPromise]).then(([games, count]) => {
+        res.render('games', {
+            title: 'Games',
+            pagination: paginationObject(currentPage,  count[0].totalCount, req.query),
+            games: games
         });
-
     });
+
+
 });
 
 module.exports = router;
