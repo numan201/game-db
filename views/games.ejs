@@ -14,7 +14,7 @@ let genres = ['Action', 'Indie', 'Adventure', 'RPG', 'Shooter', 'Strategy', 'Cas
         <%
         genres.forEach( (genre) => {
             let checked = '';
-            console.log(Object.values(pagination.query));
+
             if ('genres' in pagination.query && (pagination.query.genres == genre || Object.values(pagination.query.genres).includes(genre))) checked ='checked';
         %>
         <div class="form-check">
