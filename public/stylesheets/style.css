@@ -31,3 +31,22 @@ main {
 #theme-switcher, #reviews, #leaveReview {
     display:none;
 }
+
+#filter a.collapsed:after {
+    content: '+ Show More';
+}
+
+#filter a:not(.collapsed):after {
+    content: '- Show Less';
+}
+
+#filter #collapsegenre.collapse:not(.show) {
+    display: block;
+    /* height = lineheight * no of lines to display */
+    height: 4.5em;
+    overflow: hidden;
+}
+
+#filter #collapsegenre.collapsing {
+    height: 4.5em;
+}
