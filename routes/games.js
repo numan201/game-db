@@ -6,8 +6,8 @@ const {getCurrentPage, paginationObject, skipCalc, resultsPerPage} = require("..
 router.get('/', function(req, res, next) {
     let currentPage = getCurrentPage(req);
 
-
-    let query = [{$unwind: "$genres"}, {$skip: skipCalc(currentPage)}, {$limit: resultsPerPage}];
+    let filtersQuery = [];
+    let paginationQuery = [{$skip: skipCalc(currentPage)}, {$limit: resultsPerPage} ];
 
     if ('genres' in req.query) {
         let genres = req.query.genres;
@@ -15,12 +15,15 @@ router.get('/', function(req, res, next) {
             genres = [req.query.genres];
         }
 
-        query.push({$match: {"genres.name": { $in : genres }}});
+        filtersQuery.push({$unwind: "$genres"}, {$match: {"genres.name": { $in : genres }}});
     }
 
-    req.app.locals.db.collection('games').aggregate(query).toArray().then((games) => {
-        req.app.locals.db.collection('games').countDocuments().then( (count) => {
-            res.render('games', { title: 'Games', pagination: paginationObject(currentPage, count), games: games });
+    let paginatedQuery = filtersQuery.concat(paginationQuery);
+
+
+    req.app.locals.db.collection('games').aggregate(paginatedQuery).toArray().then((games) => {
+        req.app.locals.db.collection('games').aggregate(filtersQuery.concat({$count: 'count'})).toArray().then( (result) => {
+            res.render('games', { title: 'Games', pagination: paginationObject(currentPage, result[0].count, req.query), games: games });
         });
 
     });
