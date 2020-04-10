@@ -6,14 +6,19 @@ const {getCurrentPage, paginationObject, skipCalc, resultsPerPage} = require("..
 router.get('/', function(req, res, next) {
     let currentPage = getCurrentPage(req);
 
-    console.log(req.query.genres);
 
-    // req.app.locals.db.collection('games').aggregate([{$unwind: "$genres"}, {$match: {"genres.id": 4}}]).toArray().then((games) => {
-    //     // console.log(games);
-    // });
+    let query = [{$unwind: "$genres"}, {$skip: skipCalc(currentPage)}, {$limit: resultsPerPage}];
 
-    req.app.locals.db.collection('games').find().skip(skipCalc(currentPage)).limit(resultsPerPage).toArray().then((games) => {
+    if ('genres' in req.query) {
+        let genres = req.query.genres;
+        if (!Array.isArray(req.query.genres)) {
+            genres = [req.query.genres];
+        }
 
+        query.push({$match: {"genres.name": { $in : genres }}});
+    }
+
+    req.app.locals.db.collection('games').aggregate(query).toArray().then((games) => {
         req.app.locals.db.collection('games').countDocuments().then( (count) => {
             res.render('games', { title: 'Games', pagination: paginationObject(currentPage, count), games: games });
         });
