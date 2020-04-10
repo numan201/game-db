@@ -7,115 +7,115 @@
     <form method="get">
         <h3 class="mt-4">Genre</h3>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Action">
+            <input class="form-check-input" type="checkbox" name="genres" value="Action">
             <label class="form-check-label" for="Action">
                 Action
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Indie">
+            <input class="form-check-input" type="checkbox" name="genres" value="Indie">
             <label class="form-check-label" for="Indie">
                 Indie
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Adventure">
+            <input class="form-check-input" type="checkbox" name="genres" value="Adventure">
             <label class="form-check-label" for="Adventure">
                 Adventure
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="RPG">
+            <input class="form-check-input" type="checkbox" name="genres" value="RPG">
             <label class="form-check-label" for="RPG">
                 RPG
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Shooter">
+            <input class="form-check-input" type="checkbox" name="genres" value="Shooter">
             <label class="form-check-label" for="Shooter">
                 Shooter
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Strategy">
+            <input class="form-check-input" type="checkbox" name="genres" value="Strategy">
             <label class="form-check-label" for="Strategy">
                 Strategy
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Casual">
+            <input class="form-check-input" type="checkbox" name="genres" value="Casual">
             <label class="form-check-label" for="Casual">
                 Casual
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Simulation">
+            <input class="form-check-input" type="checkbox" name="genres" value="Simulation">
             <label class="form-check-label" for="Simulation">
                 Simulation
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Puzzle">
+            <input class="form-check-input" type="checkbox" name="genres" value="Puzzle">
             <label class="form-check-label" for="Puzzle">
                 Puzzle
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Arcade">
+            <input class="form-check-input" type="checkbox" name="genres" value="Arcade">
             <label class="form-check-label" for="Arcade">
                 Arcade
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Platformer">
+            <input class="form-check-input" type="checkbox" name="genres" value="Platformer">
             <label class="form-check-label" for="Platformer">
                 Platformer
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Racing">
+            <input class="form-check-input" type="checkbox" name="genres" value="Racing">
             <label class="form-check-label" for="Racing">
                 Default checkbox
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Sports">
+            <input class="form-check-input" type="checkbox" name="genres" value="Sports">
             <label class="form-check-label" for="defaultCheck1">
                 Default checkbox
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Massively Multiplayer">
+            <input class="form-check-input" type="checkbox" name="genres" value="Massively Multiplayer">
             <label class="form-check-label" for="Massively Multiplayer">
                 Massively Multiplayer
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Family">
+            <input class="form-check-input" type="checkbox" name="genres" value="Family">
             <label class="form-check-label" for="Family">
                 Family
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Fighting">
+            <input class="form-check-input" type="checkbox" name="genres" value="Fighting">
             <label class="form-check-label" for="Fighting">
                 Fighting
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Board Games">
+            <input class="form-check-input" type="checkbox" name="genres" value="Board Games">
             <label class="form-check-label" for="Board Games">
                 Board Games
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Educational">
+            <input class="form-check-input" type="checkbox" name="genres" value="Educational">
             <label class="form-check-label" for="Educational">
                 Educational
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="Card">
+            <input class="form-check-input" type="checkbox" name="genres" value="Card">
             <label class="form-check-label" for="Card">
                 Card
             </label>
@@ -132,7 +132,7 @@
     <hr>
 
     <% games.forEach( (game, i) => {
-        let gameUrl = "/game?id=" + game._id;
+        let gameUrl = "/game?value=" + game._id;
     %>
 
         <% if (i % 5 === 0) { %>
@@ -142,7 +142,7 @@
         <div class="card" style="width: 18rem;">
             <a href="<%= gameUrl %>"><img class="card-img-top" src="<%= game.background_image %>"></a>
             <div class="card-body">
-                <a id="cardtitle" href="<%= gameUrl %>"><h5 class="card-title"><%= game.name %></h5></a>
+                <a value="cardtitle" href="<%= gameUrl %>"><h5 class="card-title"><%= game.name %></h5></a>
                 <p class="card-text">Released <%= (game.released !== null) ? game.released.split('-')[0] : '?'%> | <%= game.reviews_count %> Reviews</p>
                 <a href="<%= gameUrl %>" class="btn btn-primary">See More</a>
             </div>
