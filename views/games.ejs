@@ -11,27 +11,12 @@ let platforms = ['PC', 'Playstation 4', 'Xbox One', 'Nintendo Switch'];
     <h1 class="mt-4">Filters</h1>
     <hr>
     <form method="get">
-        <h4 class="mt-4">Genre</h4>
-        <%
-        genres.forEach( (genre) => {
-            let checked = '';
-
-            if ('genres' in pagination.query && (pagination.query.genres == genre || Object.values(pagination.query.genres).includes(genre))) checked ='checked';
-        %>
-        <div class="form-check">
-            <input class="form-check-input" <%=checked%> type="checkbox" name="genres" value="<%=genre%>">
-            <label class="form-check-label" for="<%=genre%>">
-                <%=genre%>
-            </label>
-        </div>
-        <% });
-        %>
 
         <div class="collapse" id="collapsegenre" aria-expanded="false">
             <%
             genres.forEach( (genre) => {
                 let checked = '';
-                console.log(Object.values(pagination.query));
+
                 if ('genres' in pagination.query && (pagination.query.genres == genre || Object.values(pagination.query.genres).includes(genre))) checked ='checked';
             %>
             <div class="form-check">
