@@ -1,10 +1,26 @@
 <% include partials/filter_header %>
 
+<%
+
+let genres = ['Action', 'Indie', 'Adventure', 'RPG', 'Shooter', 'Strategy', 'Casual', 'Simulation', 'Puzzle', 'Arcade', 'Platformer', 'Racing', 'Sports','Massively Multiplayer', 'Family', 'Fighting', 'Board Games', 'Educational', 'Card'];
+
+%>
 
 <div class="col-sm-2" id="filter">
     <h1 class="mt-4">Filter</h1>
     <hr>
     <form method="get">
+        <%
+        genres.forEach( (genre) => {
+            let checked = '';
+            console.log(Object.values(pagination.query));
+            if ('genres' in pagination.query && (pagination.query.genres == genre || Object.values(pagination.query.genres).includes(genre))) checked ='checked';
+        %>
+        <div class="form-check">
+            <input class="form-check-input" <%=checked%> type="checkbox" name="genres" value="<%=genre%>">
+            <label class="form-check-label" for="<%=genre%>">
+                <%=genre%>
+            </label>
         <h4 class="mt-4">Genre</h4>
         <div class="collapse" id="collapsegenre" aria-expanded="false">
             <div class="form-check">
@@ -122,6 +138,9 @@
                 </label>
             </div>
         </div>
+        <% });
+        %>
+
         <a role="button" class="collapsed" data-toggle="collapse" href="#collapsegenre" aria-expanded="false" aria-controls="collapsegenre"></a>
         <hr>
         <h4 class="mt-4">Platforms</h4>
@@ -166,8 +185,8 @@
         let gameUrl = "/game?value=" + game._id;
     %>
 
-        <% if (i % 5 === 0) { %>
-            <div class="card-deck">
+    <% if (i % 5 === 0) { %>
+    <div class="card-deck">
         <% } %>
 
         <div class="card" style="width: 18rem;">
@@ -180,13 +199,12 @@
         </div>
 
         <% if ((i + 1) % 5 === 0) { %>
-            </div>
-            <br>
-        <% } %>
+    </div>
+    <br>
+    <% } %>
 
     <% }); %>
 
     <% include partials/pagination %>
 
-<% include partials/footer %>
-
+    <% include partials/footer %>
