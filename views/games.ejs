@@ -3,56 +3,46 @@
 <%
 
 let genres = ['Action', 'Indie', 'Adventure', 'RPG', 'Shooter', 'Strategy', 'Casual', 'Simulation', 'Puzzle', 'Arcade', 'Platformer', 'Racing', 'Sports','Massively Multiplayer', 'Family', 'Fighting', 'Board Games', 'Educational', 'Card'];
+let platforms = ['PC', 'Playstation 4', 'Xbox One', 'Nintendo Switch'];
 
 %>
 
 <div class="col-sm-2" id="filter">
-    <h1 class="mt-4">Filter</h1>
+    <h1 class="mt-4">Filters</h1>
     <hr>
     <form method="get">
         <h4 class="mt-4">Genre</h4>
-        <%
-        genres.forEach( (genre) => {
-            let checked = '';
-            console.log(Object.values(pagination.query));
-            if ('genres' in pagination.query && (pagination.query.genres == genre || Object.values(pagination.query.genres).includes(genre))) checked ='checked';
-        %>
-        <div class="form-check">
-            <input class="form-check-input" <%=checked%> type="checkbox" name="genres" value="<%=genre%>">
-            <label class="form-check-label" for="<%=genre%>">
-                <%=genre%>
-            </label>
+        <div class="collapse" id="collapsegenre" aria-expanded="false">
+            <%
+            genres.forEach( (genre) => {
+                let checked = '';
+                console.log(Object.values(pagination.query));
+                if ('genres' in pagination.query && (pagination.query.genres == genre || Object.values(pagination.query.genres).includes(genre))) checked ='checked';
+            %>
+            <div class="form-check">
+                <input class="form-check-input" <%=checked%> type="checkbox" name="genres" value="<%=genre%>">
+                <label class="form-check-label" for="<%=genre%>">
+                    <%=genre%>
+                </label>
+            </div>
+            <% });
+            %>
         </div>
-        <% });
-        %>
-
         <a role="button" class="collapsed" data-toggle="collapse" href="#collapsegenre" aria-expanded="false" aria-controls="collapsegenre"></a>
         <hr>
         <h4 class="mt-4">Platforms</h4>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="platforms" value="PC">
-            <label class="form-check-label" for="PC">
-                PC
+        <%
+        platforms.forEach((platform) => {
+        %>
+        <div class="for-check">
+            <input class="form-check-input" type="checkbox" name="platforms" value="<%=platform%>">
+            <label class="form-check-label" for="<%=platform%>">
+                <%=platform%>
             </label>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="platforms" value="PlayStation 4">
-            <label class="form-check-label" for="PlayStation 4">
-                PlayStation 4
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="platforms" value="Xbox One">
-            <label class="form-check-label" for="Xbox One">
-                Xbox One
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="platforms" value="Nintendo Switch">
-            <label class="form-check-label" for="Nintendo Switch">
-                Nintendo Switch
-            </label>
-        </div>
+        <%
+        })
+        %>
         <button type="submit" class="btn btn-primary">Filter</button>
     </form>
 </div>
