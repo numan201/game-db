@@ -10,6 +10,7 @@ let genres = ['Action', 'Indie', 'Adventure', 'RPG', 'Shooter', 'Strategy', 'Cas
     <h1 class="mt-4">Filter</h1>
     <hr>
     <form method="get">
+        <h4 class="mt-4">Genre</h4>
         <%
         genres.forEach( (genre) => {
             let checked = '';
@@ -21,122 +22,6 @@ let genres = ['Action', 'Indie', 'Adventure', 'RPG', 'Shooter', 'Strategy', 'Cas
             <label class="form-check-label" for="<%=genre%>">
                 <%=genre%>
             </label>
-        <h4 class="mt-4">Genre</h4>
-        <div class="collapse" id="collapsegenre" aria-expanded="false">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Action">
-                <label class="form-check-label" for="Action">
-                    Action
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Indie">
-                <label class="form-check-label" for="Indie">
-                    Indie
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Adventure">
-                <label class="form-check-label" for="Adventure">
-                    Adventure
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="RPG">
-                <label class="form-check-label" for="RPG">
-                    RPG
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Shooter">
-                <label class="form-check-label" for="Shooter">
-                    Shooter
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Strategy">
-                <label class="form-check-label" for="Strategy">
-                    Strategy
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Casual">
-                <label class="form-check-label" for="Casual">
-                    Casual
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Simulation">
-                <label class="form-check-label" for="Simulation">
-                    Simulation
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Puzzle">
-                <label class="form-check-label" for="Puzzle">
-                    Puzzle
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Arcade">
-                <label class="form-check-label" for="Arcade">
-                    Arcade
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Platformer">
-                <label class="form-check-label" for="Platformer">
-                    Platformer
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Racing">
-                <label class="form-check-label" for="Racing">
-                    Racing
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Sports">
-                <label class="form-check-label" for="defaultCheck1">
-                    Sports
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Massively Multiplayer">
-                <label class="form-check-label" for="Massively Multiplayer">
-                    Massively Multiplayer
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Family">
-                <label class="form-check-label" for="Family">
-                    Family
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Fighting">
-                <label class="form-check-label" for="Fighting">
-                    Fighting
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Board Games">
-                <label class="form-check-label" for="Board Games">
-                    Board Games
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Educational">
-                <label class="form-check-label" for="Educational">
-                    Educational
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="genres" value="Card">
-                <label class="form-check-label" for="Card">
-                    Card
-                </label>
-            </div>
         </div>
         <% });
         %>
@@ -168,10 +53,6 @@ let genres = ['Action', 'Indie', 'Adventure', 'RPG', 'Shooter', 'Strategy', 'Cas
                 Nintendo Switch
             </label>
         </div>
-        <script src="stylesheets/plugins/bootstrap-star-rating/js/star-rating.js">
-            $("#input-id").rating();
-        </script>
-        <input id="input-id" name="input-name" type="number" class="rating" min=1 max=5 step=1>
         <button type="submit" class="btn btn-primary">Filter</button>
     </form>
 </div>
