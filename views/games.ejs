@@ -57,7 +57,7 @@ function optionSelected(type, option) {
     <hr>
 
     <% games.forEach( (game, i) => {
-        let gameUrl = "/game?value=" + game._id;
+        let gameUrl = "/game?id=" + game._id;
     %>
 
     <% if (i % 5 === 0) { %>
@@ -82,4 +82,4 @@ function optionSelected(type, option) {
 
     <% include partials/pagination %>
 
-    <% include partials/footer %>
+<% include partials/footer %>
