@@ -9,12 +9,11 @@ function optionSelected(type, option) {
 }
 %>
 
-<div class="col-sm-2" id="filter">
+<div class="col-sm-2 text-left" id="filter">
     <h1 class="mt-4">Filters</h1>
     <hr>
-    <h4 class="mt-4">Genres</h4>
     <form method="get">
-
+        <h4 class="mt-4">Genres</h4>
         <div class="collapse" id="collapsegenre" aria-expanded="false">
             <%
             genres.forEach( (genre) => {
@@ -32,21 +31,40 @@ function optionSelected(type, option) {
         <a role="button" class="collapsed" data-toggle="collapse" href="#collapsegenre" aria-expanded="false" aria-controls="collapsegenre"></a>
 
         <hr>
+
         <h4 class="mt-4">Platforms</h4>
+        <div class="collapse" id="collapseplatforms" aria-expanded="false">
             <%
             platforms.forEach((platform) => {
                 let checked = '';
 
                 if (optionSelected('platforms', platform)) checked ='checked';
             %>
-                <div class="for-check">
+                <div class="form-check">
                     <input class="form-check-input" <%=checked%> type="checkbox" name="platforms" value="<%=platform%>">
                     <label class="form-check-label" for="<%=platform%>"><%=platform%></label>
                 </div>
             <% }) %>
+        </div>
+        <a role="button" class="collapsed" data-toggle="collapse" href="#collapseplatforms" aria-expanded="false" aria-controls="collapseplatforms"></a>
 
-
+        <hr>
+        <h4 class="mt-4">Ratings</h4>
+        <div class="stars">
+            <input type="radio" name="star" class="star-1" id="star-1" value="star1" />
+            <label class="star-1" for="star-1">1</label>
+            <input type="radio" name="star" class="star-2" id="star-2" value="star2" />
+            <label class="star-2" for="star-2">2</label>
+            <input type="radio" name="star" class="star-3" id="star-3" value="star3" />
+            <label class="star-3" for="star-3">3</label>
+            <input type="radio" name="star" class="star-4" id="star-4" value="star4" />
+            <label class="star-4" for="star-4">4</label>
+            <input type="radio" name="star" class="star-5" id="star-5" value="star5" />
+            <label class="star-5" for="star-5">5</label>
+            <span></span>
+        </div>
         <br>
+
         <button type="submit" class="btn btn-primary">Filter</button>
     </form>
 </div>

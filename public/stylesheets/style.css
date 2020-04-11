@@ -28,9 +28,6 @@ main {
     left: auto;
     right: auto;
 }
-#theme-switcher, #reviews, #leaveReview {
-    display:none;
-}
 
 #filter a.collapsed:after {
     content: '+ Show More';
@@ -48,5 +45,15 @@ main {
 }
 
 #filter #collapsegenre.collapsing {
+    height: 4.5em;
+}
+#filter #collapseplatforms.collapse:not(.show) {
+    display: block;
+    /* height = lineheight * no of lines to display */
+    height: 4.5em;
+    overflow: hidden;
+}
+
+#filter #collapsepplatforms.collapsing {
     height: 4.5em;
 }
