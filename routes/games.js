@@ -6,7 +6,7 @@ const {getCurrentPage, paginationObject, skipCalc, resultsPerPage} = require("..
 router.get('/', function(req, res, next) {
     let currentPage = getCurrentPage(req);
 
-    let filtersQuery = [];
+    let filtersCondition = {$match : {}};
     let paginationQuery = [{$skip: skipCalc(currentPage)}, {$limit: resultsPerPage} ];
 
     if ('genres' in req.query) {
@@ -15,11 +15,21 @@ router.get('/', function(req, res, next) {
             genres = [req.query.genres];
         }
 
-        filtersQuery.push({$match: {'genres.name': { $in : genres }}});
+        filtersCondition['$match']['genres.name'] = { $in : genres };
     }
 
-    let paginatedQuery = filtersQuery.concat(paginationQuery);
-    let countQuery = filtersQuery.concat( { $count: 'totalCount' });
+    if ('platforms' in req.query) {
+        let platforms = req.query.platforms;
+        if (!Array.isArray(req.query.platforms)) {
+            platforms = [req.query.platforms];
+        }
+
+        filtersCondition['$match']['platforms.platform.name'] = { $in : platforms };
+    }
+
+
+    let paginatedQuery = [filtersCondition].concat(paginationQuery);
+    let countQuery = [filtersCondition].concat( { $count: 'totalCount' });
 
     let gamesPromise = req.app.locals.db.collection('games').aggregate(paginatedQuery).toArray();
     let gamesCountPromise = req.app.locals.db.collection('games').aggregate(countQuery).toArray();
