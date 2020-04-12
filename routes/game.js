@@ -39,7 +39,6 @@ router.get('/', function(req, res) {
             // Wishlist functionality
 
             let userHasInWishlist = req.user && req.user.wishlist.includes(game._id.toString());
-
             if (req.user) {
                 let userId = require('mongodb').ObjectID(req.user._id);
 
@@ -81,7 +80,7 @@ router.get('/', function(req, res) {
 
         data.steamPlayerCount = 0;
         data.steamAppId = getSteamAppId(data.game);
-        
+
         return axios.get('https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=' + data.steamAppId)
             .then((resp) => {
                     if (resp.data.response !== null) {
@@ -196,7 +195,7 @@ router.get('/', function(req, res) {
 
     })
     .then(data => {
-        let reviews = req.app.locals.db.collection('reviews').find({gameId:id.toLocaleString()}).toArray();
+        let reviews = req.app.locals.db.collection('reviews').find({id:id.toLocaleString()}).toArray();
         return Promise.all([reviews]).then(([reviews]) => {
             data.reviews = reviews;
             return data;
