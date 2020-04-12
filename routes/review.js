@@ -2,10 +2,22 @@ const express = require('express');
 const router = express.Router();
 
 router.post('/', (req, res) => {
-    let gameURL = "/game?id=" + req.body.gameId;
+    //let gameURL = "/game?id=" + req.body.gameId;
+    let URL = "/";
+    let id;
+    if('gameId' in req.body){
+        id = req.body.gameId;
+        URL = URL + "game?id=" + id;
+    } else if('developerId' in req.body){
+        id = req.body.developerId;
+        URL = URL + "developer?id=" + id;
+    } else if('publisherId' in req.body){
+        id = req.body.publisherId;
+        URL = URL + "publisher?id=" + id;
+    }
     var time = Date.now();
     let newReview = {
-        gameId: req.body.gameId,
+        id: id,
         title: req.body.title,
         review: req.body.review,
         rating: req.body.userratings,
@@ -14,7 +26,7 @@ router.post('/', (req, res) => {
         time: time
     };
     req.app.locals.db.collection('reviews').insertOne(newReview);
-    res.redirect(gameURL);
+    res.redirect(URL);
 });
 
 module.exports = router;

@@ -177,7 +177,7 @@ router.get('/', (req, res) => {
             .catch(err => data);
 
     }).then(data => {
-        let reviews = req.app.locals.db.collection('reviews').find({gameId:id.toLocaleString()}).toArray();
+        let reviews = req.app.locals.db.collection('reviews').find({id:id.toLocaleString()}).toArray();
         return Promise.all([reviews]).then(([reviews]) => {
             data.reviews = reviews;
             return data;

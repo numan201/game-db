@@ -20,6 +20,7 @@ class UniqueSet {
 /* GET games listing. */
 router.get('/', function(req, res, next) {
     let id = require('mongodb').ObjectID(req.query.id);
+    let reviews = null;
 
     let developerList = new UniqueSet();
     req.app.locals.db.collection('publishers').findOne({_id : id}, (err, publisher) => {
@@ -53,11 +54,17 @@ router.get('/', function(req, res, next) {
                     }
                 });
             });
+            let reviewPromise = new Promise(resolve2 => {
+                req.app.locals.db.collection('reviews').find({id:id.toLocaleString()}).toArray().then((result) => {
+                    reviews = result;
+                    resolve2();
+                });
+            });
         });
 
         waitGame.then(() => {
             publisher.developers = developerList.values();
-            res.render('publisher', {title: publisher.name, publisher: publisher, games: publisher.games, developers: publisher.developers});
+            res.render('publisher', {title: publisher.name, publisher: publisher, games: publisher.games, developers: publisher.developers, reviews: reviews});
         });
     });
 
