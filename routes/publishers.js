@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 
     req.app.locals.db.collection('publishers').find().sort({games_count: -1}).skip(skipCalc(currentPage)).limit(resultsPerPage).toArray().then((publishers) => {
         req.app.locals.db.collection('publishers').countDocuments().then((count) => {
-            res.render('publishers', {title: 'Publishers', pagination: paginationObject(currentPage, count), publishers: publishers});
+            res.render('publishers', {title: 'Publishers', pagination: paginationObject(currentPage, count, req.query), publishers: publishers});
         });
     });
 });

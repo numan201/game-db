@@ -1,32 +1,41 @@
-<% include partials/header %>
+<% include partials/filter_header %>
 
-<h1 class="mt-4">Developers</h1>
-<hr>
 
-<% developers.forEach( (developer, i) => {
-    let developerUrl = "/developer?id=" + developer._id;
-%>
+<div class="col-sm-2 text-left" id="filter">
+    <h1 class="mt-4">Filters</h1>
+    <hr>
 
-    <% if (i % 5 === 0) { %>
-        <div class="card-deck">
-    <% } %>
+</div>
 
-    <div class="card" style="width: 18rem;">
-        <a href="<%= developerUrl %>"><img class="card-img-top" src="<%= developer.image_background %>"></a>
-        <div class="card-body">
-            <a style="color:#000;" href="<%= developerUrl %>"><h5 class="card-title"><%= developer.name %></h5></a>
-            <p class="card-text">Maker of <%= developer.games_count %> Games</p>
-            <a href="<%= developerUrl %>" class="btn btn-primary">See More</a>
+<div class="col-sm-9">
+
+    <h1 class="mt-4">Developers</h1>
+    <hr>
+
+    <% developers.forEach( (developer, i) => {
+        let developerUrl = "/developer?id=" + developer._id;
+    %>
+
+        <% if (i % 5 === 0) { %>
+            <div class="card-deck">
+        <% } %>
+
+        <div class="card" style="width: 18rem;">
+            <a href="<%= developerUrl %>"><img class="card-img-top" src="<%= developer.image_background %>"></a>
+            <div class="card-body">
+                <a style="color:#000;" href="<%= developerUrl %>"><h5 class="card-title"><%= developer.name %></h5></a>
+                <p class="card-text">Maker of <%= developer.games_count %> Games</p>
+                <a href="<%= developerUrl %>" class="btn btn-primary">See More</a>
+            </div>
         </div>
-    </div>
 
-    <% if ((i + 1) % 5 === 0) { %>
-        </div>
-        <br>
-    <% } %>
+        <% if ((i + 1) % 5 === 0) { %>
+            </div>
+            <br>
+        <% } %>
 
-<% }); %>
+    <% }); %>
 
-<% include partials/pagination.ejs %>
+    <% include partials/pagination.ejs %>
 
 <% include partials/footer %>
