@@ -39,7 +39,6 @@ main {
 
 #filter #collapsegenre.collapse:not(.show) {
     display: block;
-    /* height = lineheight * no of lines to display */
     height: 4.5em;
     overflow: hidden;
 }
@@ -49,7 +48,6 @@ main {
 }
 #filter #collapseplatforms.collapse:not(.show) {
     display: block;
-    /* height = lineheight * no of lines to display */
     height: 4.5em;
     overflow: hidden;
 }
