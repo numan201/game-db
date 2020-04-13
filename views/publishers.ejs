@@ -1,9 +1,40 @@
 <% include partials/filter_header %>
+<%
+let numbers = ['0', '50', '150', '200', '250', '300', '350', '400', '450'];
+function optionSelected(type, option) {
+    return (type in pagination.query && (pagination.query[type] == option || Object.values(pagination.query[type]).includes(option)));
+}
+%>
 
 <div class="col-sm-2 text-left" id="filter">
     <h1 class="mt-4">Filters</h1>
     <hr>
-
+    <form method="get">
+        <h4 class="mt-4">Number of Games Published</h4>
+        <%
+        numbers.forEach((number) =>{
+            let checked = '';
+            var i = parseInt(number);
+            var j = i + 49;
+            if (optionSelected('numbers', number)) {
+                checked ='checked';
+            }
+        %>
+        <div class="form-check">
+            <input class="form-check-input" <%=checked%> type="checkbox" name="numbers" value=<%=number%>>
+            <label class="form-check-label" for="<%=number%>"><%=number%> - <%=j%></label>
+        </div>
+        <% });
+        let checked = '';
+        if (optionSelected('numbers', '500')) checked ='checked';
+        %>
+        <div class="form-check">
+            <input class="form-check-input" <%=checked%> type="checkbox" name="numbers" value='500'>
+            <label class="form-check-label" for='500'>500+</label>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
 </div>
 
 <div class="col-sm-9">
