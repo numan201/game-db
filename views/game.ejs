@@ -89,10 +89,9 @@
     </div>
 
     <br>
-    <div class="container-fluid">
+    <div class="container-fluid text-left">
         <h2>News</h2>
         <ul class="list-unstyled">
-            <%var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];%>
             <% if (news !== null) {
                     news.forEach((article) => {
                     var date = new Date(article.date * 1000);
@@ -178,24 +177,9 @@
                     <h5 class="mt-0"><%=reviews[i].title%></h5>
                     <%=reviews[i].review%>
                     <%
-                    var rating;
-                    switch(reviews[i].rating){
-                        case "option5":
-                            rating = 5;
-                            break;
-                        case "option4":
-                            rating = 4;
-                            break;
-                        case "option3":
-                            rating = 3;
-                            break;
-                        case "option2":
-                            rating = 2;
-                            break;
-                        case "option1":
-                            rating = 1;
-                            break;
-                    }%>
+                    var rating = reviews[i].rating;
+                    rating = rating.slice(-1);
+                    %>
                     <h6 class="mt-0">Rating: <%=rating%>/5</h6>
                     <h6 class="mt-0">Written by: <%=reviews[i].username%></h6>
                     <%
@@ -229,35 +213,18 @@
             <div class="form-group">
                 <div class="row">
                     Rating:
-                    <div class="form-check">
-                        <input class="form-check-input" name="userratings" type="radio" id="rating5" value="option5">
-                        <label class="form-check-label" for="rating5">
-                            5
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" name="userratings" type="radio" id="rating4" value="option4">
-                        <label class="form-check-label" for="rating4">
-                            4
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" name="userratings" type="radio" id="rating3" value="option3">
-                        <label class="form-check-label" for="rating3">
-                            3
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" name="userratings" type="radio" id="rating2" value="option2">
-                        <label class="form-check-label" for="rating2">
-                            2
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" name="userratings" type="radio" id="rating1" value="option1">
-                        <label class="form-check-label" for="rating1">
-                            1
-                        </label>
+                    <div class="stars">
+                        <input type="radio" name="userratings" class="star-1" id="star-1" value="option1" />
+                        <label class="star-1" for="star-1">1</label>
+                        <input type="radio" name="userratings" class="star-2" id="star-2" value="option2" />
+                        <label class="star-2" for="star-2">2</label>
+                        <input type="radio" name="userratings" class="star-3" id="star-3" value="option3" />
+                        <label class="star-3" for="star-3">3</label>
+                        <input type="radio" name="userratings" class="star-4" id="star-4" value="option4" />
+                        <label class="star-4" for="star-4">4</label>
+                        <input type="radio" name="userratings" class="star-5" id="star-5" value="option5" />
+                        <label class="star-5" for="star-5">5</label>
+                        <span></span>
                     </div>
                 </div>
             </div>
