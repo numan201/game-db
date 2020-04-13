@@ -1,32 +1,71 @@
-<% include partials/header %>
-
-<h1 class="mt-4">Publishers</h1>
-<hr>
-
-<% publishers.forEach( (publisher, i) => {
-    let publisherUrl = "/publisher?id=" + publisher._id;
+<% include partials/filter_header %>
+<%
+let numbers = ['0', '50', '150', '200', '250', '300', '350', '400', '450'];
+function optionSelected(type, option) {
+    return (type in pagination.query && (pagination.query[type] == option || Object.values(pagination.query[type]).includes(option)));
+}
 %>
 
-    <% if (i % 5 === 0) { %>
-        <div class="card-deck">
-    <% } %>
-
-    <div class="card" style="width: 18rem;">
-        <a href="<%= publisherUrl %>"><img class="card-img-top" src="<%= publisher.image_background %>"></a>
-        <div class="card-body">
-            <a style="color:#000;" href="<%= publisherUrl %>"><h5 class="card-title"><%= publisher.name %></h5></a>
-            <p class="card-text">Maker of <%= publisher.games_count %> Games</p>
-            <a href="<%= publisherUrl %>" class="btn btn-primary">See More</a>
+<div class="col-sm-2 text-left" id="filter">
+    <h1 class="mt-4">Filters</h1>
+    <hr>
+    <form method="get">
+        <h4 class="mt-4">Number of Games Published</h4>
+        <%
+        numbers.forEach((number) =>{
+            let checked = '';
+            var i = parseInt(number);
+            var j = i + 49;
+            if (optionSelected('numbers', number)) {
+                checked ='checked';
+            }
+        %>
+        <div class="form-check">
+            <input class="form-check-input" <%=checked%> type="radio" name="numbers" value=<%=number%>>
+            <label class="form-check-label" for="<%=number%>"><%=number%> - <%=j%></label>
         </div>
-    </div>
-
-    <% if ((i + 1) % 5 === 0) { %>
+        <% });
+        let checked = '';
+        if (optionSelected('numbers', '500')) checked ='checked';
+        %>
+        <div class="form-check">
+            <input class="form-check-input" <%=checked%> type="radio" name="numbers" value='500'>
+            <label class="form-check-label" for='500'>500+</label>
         </div>
         <br>
-    <% } %>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+</div>
 
-<% }); %>
+<div class="col-sm-9">
 
-<% include partials/pagination.ejs %>
+    <h1 class="mt-4">Publishers</h1>
+    <hr>
+
+    <% publishers.forEach( (publisher, i) => {
+        let publisherUrl = "/publisher?id=" + publisher._id;
+    %>
+
+        <% if (i % 5 === 0) { %>
+            <div class="card-deck">
+        <% } %>
+
+        <div class="card" style="width: 18rem;">
+            <a href="<%= publisherUrl %>"><img class="card-img-top" src="<%= publisher.image_background %>"></a>
+            <div class="card-body">
+                <a style="color:#000;" href="<%= publisherUrl %>"><h5 class="card-title"><%= publisher.name %></h5></a>
+                <p class="card-text">Maker of <%= publisher.games_count %> Games</p>
+                <a href="<%= publisherUrl %>" class="btn btn-primary">See More</a>
+            </div>
+        </div>
+
+        <% if ((i + 1) % 5 === 0) { %>
+            </div>
+            <br>
+        <% } %>
+
+    <% }); %>
+
+    <% include partials/pagination.ejs %>
 
 <% include partials/footer %>

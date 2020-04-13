@@ -1,33 +1,103 @@
-<% include partials/header %>
+<% include partials/filter_header %>
+<%
+let genres = ['Action', 'Indie', 'Adventure', 'RPG', 'Shooter', 'Strategy', 'Casual', 'Simulation', 'Puzzle', 'Arcade', 'Platformer', 'Racing', 'Sports', 'Massively Multiplayer', 'Family', 'Fighting', 'Board Games', 'Educational', 'Card'];
+let platforms = ['PC', 'PlayStation 4', 'PlayStation 3', 'PlayStation 2', 'PlayStation', 'PS Vita', 'PSP', 'Xbox One', 'Xbox 360', 'Xbox', 'Nintendo Switch', 'iOS', 'Android', 'macOS', 'Linux', 'Nintendo 3DS', 'Nintendo DS', 'Nintendo DSi', 'Wii U', 'Wii', 'GameCube', 'Nintendo 64', 'Game Boy Advance', 'Game Boy Color', 'Game Boy', 'SNES', 'NES'];
 
-<h1 class="mt-4">Games</h1>
-<hr>
 
-<% games.forEach( (game, i) => {
-    let gameUrl = "/game?id=" + game._id;
+function optionSelected(type, option) {
+    return (type in pagination.query && (pagination.query[type] == option || Object.values(pagination.query[type]).includes(option)));
+}
 %>
 
-    <% if (i % 5 === 0) { %>
-        <div class="card-deck">
-    <% } %>
+<div class="col-sm-2 text-left" id="filter">
+    <h1 class="mt-4">Filters</h1>
+    <hr>
+    <form method="get">
+        <h4 class="mt-4">Genres</h4>
+        <div class="collapse" id="collapsegenre" aria-expanded="false">
+            <%
+            genres.forEach( (genre) => {
+                let checked = '';
 
-    <div class="card" style="width: 18rem;">
-        <a href="<%= gameUrl %>"><img class="card-img-top" src="<%= game.background_image %>"></a>
-        <div class="card-body">
-            <a id="cardtitle" href="<%= gameUrl %>"><h5 class="card-title"><%= game.name %></h5></a>
-            <p class="card-text">Released <%= (game.released !== null) ? game.released.split('-')[0] : '?'%> | <%= game.reviews_count %> Reviews</p>
-            <a href="<%= gameUrl %>" class="btn btn-primary">See More</a>
+                if (optionSelected('genres', genre)) checked ='checked';
+            %>
+            <div class="form-check">
+                <input class="form-check-input" <%=checked%> type="checkbox" name="genres" value="<%=genre%>">
+                <label class="form-check-label" for="<%=genre%>"><%=genre%></label>
+            </div>
+            <% }); %>
         </div>
-    </div>
 
-    <% if ((i + 1) % 5 === 0) { %>
+        <a role="button" class="collapsed" data-toggle="collapse" href="#collapsegenre" aria-expanded="false" aria-controls="collapsegenre"></a>
+
+        <hr>
+
+        <h4 class="mt-4">Platforms</h4>
+        <div class="collapse" id="collapseplatforms" aria-expanded="false">
+            <%
+            platforms.forEach((platform) => {
+                let checked = '';
+
+                if (optionSelected('platforms', platform)) checked ='checked';
+            %>
+                <div class="form-check">
+                    <input class="form-check-input" <%=checked%> type="checkbox" name="platforms" value="<%=platform%>">
+                    <label class="form-check-label" for="<%=platform%>"><%=platform%></label>
+                </div>
+            <% }) %>
+        </div>
+        <a role="button" class="collapsed" data-toggle="collapse" href="#collapseplatforms" aria-expanded="false" aria-controls="collapseplatforms"></a>
+
+        <hr>
+        <h4 class="mt-4">Ratings</h4>
+        <div class="stars">
+            <input type="radio" name="star" class="star-1" id="star-1" value="star1" />
+            <label class="star-1" for="star-1">1</label>
+            <input type="radio" name="star" class="star-2" id="star-2" value="star2" />
+            <label class="star-2" for="star-2">2</label>
+            <input type="radio" name="star" class="star-3" id="star-3" value="star3" />
+            <label class="star-3" for="star-3">3</label>
+            <input type="radio" name="star" class="star-4" id="star-4" value="star4" />
+            <label class="star-4" for="star-4">4</label>
+            <input type="radio" name="star" class="star-5" id="star-5" value="star5" />
+            <label class="star-5" for="star-5">5</label>
+            <span></span>
         </div>
         <br>
+
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+</div>
+
+<div class="col-sm-9">
+
+    <h1 class="mt-4">Games</h1>
+    <hr>
+
+    <% games.forEach( (game, i) => {
+        let gameUrl = "/game?id=" + game._id;
+    %>
+
+    <% if (i % 5 === 0) { %>
+    <div class="card-deck">
+        <% } %>
+
+        <div class="card" style="width: 18rem;">
+            <a href="<%= gameUrl %>"><img class="card-img-top" src="<%= game.background_image %>"></a>
+            <div class="card-body">
+                <a value="cardtitle" href="<%= gameUrl %>"><h5 class="card-title"><%= game.name %></h5></a>
+                <p class="card-text">Released <%= (game.released !== null) ? game.released.split('-')[0] : '?'%> | <%= game.reviews_count %> Reviews</p>
+                <a href="<%= gameUrl %>" class="btn btn-primary">See More</a>
+            </div>
+        </div>
+
+        <% if ((i + 1) % 5 === 0) { %>
+    </div>
+    <br>
     <% } %>
 
-<% }); %>
+    <% }); %>
 
-<% include partials/pagination.ejs %>
+    <% include partials/pagination %>
 
 <% include partials/footer %>
-

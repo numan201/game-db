@@ -11,15 +11,23 @@
             start = 1;
         }
 
+        let filterString = '';
+        if ('page' in pagination.query) {
+            delete pagination.query.page;
+        }
+
+        let queryString = pagination.queryString.stringify(pagination.query);
+        if (queryString !== '') queryString = '&' + queryString;
         %>
 
+
         <li class="page-item <%=(pagination.currentPage - 1 <= 0) ? 'disabled' : '' %>">
-            <a class="page-link" href="?page=<%=pagination.currentPage - 1%>" tabindex="-1">Previous</a>
+            <a class="page-link" href="?page=<%=pagination.currentPage - 1%><%=queryString%>" tabindex="-1">Previous</a>
         </li>
 
         <% for (let i = start; i <= pagination.currentPage + 3 && i <= pagination.numberPages; i++) { %>
 
-            <li class="page-item <%=(i == pagination.currentPage) ? 'active' : ''%>"><a class="page-link" href="?page=<%=i%>"><%=i%></a></li>
+            <li class="page-item <%=(i == pagination.currentPage) ? 'active' : ''%>"><a class="page-link" href="?page=<%=i%><%=queryString%>"><%=i%></a></li>
 
         <% } %>
 

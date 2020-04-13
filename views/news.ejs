@@ -1,5 +1,5 @@
 <% include partials/header %>
-<main class="container-fluid">
+<main class="container-fluid text-left">
     <div class="row">
         <div class="col-sm-1">
 
@@ -12,33 +12,22 @@
 <hr>
 
 <ul class="list-unstyled">
-<%var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];%>
-<%  news.forEach((article,i) => {
-    let gameUrl = "/game?id=" + steamGames[i]._id;
-    var date = new Date(article.date * 1000);
-    var month = months[date.getMonth()];
-    var day = date.getDate();
-    var year = date.getFullYear();
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    if(hours < 10){
-        hours = '0' + hours;
-    }
-    if(minutes < 10){
-        minutes = '0' + minutes;
-    }
-    var formattedTime = month + " " + day + ", " + year + " " + hours + ":" + minutes;
-    %>
+<%  news.forEach((article) => { %>
 
-    <li class="media">
-        <img src="<%=steamGames[i].background_image%>" class="mr-3" height="100" width="100" alt="..."/>
-        <div class="media-body">
-            <a href="<%=article.url%>"><h5 class="mt-0"><%=article.title%></h5></a>
-            <h6 class="mt-0">Game: <a href="<%= gameUrl %>"><%=steamGames[i].name%></a></h6>
-            <h6 class="mt-0">Written by: <%=article.author%></h6>
-            <h6 class="mt-0"><small><i>Date: <%=formattedTime%></i></small></h6>
+
+    <div class="media">
+        <div class="media-left">
+            <img src="<%=article.urlToImage %>" class="media-object" style="width:150px">
         </div>
-    </li>
+        <div class="media-body">
+            <a href="<%= article.url %>"><h4><%= article.title%></h4></a>
+            <h6>From: <%= article.source.name %></h6>
+            <br>
+            <p> <%= article.description %> </p>
+            <h6><small>Written By: <%=article.author%></small></h6>
+            <br>
+        </div>
+    </div>
     <hr>
 <% }); %>
 </ul>

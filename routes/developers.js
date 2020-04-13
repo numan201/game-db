@@ -7,9 +7,35 @@ router.get('/', function(req, res, next) {
 
     let currentPage = getCurrentPage(req);
 
-    req.app.locals.db.collection('developers').find().sort({games_count: -1}).skip(skipCalc(currentPage)).limit(resultsPerPage).toArray().then((developers) => {
-        req.app.locals.db.collection('developers').countDocuments().then((count) => {
-            res.render('developers', {title: 'Developers', pagination: paginationObject(currentPage, count), developers: developers});
+    let filtersCondition = {$match : {}};
+    let paginationQuery = [{$skip: skipCalc(currentPage)}, {$limit: resultsPerPage} ];
+
+    if('numbers' in req.query) {
+        let numbers = req.query.numbers;
+
+        numbers = parseInt(numbers);
+        if (numbers === 200) {
+            filtersCondition['$match']['games_count'] = {$gt: numbers};
+        } else {
+            filtersCondition['$match']['games_count'] = {$gt: numbers, $lt: numbers + 50};
+        }
+    }
+
+    let paginatedQuery = [filtersCondition].concat(paginationQuery);
+    let countQuery = [filtersCondition].concat( { $count: 'totalCount' });
+
+    let developersPromise = req.app.locals.db.collection('developers').aggregate(paginatedQuery).toArray();
+    let developersCountPromise = req.app.locals.db.collection('developers').aggregate(countQuery).toArray();
+
+    Promise.all([developersPromise, developersCountPromise]).then(([developers, count]) => {
+        if(count.length === 0){
+            let totalCount = 0;
+            count[0] = {totalcount: totalCount};
+        }
+        res.render('developers', {
+            title: 'Developers',
+            pagination: paginationObject(currentPage,  count[0].totalCount, req.query),
+            developers: developers
         });
     });
 });

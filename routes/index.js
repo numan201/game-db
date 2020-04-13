@@ -7,7 +7,7 @@ let top_rated_pc = [];
 let top_rated_xbone = [];
 const games_per_platform = 5;
 const axios = require('axios');
-const { youtubeKey, newsKey } = require('../keys');
+const { newsKey } = require('../keys');
 
 function addGameToPlatform(game){
   game.platforms.forEach((platform, i) => {
