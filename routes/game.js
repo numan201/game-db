@@ -154,7 +154,7 @@ router.get('/', function(req, res) {
                     });
                 });
                 return data;
-            })
+            }).catch(err  => data);
     })
     .then( (data) => {
         // Steam News
