@@ -111,13 +111,10 @@ router.get('/', function(req, res) {
     })
     .then((data) => {
         data.ps4Price = null;
-        let ps4NameSimilarity = 0.5;
         return axios.get('https://store.playstation.com/store/api/chihiro/00_09_000/tumbler/US/en/99/'+ escape(data.game.name) +'?suggested_size=10')
             .then((resp) => {
-                let similarity = stringSimilarity.compareTwoStrings(resp.data.links[0].name, data.game.name);
-                if(resp.data.links[0].playable_platform.includes("PS4™") && similarity > ps4NameSimilarity){
+                if(resp.data.links[0].playable_platform.includes("PS4™") ){
                     data.ps4Price = {};
-                    ps4NameSimilarity = similarity;
                     //checking if it's on sale
                     if(resp.data.links[0].default_sku.rewards.length > 0){
                         data.ps4Price.price = resp.data.links[0].default_sku.rewards[0].display_price;
@@ -125,7 +122,7 @@ router.get('/', function(req, res) {
                     else{
                         data.ps4Price.price = resp.data.links[0].default_sku.display_price;
                     }
-                    data.ps4Price.link = 'https://store.playstation.com/en-us/product/' + resp.data.links[0].default_sku.id;
+                    data.ps4Price.link = 'https://store.playstation.com/en-us/product/' + resp.data.links[0].id;
                 }
                 return data;
             })
@@ -136,17 +133,27 @@ router.get('/', function(req, res) {
         return axios.get('https://www.microsoft.com/services/api/v3/suggest?market=en-us&clientId=7F27B536-CF6B-4C65-8638-A0F8CBDFCA65&sources=Iris-Products%2CDCatAll-Products%2CMicrosoft-Terms&filter=%2BClientType%3AStoreWeb&counts=1%2C5%2C5&query=' + escape(data.game.name))
             .then((resp) =>{
                 let xb1NameSimilarity = 0.5;
-                data.xb1Price = {};
-                resp.data.ResultSets[0].Suggests.forEach((xb) => {
-                   let similarity = stringSimilarity.compareTwoStrings(xb.Title, data.game.name);
-                   if(similarity > xb1NameSimilarity){
-                       xb1NameSimilarity = similarity;
-                       data.xb1Price.link = 'https:' + xb.Url;
-                       //Now we have a link to the page that has the price, but not easy way to get the price.
-                   }
+                /*  The way that Microsoft returns search data is in multiple 'sets' for each of their store fronts
+                    Unfortunately these aren't slotted in any particular order so we have to check all the return values
+                    for the correct game, and have to ignore apps and other invalid entries manually.
+                    Also pricing information is not in an easily retrievable form, so that won't be given.
+                 */
+                if(resp.data.ResultSets.length == 0) return data;
+                resp.data.ResultSets.forEach((resultSet) => {
+                    if(resultSet.Suggests==null) return;
+                    resultSet.Suggests.forEach((xb) => {
+                        //Want to ignore the entries for "Apps"
+                        if(xb.Title == null || xb.Source == null || xb.Source == 'Apps') return;
+                        let similarity = stringSimilarity.compareTwoStrings(xb.Title, data.game.name);
+                        //Only save if the game names are similar and it isn't a promo for GamePass
+                        if(similarity > xb1NameSimilarity && xb.Source != 'One low monthly price'){
+                            xb1NameSimilarity = similarity;
+                            data.xb1Price = {};
+                            data.xb1Price.link = 'https:' + xb.Url;
+                            //Now we have a link to the page that has the price, but not easy way to get the price.
+                        }
+                    });
                 });
-                console.log(resp.data.ResultSets[0].Suggests);
-                console.log(data.xb1Price);
                 return data;
             })
     })

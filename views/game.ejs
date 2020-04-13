@@ -54,9 +54,11 @@
             <ul class="list-unstyled">
                 <% game.platforms.forEach( (platform) => { %>
                     <% if(platform.platform.name == 'PC' && steamPrice != null){%>
-                        <li><%= platform.platform.name %> <a href="<%=steamPrice.link%>" rel="noopener noreferrer" target="_blank"><%=steamPrice.final_formatted%></a></li>
+                        <li><%= platform.platform.name %>: <a href="<%=steamPrice.link%>" rel="noopener noreferrer" target="_blank"><%=steamPrice.final_formatted%></a></li>
                     <%} else if(platform.platform.name == 'PlayStation 4' && ps4Price != null) {%>
-                        <li><%= platform.platform.name %> <a href="<%=ps4Price.link%>" rel="noopener noreferrer" target="_blank"><%=ps4Price.price%></a></li>
+                        <li><%= platform.platform.name %>: <a href="<%=ps4Price.link%>" rel="noopener noreferrer" target="_blank"><%=ps4Price.price%></a></li>
+                    <%} else if(platform.platform.name == 'Xbox One' && xb1Price != null && xb1Price.link != null) {%>
+                        <li><%= platform.platform.name %>: <a href="<%=xb1Price.link%>" rel="noopener noreferrer" target="_blank">More Info</a></li>
                     <%} else {%>
                         <li><%= platform.platform.name %></li>
                     <%}});%>
