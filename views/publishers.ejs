@@ -21,7 +21,7 @@ function optionSelected(type, option) {
             }
         %>
         <div class="form-check">
-            <input class="form-check-input" <%=checked%> type="checkbox" name="numbers" value=<%=number%>>
+            <input class="form-check-input" <%=checked%> type="radio" name="numbers" value=<%=number%>>
             <label class="form-check-label" for="<%=number%>"><%=number%> - <%=j%></label>
         </div>
         <% });
@@ -29,7 +29,7 @@ function optionSelected(type, option) {
         if (optionSelected('numbers', '500')) checked ='checked';
         %>
         <div class="form-check">
-            <input class="form-check-input" <%=checked%> type="checkbox" name="numbers" value='500'>
+            <input class="form-check-input" <%=checked%> type="radio" name="numbers" value='500'>
             <label class="form-check-label" for='500'>500+</label>
         </div>
         <br>
