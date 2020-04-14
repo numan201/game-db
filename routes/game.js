@@ -249,18 +249,18 @@ function getWishlist(resolve, data, req, res){
 function checkCached(resolve, req, res, id){
     req.app.locals.db.collection('cachedgames').findOne({_id: id})
         .then(game => {
-            let FIVE_MINUTES = 1000 * 60 * 10;
-            let timeElapsed = new Date() - game.date;
-            if(timeElapsed < FIVE_MINUTES){
+            if(game == null){
+                resolve(false);
+            }
+            else{
                 const promises = [
                     new Promise(wish => getWishlist(wish, game, req, res)),
                     new Promise(wish => getReviews(wish, game, req, id))
                 ];
                 Promise.all(promises).then( game => { res.render('game', Object.assign({}, ...game));});
-                resolve(0);
+                resolve(true);
             }
-            resolve(1);
-        }).catch(err => resolve(2));
+        }).catch(err => resolve(false));
 }
 
 /* GET games listing. */
@@ -268,6 +268,9 @@ router.get('/', function(req, res) {
     let id = require('mongodb').ObjectID(req.query.id);
     // Get Game
     const cachePromise = new Promise(finish => checkCached(finish, req, res, id))
+
+    //Used for adjusting the cache timing
+    //req.app.locals.db.collection('cachedgames').createIndex({"date": 1}, {expireAfterSeconds: 60 * 5});
 
     req.app.locals.db.collection('games').findOne({_id : id})
         .then(game => {
@@ -290,10 +293,9 @@ router.get('/', function(req, res) {
             Promise.all(promises).then(out => {
                 //Out is actually an array of all the promises output, so here we merge them
                 let game = Object.assign({}, ...out);
-                game.date = Date.now();
-                cachePromise.then(status => {
-                    console.log(status);
-                    if(status != 0){
+                game.date = new Date();
+                cachePromise.then(cached => {
+                    if(cached == false){
                         res.render('game', game);
                     }
                     req.app.locals.db.collection('cachedgames').replaceOne({_id: id}, game, {upsert:true});
