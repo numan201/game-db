@@ -70,6 +70,7 @@ function getPS4Price(resolve, data){
                 else{
                     data.ps4Price.price = resp.data.links[0].default_sku.display_price;
                 }
+                data.ps4Price.publisherFallback = resp.data.links[0].provider_name;
                 data.ps4Price.link = 'https://store.playstation.com/en-us/product/' + resp.data.links[0].id;
             }
             resolve(data);
@@ -121,6 +122,8 @@ function getSteamPrice(resolve, data) {
             else{
                 data.steamPrice = resp.data[data.steamAppId].data.price_overview;
             }
+            data.steamPrice.developers = resp.data[data.steamAppId].data.developers;
+            data.steamPrice.publishers = resp.data[data.steamAppId].data.publishers;
             data.steamPrice.link = 'http://store.steampowered.com/app/' + data.steamAppId + '/';
             resolve(data);
         })
