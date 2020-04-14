@@ -230,13 +230,13 @@ function getWishlist(resolve, data, req, res){
         if ('addWishlist' in req.query) {
             req.app.locals.db.collection('users').updateOne({_id: userId}, {$addToSet: {wishlist: data._id.toString()}}).then( (result) => {
                 res.redirect('/game?id=' + req.query.id);
-            });
+            }).catch(err => data);;
             return;
 
         } else if ('removeWishlist' in req.query) {
             req.app.locals.db.collection('users').updateOne({_id: userId}, {$pull: {wishlist: data._id.toString()}}).then( (result) => {
                 res.redirect('/game?id=' + req.query.id);
-            });
+            }).catch(err => data);
             return;
         }
     }
@@ -245,11 +245,30 @@ function getWishlist(resolve, data, req, res){
     resolve(data);
 }
 
+//checks if the game is cached, returns 0 if we're up to date, 1 if cache is too old and 2 if game isn't cached
+function checkCached(resolve, req, res, id){
+    req.app.locals.db.collection('cachedgames').findOne({_id: id})
+        .then(game => {
+            let FIVE_MINUTES = 1000 * 60 * 10;
+            let timeElapsed = new Date() - game.date;
+            if(timeElapsed < FIVE_MINUTES){
+                const promises = [
+                    new Promise(wish => getWishlist(wish, game, req, res)),
+                    new Promise(wish => getReviews(wish, game, req, id))
+                ];
+                Promise.all(promises).then( game => { res.render('game', Object.assign({}, ...game));});
+                resolve(0);
+            }
+            resolve(1);
+        }).catch(err => resolve(2));
+}
+
 /* GET games listing. */
 router.get('/', function(req, res) {
     let id = require('mongodb').ObjectID(req.query.id);
-
     // Get Game
+    const cachePromise = new Promise(finish => checkCached(finish, req, res, id))
+
     req.app.locals.db.collection('games').findOne({_id : id})
         .then(game => {
             let data = {title: game.name, game};
@@ -271,7 +290,14 @@ router.get('/', function(req, res) {
             Promise.all(promises).then(out => {
                 //Out is actually an array of all the promises output, so here we merge them
                 let game = Object.assign({}, ...out);
-                res.render('game', game);
+                game.date = Date.now();
+                cachePromise.then(status => {
+                    console.log(status);
+                    if(status != 0){
+                        res.render('game', game);
+                    }
+                    req.app.locals.db.collection('cachedgames').replaceOne({_id: id}, game, {upsert:true});
+                });
                 return data;
             });
     });
