@@ -53,7 +53,7 @@
         </ol>
 
         <div class="carousel-inner">
-            <% new_releases.forEach( (game, i) => { %>
+            <% new_releases.forEach( (game, i) => {  if( game.background_image !== null) {%>
                 <% let gameUrl = "/game?id=" + game._id; %>
                 <div class="carousel-item <%= (i == 0) ? 'active' : ''%>">
                     <a href="<%=gameUrl%>">
@@ -64,7 +64,7 @@
                         </div>
                     </a>
                 </div>
-            <% }); %>
+            <% }}); %>
 
         </div>
         <a class="carousel-control-prev" href="#Indicators" role="button" data-slide="prev">
