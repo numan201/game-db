@@ -8,6 +8,7 @@ router.get('/', function(req, res, next) {
 
     let filtersCondition = {$match : {}};
     let paginationQuery = [{$skip: skipCalc(currentPage)}, {$limit: resultsPerPage} ];
+    let sortQuery = null;
 
     if ('genres' in req.query) {
         let genres = req.query.genres;
@@ -29,30 +30,37 @@ router.get('/', function(req, res, next) {
     let star = 0;
     if('star'in req.query) {
         let stars = req.query.star;
-        switch (stars) {
-            case 'star1':
-                star = 1;
-                break;
-            case 'star2':
-                star = 2;
-                break;
-            case 'star3':
-                star = 3;
-                break;
-            case 'star4':
-                star = 4;
-                break;
-            case 'star5':
-                star = 5;
-                break;
-        }
+        star = stars.slice(-1).parseInt();
     }
     if(star !== 0){
         filtersCondition['$match']['rating_top'] = { $eq : star };
     }
 
+    if('sorts' in req.query){
+        let sorts = req.query.sorts;
+        let descending = req.query.descending;
+        if(descending === '')
+            descending = true;
+        let field = '';
+        switch(sorts){
+            case "Alphabetical":
+                field = "name";
+                break;
+            case "Ratings":
+                field = "rating";
+                break;
+            case "Release Date":
+                field = "released";
+        }
+        let order = descending ? -1 : 1;
+        sortQuery = {$sort: {field : order}};
+    }
+
 
     let paginatedQuery = [filtersCondition].concat(paginationQuery);
+    if(sortQuery !== null){
+        paginatedQuery.push(sortQuery);
+    }
     let countQuery = [filtersCondition].concat( { $count: 'totalCount' });
 
     let gamesPromise = req.app.locals.db.collection('games').aggregate(paginatedQuery).toArray();

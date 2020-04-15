@@ -1,6 +1,6 @@
 <% include partials/filter_header %>
 <%
-let numbers = ['0', '50', '150'];
+let numbers = ['0', '50', '100', '150'];
 function optionSelected(type, option) {
     return (type in pagination.query && (pagination.query[type] == option || Object.values(pagination.query[type]).includes(option)));
 }

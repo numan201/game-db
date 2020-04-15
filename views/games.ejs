@@ -2,15 +2,14 @@
 <%
 let genres = ['Action', 'Indie', 'Adventure', 'RPG', 'Shooter', 'Strategy', 'Casual', 'Simulation', 'Puzzle', 'Arcade', 'Platformer', 'Racing', 'Sports', 'Massively Multiplayer', 'Family', 'Fighting', 'Board Games', 'Educational', 'Card'];
 let platforms = ['PC', 'PlayStation 4', 'PlayStation 3', 'PlayStation 2', 'PlayStation', 'PS Vita', 'PSP', 'Xbox One', 'Xbox 360', 'Xbox', 'Nintendo Switch', 'iOS', 'Android', 'macOS', 'Linux', 'Nintendo 3DS', 'Nintendo DS', 'Nintendo DSi', 'Wii U', 'Wii', 'GameCube', 'Nintendo 64', 'Game Boy Advance', 'Game Boy Color', 'Game Boy', 'SNES', 'NES'];
-
-
+let sorting = ['Alphabetical', 'Ratings', 'Release Date'];
+//let descending = true;
 function optionSelected(type, option) {
     return (type in pagination.query && (pagination.query[type] == option || Object.values(pagination.query[type]).includes(option)));
 }
 %>
 
 <div class="col-sm-2 text-left" id="filter">
-    <h1 class="mt-4">Filters</h1>
     <hr>
     <form method="get">
         <h4 class="mt-4">Genres</h4>
@@ -63,8 +62,38 @@ function optionSelected(type, option) {
             <label class="star-5" for="star-5">5</label>
             <span></span>
         </div>
-        <br>
+        <hr>
 
+        <h4 class="mt-4">Sort By</h4>
+        <%sorting.forEach((sort) => {
+            let checked = '';
+            if (optionSelected('sorts', sort)) checked ='checked';
+        %>
+            <div class="form-check">
+                <input class="form-check-input" <%=checked%> type="radio" name="sorts" value=<%=sort%>>
+                <button class="btn btn-light" type="button" id=<%=sort%>><i class="fas fa-angle-down"></i></button>
+                <label class="form-check-label" for="<%=sort%>"><%=sort%></label>
+            </div>
+        <%});%>
+        <input type="hidden" id="descending" name="descending" value=<%true%>>
+        <script>
+            $(document).ready(function() {
+                $("button").click(function(event) {
+                    if(document.getElementById(event.target.id).children[0].className === "fas fa-angle-down"){
+                        document.getElementById(event.target.id).children[0].className = "fas fa-angle-up";
+                        document.getElementById("descending").value = false;
+                        //descending = false;
+                        //alert(descending);
+                    } else {
+                        document.getElementById(event.target.id).children[0].className = "fas fa-angle-down";
+                        document.getElementById("descending").value = true;
+                        //descending = true;
+                        //alert(descending);
+                    }
+                });
+            });
+        </script>
+        <br>
         <button type="submit" class="btn btn-primary">Filter</button>
     </form>
 </div>
