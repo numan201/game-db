@@ -6,6 +6,7 @@ let top_rated_ps4 = [];
 let top_rated_pc = [];
 let top_rated_xbone = [];
 const games_per_platform = 5;
+const news_expiration_hours = 24;
 const axios = require('axios');
 const { newsKey } = require('../keys');
 
@@ -53,24 +54,48 @@ router.get('/', function(req, res, next) {
         });
     })
       .then(news => {
-
-        return axios({
-          method: 'get',
-          url: 'http://newsapi.org/v2/everything',
-          params: {q: "videogames", pageSize: 10, ApiKey: newsKey},
-        })
-            .then((response) => {
+        req.app.locals.db.collection('cachednews').createIndex( { "createdAt": 1 }, { expireAfterSeconds: 3600 * news_expiration_hours } );
+        req.app.locals.db.collection('cachednews').find({ front_page : { $exists : 1 } }).count().then(articles_count => {
+          console.log("Articles count : " + articles_count);
+          if(articles_count === 0){
+            return axios({
+              method: 'get',
+              url: 'http://newsapi.org/v2/everything',
+              params: {q: "videogames", pageSize: 10, ApiKey: newsKey},
+            })
+                .then((response) => {
+                  response.data.articles.forEach(article => {
+                    article.front_page = true;
+                    article.createdAt = new Date();
+                  });
+                  req.app.locals.db.collection('cachednews').insertMany(response.data.articles);
+                  res.render('index', {
+                    title: 'Home',
+                    new_releases: new_releases,
+                    news: response.data.articles,
+                    top_rated_switch: top_rated_switch,
+                    top_rated_pc: top_rated_pc,
+                    top_rated_ps4: top_rated_ps4,
+                    top_rated_xbone: top_rated_xbone
+                  });
+                })
+                .catch(err => news);
+          }
+          else{
+            req.app.locals.db.collection('cachednews').find({ front_page : { $exists : 1 } }).toArray().then(articles => {
               res.render('index', {
                 title: 'Home',
                 new_releases: new_releases,
-                news: response.data.articles,
+                news: articles,
                 top_rated_switch: top_rated_switch,
                 top_rated_pc: top_rated_pc,
                 top_rated_ps4: top_rated_ps4,
                 top_rated_xbone: top_rated_xbone
               });
             })
-            .catch(err => news);
+                .catch(err => news);
+          }
+        });
       });
   });
 });
