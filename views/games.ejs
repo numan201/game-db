@@ -9,7 +9,25 @@ function optionSelected(type, option) {
 }
 %>
 
+<div class="col-sm-12 text-right">
+    <form method="get" id="sortform">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort by:
+        </button>
+        <input class="span2" id="sorts" name="sorts" type="hidden">
+        <ul class="dropdown-menu" id="dropdownlist" aria-labelledby="dropdownMenuButton">
+            <li class="dropdown-item" onclick="$('#sorts').val('AlpAsc'); $('#sortform').submit()">Alphabetical: Ascending</li>
+            <li class="dropdown-item" onclick="$('#sorts').val('AlpDes'); $('#sortform').submit()">Alphabetical: Descending</li>
+            <li class="dropdown-item" onclick="$('#sorts').val('RatAsc'); $('#sortform').submit()">Ratings: Ascending</li>
+            <li class="dropdown-item" onclick="$('#sorts').val('RatDes'); $('#sortform').submit()">Ratings: Descending</li>
+            <li class="dropdown-item" onclick="$('#sorts').val('RelDes'); $('#sortform').submit()">Newest</li>
+            <li class="dropdown-item" onclick="$('#sorts').val('RelAsc'); $('#sortform').submit()">Oldest</li>
+        </ul>
+    </form>
+    <hr>
+</div>
 <div class="col-sm-2 text-left" id="filter">
+    <h1 class="mt-4">Filters</h1>
     <hr>
     <form method="get">
         <h4 class="mt-4">Genres</h4>
@@ -63,36 +81,6 @@ function optionSelected(type, option) {
             <span></span>
         </div>
         <hr>
-
-        <h4 class="mt-4">Sort By</h4>
-        <%sorting.forEach((sort) => {
-            let checked = '';
-            if (optionSelected('sorts', sort)) checked ='checked';
-        %>
-            <div class="form-check">
-                <input class="form-check-input" <%=checked%> type="radio" name="sorts" value=<%=sort%>>
-                <button class="btn btn-light" type="button" id=<%=sort%>><i class="fas fa-angle-down"></i></button>
-                <label class="form-check-label" for="<%=sort%>"><%=sort%></label>
-            </div>
-        <%});%>
-        <input type="hidden" id="descending" name="descending" value=<%true%>>
-        <script>
-            $(document).ready(function() {
-                $("button").click(function(event) {
-                    if(document.getElementById(event.target.id).children[0].className === "fas fa-angle-down"){
-                        document.getElementById(event.target.id).children[0].className = "fas fa-angle-up";
-                        document.getElementById("descending").value = false;
-                        //descending = false;
-                        //alert(descending);
-                    } else {
-                        document.getElementById(event.target.id).children[0].className = "fas fa-angle-down";
-                        document.getElementById("descending").value = true;
-                        //descending = true;
-                        //alert(descending);
-                    }
-                });
-            });
-        </script>
         <br>
         <button type="submit" class="btn btn-primary">Filter</button>
     </form>
@@ -126,6 +114,8 @@ function optionSelected(type, option) {
     <% } %>
 
     <% }); %>
+
+</div>
 
     <% include partials/pagination %>
 

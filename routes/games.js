@@ -37,19 +37,18 @@ router.get('/', function(req, res, next) {
     }
 
     if('sorts' in req.query){
-        let sorts = req.query.sorts;
-        let descending = req.query.descending;
-        if(descending === '')
-            descending = true;
+        //let sorts = req.query.sorts;
+        let type = req.query.sorts.slice(0, 3);
+        let descending = req.query.sorts.slice(-3) === "Des";
         let field = '';
-        switch(sorts){
-            case "Alphabetical":
+        switch(type){
+            case "Alp":
                 field = "name";
                 break;
-            case "Ratings":
+            case "Rat":
                 field = "rating";
                 break;
-            case "Release Date":
+            case "Rel":
                 field = "released";
         }
         let order = descending ? -1 : 1;
