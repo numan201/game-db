@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {getCurrentPage, paginationObject, skipCalc, resultsPerPage} = require("../paginationHelper");
+const {searchQuery} = require("../searchHelper");
+
 
 /* GET games listing. */
 router.get('/', function(req, res, next) {
@@ -9,6 +11,11 @@ router.get('/', function(req, res, next) {
     let filtersCondition = {$match : {}};
     let paginationQuery = [{$skip: skipCalc(currentPage)}, {$limit: resultsPerPage} ];
     let sortQuery = [];
+
+    if ('search' in req.query) {
+        filtersCondition['$match']['$text'] = { $search : req.query.search };
+        sortQuery = { $sort: { score: { $meta: "textScore" } } };
+    }
 
     if ('genres' in req.query) {
         let genres = req.query.genres;
@@ -27,12 +34,13 @@ router.get('/', function(req, res, next) {
 
         filtersCondition['$match']['platforms.platform.name'] = { $in : platforms };
     }
+
     let star = 0;
-    if('star'in req.query) {
+    if ('star' in req.query) {
         let stars = req.query.star;
         star = stars.slice(-1).parseInt();
     }
-    if(star !== 0){
+    if (star !== 0) {
         filtersCondition['$match']['rating_top'] = { $eq : star };
     }
 
@@ -52,6 +60,7 @@ router.get('/', function(req, res, next) {
         }
 
         let order = descending ? -1 : 1;
+
         sortQuery = {$sort: {[field] : order}};
     }
 
@@ -67,6 +76,7 @@ router.get('/', function(req, res, next) {
         res.render('games', {
             title: 'Games',
             pagination: paginationObject(currentPage,  count[0].totalCount, req.query),
+            searchQuery: searchQuery(req),
             games: games
         });
     });
