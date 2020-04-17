@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
         url: 'http://newsapi.org/v2/everything',
         params: {q: "videogames", pageSize: 20, ApiKey: newsKey},
     }).then((response) => {
-        res.render('news', {title: 'News', news: response.data.articles})
+        res.render('news', {title: 'News', page: req.baseUrl, news: response.data.articles})
     });
 
 });

@@ -44,11 +44,11 @@ router.get('/', function(req, res, next) {
         filtersCondition['$match']['rating_top'] = { $eq : star };
     }
 
-    if('sorts' in req.query){
+    if ('sorts' in req.query) {
         let type = req.query.sorts.slice(0, 3);
         let descending = req.query.sorts.slice(-3) === "Des";
         let field = '';
-        switch(type){
+        switch (type) {
             case "Alp":
                 field = "name";
                 break;
@@ -77,6 +77,7 @@ router.get('/', function(req, res, next) {
             title: 'Games',
             pagination: paginationObject(currentPage,  count[0].totalCount, req.query),
             searchQuery: searchQuery(req),
+            page: req.baseUrl,
             games: games
         });
     });

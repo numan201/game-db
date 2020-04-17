@@ -277,7 +277,7 @@ router.get('/', function(req, res) {
 
     req.app.locals.db.collection('games').findOne({_id : id})
         .then(game => {
-            let data = {title: game.name, game};
+            let data = {title: game.name, game, page: req.baseUrl};
             data._id = id;
             //Allowing Concurrency in our page load
             const promises = [

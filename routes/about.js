@@ -115,7 +115,7 @@ router.get('/', function(req, res, next) {
             await req.app.locals.db.collection('cache').updateOne({name: 'github'}, {$set: {updated: new Date(), issueNumbers: issueNumbers, commitNumbers: commitNumbers, commitNumbersWithoutTeam: commitNumbersWithoutTeam}});
         }
 
-        res.render('about', { title: 'About', issueNumbers: issueNumbers, commitNumbers: commitNumbers, graphCommitNumbersArray: JSON.stringify(commitNumbersWithoutTeam) });
+        res.render('about', { title: 'About', page: req.baseUrl, issueNumbers: issueNumbers, commitNumbers: commitNumbers, graphCommitNumbersArray: JSON.stringify(commitNumbersWithoutTeam) });
 
     });
 

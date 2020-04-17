@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {getCurrentPage, paginationObject, skipCalc, resultsPerPage} = require("../paginationHelper");
+const {searchQuery} = require("../searchHelper");
 
 /* GET publishers listing. */
 router.get('/', function(req, res, next) {
@@ -12,7 +13,12 @@ router.get('/', function(req, res, next) {
 
     let sortQuery = [];
 
-    if('numbers' in req.query) {
+    if ('search' in req.query) {
+        filtersCondition['$match']['$text'] = { $search : req.query.search };
+        sortQuery = { $sort: { score: { $meta: "textScore" } } };
+    }
+
+    if ('numbers' in req.query) {
         let numbers = req.query.numbers;
 
         numbers = parseInt(numbers);
@@ -23,11 +29,11 @@ router.get('/', function(req, res, next) {
         }
     }
 
-    if('sorts' in req.query){
+    if ('sorts' in req.query) {
         let type = req.query.sorts.slice(0, 3);
         let descending = req.query.sorts.slice(-3) === "Des";
         let field = '';
-        if(type === 'Alp'){
+        if (type === 'Alp') {
             field = "name";
         } else {
             field = "games_count";
@@ -35,6 +41,7 @@ router.get('/', function(req, res, next) {
         let order = descending ? -1 : 1;
         sortQuery = {$sort: {[field] : order}};
     }
+
     let baseQuery = [filtersCondition].concat(sortQuery);
     let paginatedQuery = baseQuery.concat(paginationQuery);
 
@@ -51,7 +58,9 @@ router.get('/', function(req, res, next) {
         res.render('publishers', {
             title: 'Publishers',
             pagination: paginationObject(currentPage,  count[0].totalCount, req.query),
-            publishers: publishers
+            publishers: publishers,
+            page: req.baseUrl,
+            searchQuery: searchQuery(req)
         });
     });
 });

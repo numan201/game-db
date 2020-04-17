@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {getCurrentPage, paginationObject, skipCalc, resultsPerPage} = require("../paginationHelper");
+const {searchQuery} = require("../searchHelper");
 
 /* GET developers listing. */
 router.get('/', function(req, res, next) {
@@ -12,7 +13,12 @@ router.get('/', function(req, res, next) {
 
     let sortQuery = [];
 
-    if('numbers' in req.query) {
+    if ('search' in req.query) {
+        filtersCondition['$match']['$text'] = { $search : req.query.search };
+        sortQuery = { $sort: { score: { $meta: "textScore" } } };
+    }
+
+    if ('numbers' in req.query) {
         let numbers = req.query.numbers;
 
         numbers = parseInt(numbers);
@@ -23,11 +29,11 @@ router.get('/', function(req, res, next) {
         }
     }
 
-    if('sorts' in req.query){
+    if ('sorts' in req.query){
         let type = req.query.sorts.slice(0, 3);
         let descending = req.query.sorts.slice(-3) === "Des";
         let field = '';
-        if(type === 'Alp'){
+        if (type === 'Alp'){
             field = "name";
         } else {
             field = "games_count";
@@ -49,9 +55,12 @@ router.get('/', function(req, res, next) {
             let totalCount = 0;
             count[0] = {totalcount: totalCount};
         }
+
         res.render('developers', {
             title: 'Developers',
             pagination: paginationObject(currentPage,  count[0].totalCount, req.query),
+            searchQuery: searchQuery(req),
+            page: req.baseUrl,
             developers: developers
         });
     });

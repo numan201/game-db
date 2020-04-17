@@ -62,6 +62,7 @@ router.get('/', function(req, res, next) {
             .then((response) => {
               res.render('index', {
                 title: 'Home',
+                page: req.baseUrl,
                 new_releases: new_releases,
                 news: response.data.articles,
                 top_rated_switch: top_rated_switch,
