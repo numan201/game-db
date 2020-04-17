@@ -2,8 +2,6 @@
 <%
 let genres = ['Action', 'Indie', 'Adventure', 'RPG', 'Shooter', 'Strategy', 'Casual', 'Simulation', 'Puzzle', 'Arcade', 'Platformer', 'Racing', 'Sports', 'Massively Multiplayer', 'Family', 'Fighting', 'Board Games', 'Educational', 'Card'];
 let platforms = ['PC', 'PlayStation 4', 'PlayStation 3', 'PlayStation 2', 'PlayStation', 'PS Vita', 'PSP', 'Xbox One', 'Xbox 360', 'Xbox', 'Nintendo Switch', 'iOS', 'Android', 'macOS', 'Linux', 'Nintendo 3DS', 'Nintendo DS', 'Nintendo DSi', 'Wii U', 'Wii', 'GameCube', 'Nintendo 64', 'Game Boy Advance', 'Game Boy Color', 'Game Boy', 'SNES', 'NES'];
-let sorting = ['Alphabetical', 'Ratings', 'Release Date'];
-//let descending = true;
 function optionSelected(type, option) {
     return (type in pagination.query && (pagination.query[type] == option || Object.values(pagination.query[type]).includes(option)));
 }
@@ -80,7 +78,6 @@ function optionSelected(type, option) {
             <label class="star-5" for="star-5">5</label>
             <span></span>
         </div>
-        <hr>
         <br>
         <button type="submit" class="btn btn-primary">Filter</button>
     </form>
@@ -114,8 +111,6 @@ function optionSelected(type, option) {
     <% } %>
 
     <% }); %>
-
-</div>
 
     <% include partials/pagination %>
 
