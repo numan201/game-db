@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
     let paginationQuery = [{$skip: skipCalc(currentPage)}, {$limit: resultsPerPage} ];
     let sortQuery = [];
 
-    if ('search' in req.query) {
+    if ('search' in req.query && req.query.search.trim() !== '') {
         filtersCondition['$match']['$text'] = { $search : req.query.search };
         sortQuery = { $sort: { score: { $meta: "textScore" } } };
     }
