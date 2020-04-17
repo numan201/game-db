@@ -2,13 +2,28 @@
 <%
 let genres = ['Action', 'Indie', 'Adventure', 'RPG', 'Shooter', 'Strategy', 'Casual', 'Simulation', 'Puzzle', 'Arcade', 'Platformer', 'Racing', 'Sports', 'Massively Multiplayer', 'Family', 'Fighting', 'Board Games', 'Educational', 'Card'];
 let platforms = ['PC', 'PlayStation 4', 'PlayStation 3', 'PlayStation 2', 'PlayStation', 'PS Vita', 'PSP', 'Xbox One', 'Xbox 360', 'Xbox', 'Nintendo Switch', 'iOS', 'Android', 'macOS', 'Linux', 'Nintendo 3DS', 'Nintendo DS', 'Nintendo DSi', 'Wii U', 'Wii', 'GameCube', 'Nintendo 64', 'Game Boy Advance', 'Game Boy Color', 'Game Boy', 'SNES', 'NES'];
-
-
 function optionSelected(type, option) {
     return (type in pagination.query && (pagination.query[type] == option || Object.values(pagination.query[type]).includes(option)));
 }
 %>
 
+<div class="col-sm-12 text-right">
+    <form method="get" id="sortform">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort by:
+        </button>
+        <input class="span2" id="sorts" name="sorts" type="hidden">
+        <ul class="dropdown-menu" id="dropdownlist" aria-labelledby="dropdownMenuButton">
+            <li class="dropdown-item" onclick="$('#sorts').val('AlpAsc'); $('#sortform').submit()">Alphabetical: Ascending</li>
+            <li class="dropdown-item" onclick="$('#sorts').val('AlpDes'); $('#sortform').submit()">Alphabetical: Descending</li>
+            <li class="dropdown-item" onclick="$('#sorts').val('RatAsc'); $('#sortform').submit()">Ratings: Ascending</li>
+            <li class="dropdown-item" onclick="$('#sorts').val('RatDes'); $('#sortform').submit()">Ratings: Descending</li>
+            <li class="dropdown-item" onclick="$('#sorts').val('RelDes'); $('#sortform').submit()">Newest</li>
+            <li class="dropdown-item" onclick="$('#sorts').val('RelAsc'); $('#sortform').submit()">Oldest</li>
+        </ul>
+    </form>
+    <hr>
+</div>
 <div class="col-sm-2 text-left" id="filter">
     <h1 class="mt-4">Filters</h1>
     <hr>
@@ -64,7 +79,6 @@ function optionSelected(type, option) {
             <span></span>
         </div>
         <br>
-
         <button type="submit" class="btn btn-primary">Filter</button>
     </form>
 </div>
