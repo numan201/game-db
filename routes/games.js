@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 
     let filtersCondition = {$match : {}};
     let paginationQuery = [{$skip: skipCalc(currentPage)}, {$limit: resultsPerPage} ];
-    let sortQuery = null;
+    let sortQuery = [];
 
     if ('genres' in req.query) {
         let genres = req.query.genres;
@@ -37,7 +37,6 @@ router.get('/', function(req, res, next) {
     }
 
     if('sorts' in req.query){
-        //let sorts = req.query.sorts;
         let type = req.query.sorts.slice(0, 3);
         let descending = req.query.sorts.slice(-3) === "Des";
         let field = '';
@@ -51,15 +50,14 @@ router.get('/', function(req, res, next) {
             case "Rel":
                 field = "released";
         }
+
         let order = descending ? -1 : 1;
-        sortQuery = {$sort: {field : order}};
+        sortQuery = {$sort: {[field] : order}};
     }
 
+    let baseQuery = [filtersCondition].concat(sortQuery);
+    let paginatedQuery = baseQuery.concat(paginationQuery);
 
-    let paginatedQuery = [filtersCondition].concat(paginationQuery);
-    if(sortQuery !== null){
-        paginatedQuery.push(sortQuery);
-    }
     let countQuery = [filtersCondition].concat( { $count: 'totalCount' });
 
     let gamesPromise = req.app.locals.db.collection('games').aggregate(paginatedQuery).toArray();
