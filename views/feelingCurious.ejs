@@ -1,0 +1,25 @@
+<% include partials/header %>
+
+<main class="container-fluid">
+    <h1 class="mt-4">Your curiosity has led you to</h1>
+
+    <hr>
+
+    <div class="card-deck" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); grid-gap: 0.1rem;">
+        <% let count = req.app.locals.db.collection('games').count;
+
+            let randNum = Math.floor(Math.random() * count);
+            let randGame = req.app.locals.db.collection('games').find().limit(1).skip(count);
+            let gameUrl = "/game?id=" + randGame._id;
+        %>
+        <div class="card" style="margin-bottom: 15px">
+            <a href="<%= gameURL %>"><img class="card-img-top" src="<%= randGame.background_image %>"></a>
+            <div class="card-body">
+                <a style="color:#000;" href="<%= gameURL %>"><h5 class="card-title"><%= randGame.name %></h5></a>
+            </div>
+        </div>
+    </div>
+    <br>
+</main>
+
+<% include partials/footer %>
