@@ -4,7 +4,7 @@ const axios = require('axios');
 const hltb = require('howlongtobeat');
 const hltbService = new hltb.HowLongToBeatService();
 const youtubeApiV3Search = require("youtube-api-v3-search");
-const { youtubeKey, twitchKey } = require('../keys');
+const { youtubeKey, twitchKey, steamKey } = require('../keys');
 const stringSimilarity = require('string-similarity');
 
 function getSteamAppId(game) {
@@ -262,6 +262,17 @@ function getWishlist(resolve, data, req, res){
     resolve(data);
 }
 
+function getSteamAchievements(resolve, data, req, res){
+    data.achievements = null;
+    data.steamAppId = getSteamAppId(data.game);
+    if(data.steamAppId == null) resolve(data);
+    return axios.get("http://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=" + steamKey + "&appid=" + data.steamAppId).then((resp) => {
+        data.achievements = resp.data.game.availableGameStats.achievements;
+        resolve(data);
+    })
+        .catch(err => {resolve(data);});
+}
+
 //checks if the game is cached, returns 0 if we're up to date, 1 if cache is too old and 2 if game isn't cached
 function checkCached(resolve, req, res, id){
     req.app.locals.db.collection('cachedgames').findOne({_id: id})
@@ -291,7 +302,7 @@ router.get('/', function(req, res) {
 
     req.app.locals.db.collection('games').findOne({_id : id})
         .then(game => {
-            let data = {title: game.name, game};
+            let data = {title: game.name, game, page: req.baseUrl};
             data._id = id;
             //Allowing Concurrency in our page load
             const promises = [
@@ -305,7 +316,8 @@ router.get('/', function(req, res) {
                 new Promise(resolve => getHLTB(resolve, data)),
                 new Promise(resolve => getYoutube(resolve, data)),
                 new Promise(resolve => getReviews(resolve, data, req, id)),
-                new Promise(resolve => getSteamPrice(resolve, data, req, id))
+                new Promise(resolve => getSteamPrice(resolve, data, req, id)),
+                new Promise(resolve => getSteamAchievements(resolve, data, req, id))
             ];
             Promise.all(promises).then(out => {
                 //Out is actually an array of all the promises output, so here we merge them

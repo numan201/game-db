@@ -5,6 +5,21 @@ function optionSelected(type, option) {
     return (type in pagination.query && (pagination.query[type] == option || Object.values(pagination.query[type]).includes(option)));
 }
 %>
+<div class="col-sm-12 text-right">
+    <form method="get" id="sortform">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort by:
+        </button>
+        <input class="span2" id="sorts" name="sorts" type="hidden">
+        <ul class="dropdown-menu" id="dropdownlist" aria-labelledby="dropdownMenuButton">
+            <li class="dropdown-item" onclick="$('#sorts').val('AlpAsc'); $('#sortform').submit()">Alphabetical: Ascending</li>
+            <li class="dropdown-item" onclick="$('#sorts').val('AlpDes'); $('#sortform').submit()">Alphabetical: Descending</li>
+            <li class="dropdown-item" onclick="$('#sorts').val('GamAsc'); $('#sortform').submit()"># of Games: Ascending</li>
+            <li class="dropdown-item" onclick="$('#sorts').val('GamDes'); $('#sortform').submit()"># of Games: Descending</li>
+        </ul>
+    </form>
+    <hr>
+</div>
 
 <div class="col-sm-2 text-left" id="filter">
     <h1 class="mt-4">Filters</h1>
@@ -34,6 +49,8 @@ function optionSelected(type, option) {
         </div>
         <br>
         <button type="submit" class="btn btn-primary">Filter</button>
+
+        <input name="search" type="hidden" value="<%=searchQuery%>"/>
     </form>
 </div>
 
@@ -41,7 +58,7 @@ function optionSelected(type, option) {
 
     <h1 class="mt-4">Publishers</h1>
     <hr>
-
+    <%if(publishers.length !== 0){%>
     <% publishers.forEach( (publisher, i) => {
         let publisherUrl = "/publisher?id=" + publisher._id;
     %>
@@ -65,6 +82,9 @@ function optionSelected(type, option) {
         <% } %>
 
     <% }); %>
+    <%} else {%>
+        <h3>No Publishers found</h3>
+    <%}%>
 
     <% include partials/pagination.ejs %>
 

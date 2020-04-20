@@ -58,7 +58,7 @@ router.get('/', function(req, res, next) {
             });
         }).then((games) => {
             let publishers = publisherList.values();
-            res.render('developer', {title: developer.name, developer: developer, games: games, publishers: publishers, reviews: games.reviews});
+            res.render('developer', {title: developer.name, page: req.baseUrl, developer: developer, games: games, publishers: publishers, reviews: games.reviews});
         });
     });
 

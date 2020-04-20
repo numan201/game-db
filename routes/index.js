@@ -85,6 +85,7 @@ router.get('/', function(req, res, next) {
             req.app.locals.db.collection('cachednews').find({ front_page : { $exists : 1 } }).toArray().then(articles => {
               res.render('index', {
                 title: 'Home',
+                page: req.baseUrl,
                 new_releases: new_releases,
                 news: articles,
                 top_rated_switch: top_rated_switch,

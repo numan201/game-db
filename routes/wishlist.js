@@ -18,7 +18,7 @@ router.get('/', require('connect-ensure-login').ensureLoggedIn('/'), function(re
         }
 
         req.app.locals.db.collection('games').find({_id: {$in: wishlist}}).toArray().then((games) => {
-            res.render('wishlist', {title: 'Wishlist', games: games});
+            res.render('wishlist', {title: 'Wishlist', page: req.baseUrl, games: games});
         });
 
     }
