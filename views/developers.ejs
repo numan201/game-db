@@ -58,7 +58,7 @@ function optionSelected(type, option) {
 
     <h1 class="mt-4">Developers</h1>
     <hr>
-
+    <%if(developers.length !== 0){%>
     <% developers.forEach( (developer, i) => {
         let developerUrl = "/developer?id=" + developer._id;
     %>
@@ -82,6 +82,9 @@ function optionSelected(type, option) {
         <% } %>
 
     <% }); %>
+    <%} else {%>
+        <h3>No Developers found</h3>
+    <%}%>
 
     <% include partials/pagination.ejs %>
 

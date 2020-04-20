@@ -73,6 +73,10 @@ router.get('/', function(req, res, next) {
     let gamesCountPromise = req.app.locals.db.collection('games').aggregate(countQuery).toArray();
 
     Promise.all([gamesPromise, gamesCountPromise]).then(([games, count]) => {
+        if(count.length === 0){
+            let totalCount = 0;
+            count[0] = {totalcount: totalCount};
+        }
         res.render('games', {
             title: 'Games',
             pagination: paginationObject(currentPage,  count[0].totalCount, req.query),
