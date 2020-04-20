@@ -115,7 +115,6 @@
                     <%} else{%>
                         <h6 class="mt-0">Written by: Unknown Author</h6>
                     <%}%>
-                    <h6 class="mt-0">Written by: <%=article.author%></h6>
                     <h6 class="mt-0"><small><i>Date: <%=formattedTime%></i></small></h6>
                 </div>
             </li>
@@ -127,6 +126,52 @@
             <%}%>
         </ul>
     </div>
+
+    <br>
+    <%if(achievements !== null){%>
+    <h2>Steam Achievements</h2>
+    <div class="container-fluid text-left">
+        <div class="row">
+            <div class="col-6">
+                <%
+                var ceiling;
+                if(achievements.length >= 5){
+                    ceiling = 5;
+                } else {
+                    ceiling = achievements.length;
+                }
+                for(let i = 0; i < ceiling; i++){%>
+                <div class="media">
+                    <img class="mr-3" src="<%=achievements[i].icon%>" alt="...">
+                    <div class="media-body">
+                        <h5 class="mt-0"><%=achievements[i].displayName%></h5>
+                        <h7 class="mt-0"><%=achievements[i].description%></h7>
+                    </div>
+                </div>
+                <%}%>
+            </div>
+            <%if(achievements.length > 5){
+                if(achievements.length >= 10){
+                    ceiling = 10;
+                } else {
+                    ceiling = achievements.length;
+                }
+            %>
+            <div class="col-6">
+                <%for(let i = 5; i < ceiling; i++){%>
+                <div class="media">
+                    <img class="mr-3" src="<%=achievements[i].icon%>" alt="...">
+                    <div class="media-body">
+                        <h5 class="mt-0"><%=achievements[i].displayName%></h5>
+                        <h7 class="mt-0"><%=achievements[i].description%></h7>
+                    </div>
+                </div>
+                <%}%>
+            </div>
+            <%}%>
+        </div>
+    </div>
+    <%}%>
 
     <br>
 
