@@ -130,20 +130,34 @@ function getSteamPrice(resolve, data) {
         .catch(err => {resolve(data);});
 }
 
-function getSteamNews(resolve, data){
+function getSteamNews(resolve, data, req) {
     // Steam News
     data.news = null;
     data.steamAppId = getSteamAppId(data.game);
-    if(data.steamAppId == null) resolve(data);
-    return axios.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=' + data.steamAppId +'&count=3&maxlength=0&format=json')
-        .then( (resp) => {
-                if (resp.data.appnews !== null) {
-                    data.news = resp.data.appnews.newsitems;
-                }
-                resolve(data);
-            }
-        )
-        .catch(err => resolve(data));
+    if (data.steamAppId == null) resolve(data);
+    req.app.locals.db.collection('cachednews').find({ game_name : {$eq: data.game.name}}).toArray().then(articles => {
+        console.log("Articles count for " + data.game.name + " is " + articles.length);
+        if(articles.length === 0) {
+            return axios.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=' + data.steamAppId + '&count=3&maxlength=0&format=json')
+                .then((resp) => {
+                        if (resp.data.appnews !== null) {
+                            data.news = resp.data.appnews.newsitems;
+                            resp.data.appnews.newsitems.forEach(newsitem => {
+                                newsitem.game_name = data.game.name;
+                                newsitem.createdAt = new Date();
+                            });
+                            req.app.locals.db.collection('cachednews').insertMany(resp.data.appnews.newsitems);
+                        }
+                        resolve(data);
+                    }
+                )
+                .catch(err => resolve(data));
+        }
+        else{
+            data.news = articles;
+            resolve(data);
+        }
+    });
 }
 
 function getTwitchIntegration(resolve, data){
@@ -297,7 +311,7 @@ router.get('/', function(req, res) {
                 new Promise(resolve => getSteamPlayerCount(resolve, data)),
                 new Promise(resolve => getPS4Price(resolve, data)),
                 new Promise(resolve => getXB1Link(resolve, data)),
-                new Promise(resolve => getSteamNews(resolve, data)),
+                new Promise(resolve => getSteamNews(resolve, data, req)),
                 new Promise(resolve => getTwitchIntegration(resolve, data)),
                 new Promise(resolve => getHLTB(resolve, data)),
                 new Promise(resolve => getYoutube(resolve, data)),
