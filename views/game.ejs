@@ -127,17 +127,15 @@
 
         </div>
     </div>
-
+    <% if (news !== null) {%>
     <br>
     <div class="container-fluid text-left">
         <h2>News</h2>
         <ul class="list-unstyled">
-            <% if (news !== null) {
-                    news.forEach((article) => {
-                    var date = new Date(article.date * 1000);
-                    var formattedTime = date.toLocaleDateString() + " " + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            <%news.forEach((article) => {
+            var date = new Date(article.date * 1000);
+            var formattedTime = date.toLocaleDateString() + " " + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
             %>
-
             <li class="media">
                 <div class="media-body">
                     <a href="<%=article.url%>"><h5 class="mt-0"><%=article.title%></h5></a>
@@ -151,10 +149,7 @@
             </li>
             <hr>
             <% });
-            } else {%>
-                <h6 class="mt-0">This website currently does not have support for news for non-Steam Games</h6>
-                <h6 class="mt-0">Please check our Github Repo when this feature will be implemented</h6>
-            <%}%>
+            }%>
         </ul>
     </div>
 
