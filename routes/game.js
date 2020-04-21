@@ -136,7 +136,6 @@ function getSteamNews(resolve, data, req) {
     data.steamAppId = getSteamAppId(data.game);
     if (data.steamAppId == null) resolve(data);
     req.app.locals.db.collection('cachednews').find({ game_name : {$eq: data.game.name}}).toArray().then(articles => {
-        console.log("Articles count for " + data.game.name + " is " + articles.length);
         if(articles.length === 0) {
             return axios.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=' + data.steamAppId + '&count=3&maxlength=0&format=json')
                 .then((resp) => {
@@ -265,12 +264,12 @@ function getWishlist(resolve, data, req, res){
 function getSteamAchievements(resolve, data, req, res){
     data.achievements = null;
     data.steamAppId = getSteamAppId(data.game);
-    if(data.steamAppId == null) resolve(data);
-    return axios.get("http://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=" + steamKey + "&appid=" + data.steamAppId).then((resp) => {
+    if(data.steamAppId == null){ resolve(data); }
+    axios.get("http://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=" + steamKey + "&appid=" + data.steamAppId).then((resp) => {
         data.achievements = resp.data.game.availableGameStats.achievements;
         resolve(data);
     })
-        .catch(err => {resolve(data);});
+        .catch(err => { resolve(data);});
 }
 
 //checks if the game is cached, returns 0 if we're up to date, 1 if cache is too old and 2 if game isn't cached
@@ -299,7 +298,6 @@ router.get('/', function(req, res) {
 
     //Used for adjusting the cache timing
     //req.app.locals.db.collection('cachedgames').createIndex({"date": 1}, {expireAfterSeconds: 60 * 5});
-
     req.app.locals.db.collection('games').findOne({_id : id})
         .then(game => {
             let data = {title: game.name, game, page: req.baseUrl};

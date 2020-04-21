@@ -10,11 +10,24 @@ class UniqueSet {
         this.map.set(JSON.stringify(item), item);
     }
     values() {
-        return this.map.values();
+        return [...this.map.values()];
     }
     delete(item) {
         return this.map.delete(JSON.stringify(item));
     }
+}
+
+function checkCached(resolve, req, res, id){
+    req.app.locals.db.collection('cachedpublishers').findOne({_id: id})
+        .then(publisher => {
+            if(publisher == null){
+                resolve(false);
+            }
+            else{
+                res.render('publisher', publisher);
+                resolve(true);
+            }
+        }).catch(err => resolve(false));
 }
 
 /* GET games listing. */
@@ -23,6 +36,8 @@ router.get('/', function(req, res, next) {
     //let reviews = null;
 
     let developerList = new UniqueSet();
+
+    const cachePromise = new Promise(finish => checkCached(finish, req, res, id))
 
     // Get publisher
     req.app.locals.db.collection('publishers').findOne({_id : id}).then((publisher) => {
@@ -58,8 +73,15 @@ router.get('/', function(req, res, next) {
                 return games;
             });
         }).then((games) => {
-            let developers = developerList.values();
-            res.render('publisher', {title: publisher.name, page: req.baseUrl, publisher: publisher, games: games, developers: developers, reviews: games.reviews});
+            cachePromise.then(cached => {
+                let developers = developerList.values();
+                let pubRender  = {title: publisher.name, page: req.baseUrl, publisher: publisher, games: games, developers: developers, reviews: games.reviews};
+                if(cached == false){
+                    res.render('publisher', pubRender);
+                }
+                req.app.locals.db.collection('cachedpublishers').replaceOne({_id: id}, pubRender, {upsert:true});
+                return pubRender;
+            });
         });
 
 
