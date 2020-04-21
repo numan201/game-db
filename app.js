@@ -16,6 +16,7 @@ const aboutRouter = require('./routes/about');
 const wishlistRouter = require('./routes/wishlist');
 const newsRouter = require('./routes/news');
 const reviewRouter = require('./routes/review');
+const feelingCuriousRouter = require('./routes/feelingCurious');
 const domain = 'localhost:3000';
 
 const app = express();
@@ -114,6 +115,7 @@ app.use('/wishlist', wishlistRouter);
 app.use('/logout', logoutRouter);
 app.use('/news', newsRouter);
 app.use('/review', reviewRouter);
+app.use('/feelingCurious', feelingCuriousRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
