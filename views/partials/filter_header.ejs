@@ -56,7 +56,7 @@ let selectedSearchType = searchPage.replace('/', '')[0].toUpperCase() + searchPa
 
 
             <div class="input-group">
-                <input name="search" style="width:600px;" class="form-control" type="text" placeholder="Search" value="<%=searchQuery%>" aria-label="Search">
+                <input name="search" style="width:250px;" class="form-control" type="text" placeholder="Search" value="<%=searchQuery%>" aria-label="Search">
                 <div class="input-group-append">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%=selectedSearchType%></button>
                     <div class="dropdown-menu" style="left:auto">
@@ -94,14 +94,6 @@ let selectedSearchType = searchPage.replace('/', '')[0].toUpperCase() + searchPa
         <% } %>
         <div>
 </nav>
-
-<% if (page == '') { %>
-    <div class="container-fluid" id="banner_container">
-        <div class="full-width-div" id="banner_div">
-            <img id="banner" src="/images/banner_wide.png">
-        </div>
-    </div>
-<% } %>
 
 <main class="container-fluid text-center">
     <div class="row">
