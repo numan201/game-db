@@ -10,17 +10,32 @@ class UniqueSet {
         this.map.set(JSON.stringify(item), item);
     }
     values() {
-        return this.map.values();
+        return [...this.map.values()];
     }
     delete(item) {
         return this.map.delete(JSON.stringify(item));
     }
 }
 
+function checkCached(resolve, req, res, id){
+    req.app.locals.db.collection('cacheddevelopers').findOne({_id: id})
+        .then(developer => {
+            if(developer == null){
+                resolve(false);
+            }
+            else{
+                res.render('developer', developer);
+                resolve(true);
+            }
+        }).catch(err => resolve(false));
+}
+
 /* GET games listing. */
 router.get('/', function(req, res, next) {
     let id = require('mongodb').ObjectID(req.query.id);
     let publisherList = new UniqueSet();
+
+    const cachePromise = new Promise(finish => checkCached(finish, req, res, id))
 
     // Get developer
     req.app.locals.db.collection('developers').findOne({_id : id}).then((developer) => {
@@ -57,8 +72,15 @@ router.get('/', function(req, res, next) {
                 return games;
             });
         }).then((games) => {
-            let publishers = publisherList.values();
-            res.render('developer', {title: developer.name, page: req.baseUrl, developer: developer, games: games, publishers: publishers, reviews: games.reviews});
+            cachePromise.then(cached => {
+                let publishers = publisherList.values();
+                let devRender  = {title: developer.name, page: req.baseUrl, developer: developer, games: games, publishers: publishers, reviews: games.reviews};
+                if(cached == false){
+                    res.render('developer', devRender);
+                }
+                req.app.locals.db.collection('cacheddevelopers').replaceOne({_id: id}, devRender, {upsert:true});
+                return devRender;
+            });
         });
     });
 
