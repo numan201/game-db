@@ -6,6 +6,16 @@ function searchQuery(req) {
     return searchQuery;
 }
 
+function sortBy(req) {
+    let sortBy = '';
+
+    if ('sorts' in req.query) sortBy = req.query.sorts;
+
+    return sortBy;
+}
+
+
 module.exports = {
-    searchQuery
+    searchQuery,
+    sortBy
 };

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {getCurrentPage, paginationObject, skipCalc, resultsPerPage} = require("../paginationHelper");
-const {searchQuery} = require("../searchHelper");
+const {searchQuery, sortBy} = require("../searchSortHelper");
 
 /* GET developers listing. */
 router.get('/', function(req, res, next) {
@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
         }
     }
 
-    if ('sorts' in req.query){
+    if ('sorts' in req.query && req.query.sorts.trim() !== '') {
         if(req.query.sorts !== 'Relevance') {
             let type = req.query.sorts.slice(0, 3);
             let descending = req.query.sorts.slice(-3) === "Des";
@@ -62,6 +62,7 @@ router.get('/', function(req, res, next) {
             title: 'Developers',
             pagination: paginationObject(currentPage,  count[0].totalCount, req.query),
             searchQuery: searchQuery(req),
+            sortBy: sortBy(req),
             page: req.baseUrl,
             developers: developers
         });
