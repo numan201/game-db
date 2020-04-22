@@ -51,6 +51,17 @@ function optionSelected(type, option) {
         <input class="span2" id="sorts" name="sorts" type="hidden">
         <input name="search" type="hidden" value="<%=searchQuery%>"/>
     </form>
+    <script>
+        //Deselect rating buttons if user holds down ctrl and clicks
+        let radios = document.getElementsByName('numbers');
+        for(let i=0; i<radios.length; i++ ) {
+            radios[i].onclick = function(e) {
+                if(e.ctrlKey) {
+                    this.checked = false;
+                }
+            }
+        }
+    </script>
 </div>
 
 <div class="col-sm-9">
