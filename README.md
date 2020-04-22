@@ -31,5 +31,5 @@
 ### David Wolf
 * **EID:** drw2764 
 * **GitHub ID:** rambisco
-* **Estimated completion time (hours):** 22 
-* **Actual completion time (hours):** 24
+* **Estimated completion time (hours):** 25 
+* **Actual completion time (hours):** 27
