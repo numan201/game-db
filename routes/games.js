@@ -38,10 +38,17 @@ router.get('/', function(req, res, next) {
     let star = 0;
     if ('star' in req.query) {
         let stars = req.query.star;
-        star = stars.slice(-1).parseInt();
+        star = stars.slice(-1);
+        star = parseInt(star);
     }
     if (star !== 0) {
-        filtersCondition['$match']['rating_top'] = { $eq : star };
+        if(star === 1) {
+            filtersCondition['$match']['rating'] = {$lt: 1.50};
+        } else if(star === 5){
+            filtersCondition['$match']['rating'] = {$lt: 5.01, $gt: star - 0.51};
+        }else {
+            filtersCondition['$match']['rating'] = {$lt: star + .50, $gt: star - 0.51};
+        }
     }
 
     if ('sorts' in req.query) {

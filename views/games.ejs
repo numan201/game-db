@@ -2,6 +2,7 @@
 <%
 let genres = ['Action', 'Indie', 'Adventure', 'RPG', 'Shooter', 'Strategy', 'Casual', 'Simulation', 'Puzzle', 'Arcade', 'Platformer', 'Racing', 'Sports', 'Massively Multiplayer', 'Family', 'Fighting', 'Board Games', 'Educational', 'Card'];
 let platforms = ['PC', 'PlayStation 4', 'PlayStation 3', 'PlayStation 2', 'PlayStation', 'PS Vita', 'PSP', 'Xbox One', 'Xbox 360', 'Xbox', 'Nintendo Switch', 'iOS', 'Android', 'macOS', 'Linux', 'Nintendo 3DS', 'Nintendo DS', 'Nintendo DSi', 'Wii U', 'Wii', 'GameCube', 'Nintendo 64', 'Game Boy Advance', 'Game Boy Color', 'Game Boy', 'SNES', 'NES'];
+let stars = ['star1', 'star2', 'star3', 'star4', 'star5'];
 function optionSelected(type, option) {
     return (type in pagination.query && (pagination.query[type] == option || Object.values(pagination.query[type]).includes(option)));
 }
@@ -66,18 +67,30 @@ function optionSelected(type, option) {
         <hr>
         <h4 class="mt-4">Ratings</h4>
         <div class="stars">
-            <input type="radio" name="star" class="star-1" id="star-1" value="star1" />
-            <label class="star-1" for="star-1">1</label>
-            <input type="radio" name="star" class="star-2" id="star-2" value="star2" />
-            <label class="star-2" for="star-2">2</label>
-            <input type="radio" name="star" class="star-3" id="star-3" value="star3" />
-            <label class="star-3" for="star-3">3</label>
-            <input type="radio" name="star" class="star-4" id="star-4" value="star4" />
-            <label class="star-4" for="star-4">4</label>
-            <input type="radio" name="star" class="star-5" id="star-5" value="star5" />
-            <label class="star-5" for="star-5">5</label>
+            <%
+            stars.forEach((star) => {
+                let checked = '';
+                if(optionSelected('star', star)) checked = 'checked'
+                let betterStar = star.slice(0, 4) + '-' + star.slice(4);
+                let number = star.slice(4);
+                number = parseInt(number);
+            %>
+                <input type="radio" name="star" class="<%=betterStar%>" <%=checked%> id="<%=betterStar%>" value="<%=star%>" />
+                <label class="<%=betterStar%>" for="<%=betterStar%>"><%=number%></label>
+            <%})
+            %>
             <span></span>
         </div>
+        <script>
+            let radios = document.getElementsByName('star');
+            for(let i=0; i<radios.length; i++ ) {
+                radios[i].onclick = function(e) {
+                    if(e.ctrlKey) {
+                        this.checked = false;
+                    }
+                }
+            }
+        </script>
         <br>
         <button type="submit" class="btn btn-primary">Filter</button>
 
