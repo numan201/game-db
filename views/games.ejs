@@ -15,6 +15,7 @@ function optionSelected(type, option) {
         </button>
         <input class="span2" id="sorts" name="sorts" type="hidden">
         <ul class="dropdown-menu" id="dropdownlist" aria-labelledby="dropdownMenuButton">
+            <li class="dropdown-item" onclick="$('#sorts').val('Relevance'); $('#sortform').submit()">Relevance</li>
             <li class="dropdown-item" onclick="$('#sorts').val('AlpAsc'); $('#sortform').submit()">Alphabetical: Ascending</li>
             <li class="dropdown-item" onclick="$('#sorts').val('AlpDes'); $('#sortform').submit()">Alphabetical: Descending</li>
             <li class="dropdown-item" onclick="$('#sorts').val('RatAsc'); $('#sortform').submit()">Ratings: Ascending</li>
@@ -82,6 +83,7 @@ function optionSelected(type, option) {
             <span></span>
         </div>
         <script>
+            //Deselect rating buttons if user holds down ctrl and clicks
             let radios = document.getElementsByName('star');
             for(let i=0; i<radios.length; i++ ) {
                 radios[i].onclick = function(e) {
