@@ -6,25 +6,22 @@ function optionSelected(type, option) {
 }
 %>
 <div class="col-sm-12 text-right">
-    <form method="get" id="sortform">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sort by:
-        </button>
-        <input class="span2" id="sorts" name="sorts" type="hidden">
-        <ul class="dropdown-menu" id="dropdownlist" aria-labelledby="dropdownMenuButton">
-            <li class="dropdown-item" onclick="$('#sorts').val('AlpAsc'); $('#sortform').submit()">Alphabetical: Ascending</li>
-            <li class="dropdown-item" onclick="$('#sorts').val('AlpDes'); $('#sortform').submit()">Alphabetical: Descending</li>
-            <li class="dropdown-item" onclick="$('#sorts').val('GamAsc'); $('#sortform').submit()"># of Games: Ascending</li>
-            <li class="dropdown-item" onclick="$('#sorts').val('GamDes'); $('#sortform').submit()"># of Games: Descending</li>
-        </ul>
-    </form>
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Sort by:
+    </button>
+    <ul class="dropdown-menu" id="dropdownlist" aria-labelledby="dropdownMenuButton">
+        <li class="dropdown-item" onclick="$('#sorts').val('AlpAsc'); $('#filterSearchSort').submit()">Alphabetical: Ascending</li>
+        <li class="dropdown-item" onclick="$('#sorts').val('AlpDes'); $('#filterSearchSort').submit()">Alphabetical: Descending</li>
+        <li class="dropdown-item" onclick="$('#sorts').val('GamAsc'); $('#filterSearchSort').submit()"># of Games: Ascending</li>
+        <li class="dropdown-item" onclick="$('#sorts').val('GamDes'); $('#filterSearchSort').submit()"># of Games: Descending</li>
+    </ul>
     <hr>
 </div>
 
 <div class="col-sm-2 text-left" id="filter">
     <h1 class="mt-4">Filters</h1>
     <hr>
-    <form method="get">
+    <form id="filterSearchSort" method="get">
         <h4 class="mt-4">Number of Games Published</h4>
         <%
         numbers.forEach((number) =>{
@@ -50,6 +47,7 @@ function optionSelected(type, option) {
         <br>
         <button type="submit" class="btn btn-primary">Filter</button>
 
+        <input class="span2" id="sorts" name="sorts" type="hidden">
         <input name="search" type="hidden" value="<%=searchQuery%>"/>
     </form>
 </div>

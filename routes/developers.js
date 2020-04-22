@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
         }
     }
 
-    if ('sorts' in req.query){
+    if ('sorts' in req.query && req.query.sorts.trim() !== '') {
         let type = req.query.sorts.slice(0, 3);
         let descending = req.query.sorts.slice(-3) === "Des";
         let field = '';
