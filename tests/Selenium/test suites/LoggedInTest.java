@@ -96,5 +96,7 @@ public class LoggedInTest {
     driver.findElement(By.linkText("About")).click();
     // 9 | click | linkText=News | 
     driver.findElement(By.linkText("News")).click();
+    // 10 | click | linkText=Feeling Curious | 
+    driver.findElement(By.linkText("Feeling Curious")).click();
   }
 }

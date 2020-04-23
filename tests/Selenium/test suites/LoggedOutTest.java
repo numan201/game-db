@@ -52,9 +52,11 @@ public class LoggedOutTest {
     driver.findElement(By.linkText("Publishers")).click();
     // 6 | click | linkText=About | 
     driver.findElement(By.linkText("About")).click();
-    // 7 | click | linkText=News | 
+    // 7 | click | linkText=Feeling Curious | 
+    driver.findElement(By.linkText("Feeling Curious")).click();
+    // 8 | click | linkText=News | 
     driver.findElement(By.linkText("News")).click();
-    // 8 | click | linkText=Games | 
+    // 9 | click | linkText=Games | 
     driver.findElement(By.linkText("Games")).click();
   }
   @Test
