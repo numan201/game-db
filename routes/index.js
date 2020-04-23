@@ -71,6 +71,7 @@ router.get('/', function(req, res, next) {
                   req.app.locals.db.collection('cachednews').insertMany(response.data.articles);
                   res.render('index', {
                     title: 'Home',
+                    page: req.baseUrl,
                     new_releases: new_releases,
                     news: response.data.articles,
                     top_rated_switch: top_rated_switch,
