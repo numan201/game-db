@@ -22,6 +22,7 @@ router.get('/', function(req, res, next) {
                     res.render('news', {
                         title: 'News',
                         news: response.data.articles,
+                        page: req.baseUrl
                     });
                 })
                 .catch(err => news);
