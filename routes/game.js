@@ -192,7 +192,7 @@ function getTwitchIntegration(resolve, data){
 
 function getHLTB(resolve, data){
     // How Long to Beat
-
+    data.hltb = null;
     return hltbService.search(data.game.name).then(result => {
         data.hltb = {};
 
