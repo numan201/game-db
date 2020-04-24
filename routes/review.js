@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 router.post('/', (req, res) => {
-    //let gameURL = "/game?id=" + req.body.gameId;
     let URL = "/";
     let id;
     if('gameId' in req.body){
@@ -16,6 +15,9 @@ router.post('/', (req, res) => {
         URL = URL + "publisher?id=" + id;
     }
     var time = Date.now();
+    if(!('userratings' in req.body)){
+        res.redirect(URL);
+    }
     let newReview = {
         id: id,
         title: req.body.title,
