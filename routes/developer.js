@@ -29,7 +29,7 @@ function checkCached(resolve, req, res, id){
                     resolve(true);
                     developer.reviews = reviews;
                     res.render('developer', developer);
-                }));
+                });
             }
         }).catch(err => resolve(false));
 }
