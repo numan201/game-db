@@ -204,6 +204,7 @@ function getHLTB(resolve, data){
             data.hltb.main = result[0].gameplayMain;
             data.hltb.mainExtra = result[0].gameplayMainExtra;
             data.hltb.completionist = result[0].gameplayCompletionist;
+            if(data.hltb.main == 0 && data.hltb.mainExtra == 0 && data.hltb.completionist == 0) data.hltb.exists = false;
         }
         resolve(data);
     })

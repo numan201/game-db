@@ -41,7 +41,7 @@
                 <% developers.forEach( (developer, i) => { %>
                     <a href="/developer?id=<%= developer._id %>"><%= developer.name %></a><%= (i !== developers.length - 1) ? ', ' : '' %>
                 <% }); %>
-                <% if(developers.length == 0 && steamPrice != null) { steamPrice.developers.forEach((developer, i) => {%>
+                <% if(developers.length == 0 && steamPrice != null && steamPrice.developers != null) { steamPrice.developers.forEach((developer, i) => {%>
                     <%= developer%><%= (i !== steamPrice.developers.length - 1) ? ', ' : '' %>
                 <%});}%>
 
@@ -49,7 +49,7 @@
                 <% publishers.forEach( (publisher, i) => { %>
                     <a href="/publisher?id=<%= publisher._id %>"><%= publisher.name %></a><%= (i !== publishers.length - 1) ? ', ' : '' %>
                 <% }); %>
-                <% if(publishers.length == 0 && steamPrice != null) { steamPrice.publishers.forEach((publisher, i) => {%>
+                <% if(publishers.length == 0 && steamPrice != null && steamPrice.publishers != null) { steamPrice.publishers.forEach((publisher, i) => {%>
                     <%= publisher%><%= (i !== steamPrice.publishers.length - 1) ? ', ' : '' %>
                 <%});} else if(publishers.length == 0 && ps4Price != null) {%>
                     <%= ps4Price.publisherFallback%>
@@ -73,7 +73,7 @@
                     <%}});%>
             </ul>
 
-            <% if(hltb && hltb.exists == true) {%>
+            <% if(hltb && hltb.exists !== undefined && hltb.exists != null && hltb.exists == true) {%>
                 <strong>Average Time to Complete:</strong>
                 <ul class="list-unstyled">
                     <li>Main Story: <%= hltb.main%> Hours</li>
@@ -154,7 +154,7 @@
     </div>
 
     <br>
-    <%if(achievements !== null){%>
+    <%if(achievements !== null && achievements !== undefined){%>
     <h2>Steam Achievements</h2>
     <div class="container-fluid text-left">
         <div class="row">
