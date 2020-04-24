@@ -91,7 +91,7 @@
                     <a href="?id=<%=game._id%>&addWishlist"><button class="btn btn-secondary">Add to Wishlist</button></a>
                 <% }
             } else { %>
-                <a href="/auth/google">Login to Add to Wishlist</a>
+                    <a href="/auth/google"><button class="btn btn-danger">Login to Add to Wishlist</button></a><br><br>
             <% } %>
 
                 <%let gameUrl = "http://gamedb.us-east-1.elasticbeanstalk.com/game?id=" + game._id;%>
