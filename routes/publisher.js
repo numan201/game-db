@@ -24,8 +24,12 @@ function checkCached(resolve, req, res, id){
                 resolve(false);
             }
             else{
-                res.render('publisher', publisher);
-                resolve(true);
+                let reviews = req.app.locals.db.collection('reviews').find({id:id.toLocaleString()}).toArray();
+                Promise.all([reviews]).then(([reviews]) => {
+                    resolve(true);
+                    publisher.reviews = reviews;
+                    res.render('publisher', publisher);
+                });
             }
         }).catch(err => resolve(false));
 }
