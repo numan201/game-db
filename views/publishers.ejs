@@ -57,7 +57,7 @@ function optionSelected(type, option) {
         let radios = document.getElementsByName('numbers');
         for(let i=0; i<radios.length; i++ ) {
             radios[i].onclick = function(e) {
-                if(e.ctrlKey) {
+                if(e.shiftKey) {
                     this.checked = false;
                 }
             }
