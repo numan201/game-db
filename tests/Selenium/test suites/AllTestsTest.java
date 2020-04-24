@@ -487,23 +487,6 @@ public class AllTestsTest {
     driver.findElement(By.linkText("Rockstar Games")).click();
   }
   @Test
-  public void fakeSearchBaralwaysleadstohomepage() {
-    // Test name: fake Search Bar (always leads to homepage)
-    // Step # | name | target | value
-    // 1 | open | / | 
-    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
-    // 2 | setWindowSize | 1280x800 | 
-    driver.manage().window().setSize(new Dimension(1280, 800));
-    // 3 | click | css=.form-control | 
-    driver.findElement(By.cssSelector(".form-control")).click();
-    // 4 | type | css=.form-control | test
-    driver.findElement(By.cssSelector(".form-control")).sendKeys("test");
-    // 5 | sendKeys | css=.form-control | ${KEY_ENTER}
-    driver.findElement(By.cssSelector(".form-control")).sendKeys(Keys.ENTER);
-    // 6 | type | css=.form-control | test
-    driver.findElement(By.cssSelector(".form-control")).sendKeys("test");
-  }
-  @Test
   public void developersPublishersSony() {
     // Test name: developers -> Publishers (Sony)
     // Step # | name | target | value

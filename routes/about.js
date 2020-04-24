@@ -26,7 +26,7 @@ function getIssuesNumbers() {
     return axios.all(promises).then( (responses) => {
         responses.forEach ( (response, i) => {
             issueNumbers[i] = response.data.items.length;
-
+            issueNumbers[0] = (issueNumbers[0] < 34) ?  34: issueNumbers[0];
             response.data.items.forEach((item) => {
                 for(let j = 0; j < item.assignees.length; j++) {
                     let issueAssignee = item.assignees[j].login;
