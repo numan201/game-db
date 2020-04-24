@@ -52,9 +52,11 @@ public class SmokeTestTest {
     driver.findElement(By.linkText("Publishers")).click();
     // 6 | click | linkText=About | 
     driver.findElement(By.linkText("About")).click();
-    // 7 | click | linkText=News | 
+    // 7 | click | linkText=Feeling Curious | 
+    driver.findElement(By.linkText("Feeling Curious")).click();
+    // 8 | click | linkText=News | 
     driver.findElement(By.linkText("News")).click();
-    // 8 | click | linkText=Games | 
+    // 9 | click | linkText=Games | 
     driver.findElement(By.linkText("Games")).click();
   }
   @Test
@@ -108,5 +110,43 @@ public class SmokeTestTest {
     driver.findElement(By.linkText("Developers")).click();
     // 4 | click | linkText=See More | 
     driver.findElement(By.linkText("See More")).click();
+  }
+  @Test
+  public void feelingCurious() {
+    // Test name: feeling Curious
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | linkText=Feeling Curious | 
+    driver.findElement(By.linkText("Feeling Curious")).click();
+    // 4 | click | linkText=Feeling Curious | 
+    driver.findElement(By.linkText("Feeling Curious")).click();
+    // 5 | click | linkText=Feeling Curious | 
+    driver.findElement(By.linkText("Feeling Curious")).click();
+    // 6 | click | linkText=Feeling Curious | 
+    driver.findElement(By.linkText("Feeling Curious")).click();
+  }
+  @Test
+  public void toggleDarkMode() {
+    // Test name: toggle Dark Mode
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | css=.toggle-off | 
+    driver.findElement(By.cssSelector(".toggle-off")).click();
+    // 4 | click | css=.toggle-on | 
+    driver.findElement(By.cssSelector(".toggle-on")).click();
+    // 5 | click | css=.toggle-off | 
+    driver.findElement(By.cssSelector(".toggle-off")).click();
+    // 6 | click | css=.toggle-on | 
+    driver.findElement(By.cssSelector(".toggle-on")).click();
+    // 7 | click | css=.toggle-off | 
+    driver.findElement(By.cssSelector(".toggle-off")).click();
+    // 8 | click | css=.toggle-on | 
+    driver.findElement(By.cssSelector(".toggle-on")).click();
   }
 }

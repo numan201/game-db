@@ -36,6 +36,19 @@ public class AllTestsTest {
   public void tearDown() {
     driver.quit();
   }
+  public String waitForWindow(int timeout) {
+    try {
+      Thread.sleep(timeout);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    Set<String> whNow = driver.getWindowHandles();
+    Set<String> whThen = (Set<String>) vars.get("window_handles");
+    if (whNow.size() > whThen.size()) {
+      whNow.removeAll(whThen);
+    }
+    return whNow.iterator().next();
+  }
   @Test
   public void wishlistAddThenRemoveFirstGameOnGamesLoggedIn() {
     // Test name: wishlist Add Then Remove First Game On Games_(Logged In)
@@ -74,9 +87,11 @@ public class AllTestsTest {
     driver.findElement(By.linkText("Publishers")).click();
     // 6 | click | linkText=About | 
     driver.findElement(By.linkText("About")).click();
-    // 7 | click | linkText=News | 
+    // 7 | click | linkText=Feeling Curious | 
+    driver.findElement(By.linkText("Feeling Curious")).click();
+    // 8 | click | linkText=News | 
     driver.findElement(By.linkText("News")).click();
-    // 8 | click | linkText=Games | 
+    // 9 | click | linkText=Games | 
     driver.findElement(By.linkText("Games")).click();
   }
   @Test
@@ -101,6 +116,8 @@ public class AllTestsTest {
     driver.findElement(By.linkText("About")).click();
     // 9 | click | linkText=News | 
     driver.findElement(By.linkText("News")).click();
+    // 10 | click | linkText=Feeling Curious | 
+    driver.findElement(By.linkText("Feeling Curious")).click();
   }
   @Test
   public void clickGameDBLogoToGoToSplashPage() {
@@ -470,23 +487,6 @@ public class AllTestsTest {
     driver.findElement(By.linkText("Rockstar Games")).click();
   }
   @Test
-  public void fakeSearchBaralwaysleadstohomepage() {
-    // Test name: fake Search Bar (always leads to homepage)
-    // Step # | name | target | value
-    // 1 | open | / | 
-    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
-    // 2 | setWindowSize | 1280x800 | 
-    driver.manage().window().setSize(new Dimension(1280, 800));
-    // 3 | click | css=.form-control | 
-    driver.findElement(By.cssSelector(".form-control")).click();
-    // 4 | type | css=.form-control | test
-    driver.findElement(By.cssSelector(".form-control")).sendKeys("test");
-    // 5 | sendKeys | css=.form-control | ${KEY_ENTER}
-    driver.findElement(By.cssSelector(".form-control")).sendKeys(Keys.ENTER);
-    // 6 | type | css=.form-control | test
-    driver.findElement(By.cssSelector(".form-control")).sendKeys("test");
-  }
-  @Test
   public void developersPublishersSony() {
     // Test name: developers -> Publishers (Sony)
     // Step # | name | target | value
@@ -507,5 +507,862 @@ public class AllTestsTest {
     driver.manage().window().setSize(new Dimension(1280, 800));
     // 3 | click | linkText=See More | 
     driver.findElement(By.linkText("See More")).click();
+  }
+  @Test
+  public void feelingCurious() {
+    // Test name: feeling Curious
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | linkText=Feeling Curious | 
+    driver.findElement(By.linkText("Feeling Curious")).click();
+    // 4 | click | linkText=Feeling Curious | 
+    driver.findElement(By.linkText("Feeling Curious")).click();
+    // 5 | click | linkText=Feeling Curious | 
+    driver.findElement(By.linkText("Feeling Curious")).click();
+    // 6 | click | linkText=Feeling Curious | 
+    driver.findElement(By.linkText("Feeling Curious")).click();
+  }
+  @Test
+  public void filterDevelopersByNumberOfGamesDeveloped() {
+    // Test name: filter Developers By Number Of Games Developed
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | linkText=Developers | 
+    driver.findElement(By.linkText("Developers")).click();
+    // 4 | click | css=.form-check:nth-child(2) | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(2)")).click();
+    // 5 | click | name=numbers | 
+    driver.findElement(By.name("numbers")).click();
+    // 6 | click | css=.btn:nth-child(8) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(8)")).click();
+    // 7 | click | css=.form-check:nth-child(3) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(3) > .form-check-input")).click();
+    // 8 | click | css=.btn:nth-child(8) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(8)")).click();
+    // 9 | click | css=.form-check:nth-child(4) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(4) > .form-check-input")).click();
+    // 10 | click | css=.btn:nth-child(8) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(8)")).click();
+    // 11 | click | css=.form-check:nth-child(5) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(5) > .form-check-input")).click();
+    // 12 | click | css=.btn:nth-child(8) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(8)")).click();
+    // 13 | click | css=.form-check:nth-child(6) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(6) > .form-check-input")).click();
+    // 14 | click | css=.btn:nth-child(8) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(8)")).click();
+  }
+  @Test
+  public void filterGamesByGenre() {
+    // Test name: filter Games By Genre
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | linkText=Games | 
+    driver.findElement(By.linkText("Games")).click();
+    // 4 | click | name=genres | 
+    driver.findElement(By.name("genres")).click();
+    // 5 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 6 | click | name=genres | 
+    driver.findElement(By.name("genres")).click();
+    // 7 | click | css=#collapsegenre > .form-check:nth-child(2) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(2) > .form-check-input")).click();
+    // 8 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 9 | click | css=#collapsegenre > .form-check:nth-child(2) | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(2)")).click();
+    // 10 | click | css=#collapsegenre > .form-check:nth-child(2) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(2) > .form-check-input")).click();
+    // 11 | click | css=#collapsegenre > .form-check:nth-child(3) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(3) > .form-check-input")).click();
+    // 12 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 13 | click | css=.collapsed:nth-child(3) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(3)")).click();
+    // 14 | click | css=#collapsegenre > .form-check:nth-child(3) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(3) > .form-check-input")).click();
+    // 15 | click | css=#collapsegenre > .form-check:nth-child(4) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(4) > .form-check-input")).click();
+    // 16 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 17 | click | css=.collapsed:nth-child(3) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(3)")).click();
+    // 18 | click | css=#collapsegenre > .form-check:nth-child(4) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(4) > .form-check-input")).click();
+    // 19 | click | css=#collapsegenre > .form-check:nth-child(5) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(5) > .form-check-input")).click();
+    // 20 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 21 | click | css=.collapsed:nth-child(3) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(3)")).click();
+    // 22 | click | css=#collapsegenre > .form-check:nth-child(5) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(5) > .form-check-input")).click();
+    // 23 | click | css=#collapsegenre > .form-check:nth-child(6) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(6) > .form-check-input")).click();
+    // 24 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 25 | click | css=.collapsed:nth-child(3) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(3)")).click();
+    // 26 | click | css=#collapsegenre > .form-check:nth-child(6) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(6) > .form-check-input")).click();
+    // 27 | click | css=#collapsegenre > .form-check:nth-child(7) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(7) > .form-check-input")).click();
+    // 28 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 29 | click | css=.collapsed:nth-child(3) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(3)")).click();
+    // 30 | click | css=#collapsegenre > .form-check:nth-child(7) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(7) > .form-check-input")).click();
+    // 31 | click | css=#collapsegenre > .form-check:nth-child(8) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(8) > .form-check-input")).click();
+    // 32 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 33 | click | css=.collapsed:nth-child(3) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(3)")).click();
+    // 34 | click | css=#collapsegenre > .form-check:nth-child(8) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(8) > .form-check-input")).click();
+    // 35 | click | css=#collapsegenre > .form-check:nth-child(9) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(9) > .form-check-input")).click();
+    // 36 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 37 | click | css=.collapsed:nth-child(3) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(3)")).click();
+    // 38 | click | css=#collapsegenre > .form-check:nth-child(9) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(9) > .form-check-input")).click();
+    // 39 | click | css=#collapsegenre > .form-check:nth-child(10) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(10) > .form-check-input")).click();
+    // 40 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 41 | click | css=.collapsed:nth-child(3) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(3)")).click();
+    // 42 | click | css=#collapsegenre > .form-check:nth-child(10) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(10) > .form-check-input")).click();
+    // 43 | click | css=#collapsegenre > .form-check:nth-child(11) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(11) > .form-check-input")).click();
+    // 44 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 45 | click | css=.collapsed:nth-child(3) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(3)")).click();
+    // 46 | click | css=#collapsegenre > .form-check:nth-child(11) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(11) > .form-check-input")).click();
+    // 47 | click | css=#collapsegenre > .form-check:nth-child(12) | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(12)")).click();
+    // 48 | click | css=#collapsegenre > .form-check:nth-child(12) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(12) > .form-check-input")).click();
+    // 49 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 50 | click | css=.collapsed:nth-child(3) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(3)")).click();
+    // 51 | click | css=#collapsegenre > .form-check:nth-child(12) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(12) > .form-check-input")).click();
+    // 52 | click | css=#collapsegenre > .form-check:nth-child(13) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(13) > .form-check-input")).click();
+    // 53 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 54 | click | css=.collapsed:nth-child(3) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(3)")).click();
+    // 55 | click | css=#collapsegenre > .form-check:nth-child(13) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(13) > .form-check-input")).click();
+    // 56 | click | css=#collapsegenre > .form-check:nth-child(14) | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(14)")).click();
+    // 57 | click | css=#collapsegenre > .form-check:nth-child(14) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(14) > .form-check-input")).click();
+    // 58 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 59 | click | css=.collapsed:nth-child(3) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(3)")).click();
+    // 60 | click | css=#collapsegenre > .form-check:nth-child(14) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(14) > .form-check-input")).click();
+    // 61 | click | css=#collapsegenre > .form-check:nth-child(15) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(15) > .form-check-input")).click();
+    // 62 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 63 | click | css=.collapsed:nth-child(3) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(3)")).click();
+    // 64 | click | css=#collapsegenre > .form-check:nth-child(15) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(15) > .form-check-input")).click();
+    // 65 | click | css=#collapsegenre > .form-check:nth-child(16) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(16) > .form-check-input")).click();
+    // 66 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 67 | click | css=.collapsed:nth-child(3) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(3)")).click();
+    // 68 | click | css=#collapsegenre > .form-check:nth-child(16) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(16) > .form-check-input")).click();
+    // 69 | click | css=#collapsegenre > .form-check:nth-child(17) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(17) > .form-check-input")).click();
+    // 70 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 71 | click | css=.collapsed:nth-child(3) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(3)")).click();
+    // 72 | click | css=#collapsegenre > .form-check:nth-child(17) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(17) > .form-check-input")).click();
+    // 73 | click | css=#collapsegenre > .form-check:nth-child(18) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(18) > .form-check-input")).click();
+    // 74 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 75 | click | css=.collapsed:nth-child(3) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(3)")).click();
+    // 76 | click | css=#collapsegenre > .form-check:nth-child(18) | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(18)")).click();
+    // 77 | click | css=#collapsegenre > .form-check:nth-child(18) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(18) > .form-check-input")).click();
+    // 78 | click | css=#collapsegenre > .form-check:nth-child(19) | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(19)")).click();
+    // 79 | click | css=#collapsegenre > .form-check:nth-child(19) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapsegenre > .form-check:nth-child(19) > .form-check-input")).click();
+    // 80 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+  }
+  @Test
+  public void filterGamesByPlatform() {
+    // Test name: filter Games By Platform
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | linkText=Games | 
+    driver.findElement(By.linkText("Games")).click();
+    // 4 | click | name=platforms | 
+    driver.findElement(By.name("platforms")).click();
+    // 5 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 6 | click | name=platforms | 
+    driver.findElement(By.name("platforms")).click();
+    // 7 | click | css=#collapseplatforms > .form-check:nth-child(2) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(2) > .form-check-input")).click();
+    // 8 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 9 | click | css=#collapseplatforms > .form-check:nth-child(2) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(2) > .form-check-input")).click();
+    // 10 | click | css=#collapseplatforms > .form-check:nth-child(3) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(3) > .form-check-input")).click();
+    // 11 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 12 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 13 | click | css=#collapseplatforms > .form-check:nth-child(3) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(3) > .form-check-input")).click();
+    // 14 | click | css=#collapseplatforms > .form-check:nth-child(4) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(4) > .form-check-input")).click();
+    // 15 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 16 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 17 | click | css=#collapseplatforms > .form-check:nth-child(4) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(4) > .form-check-input")).click();
+    // 18 | click | css=#collapseplatforms > .form-check:nth-child(5) | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(5)")).click();
+    // 19 | click | css=#collapseplatforms > .form-check:nth-child(5) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(5) > .form-check-input")).click();
+    // 20 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 21 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 22 | click | css=#collapseplatforms > .form-check:nth-child(5) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(5) > .form-check-input")).click();
+    // 23 | click | css=#collapseplatforms > .form-check:nth-child(6) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(6) > .form-check-input")).click();
+    // 24 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 25 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 26 | click | css=#collapseplatforms > .form-check:nth-child(6) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(6) > .form-check-input")).click();
+    // 27 | click | css=#collapseplatforms > .form-check:nth-child(7) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(7) > .form-check-input")).click();
+    // 28 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 29 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 30 | click | css=#collapseplatforms > .form-check:nth-child(7) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(7) > .form-check-input")).click();
+    // 31 | click | css=#collapseplatforms > .form-check:nth-child(8) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(8) > .form-check-input")).click();
+    // 32 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 33 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 34 | click | css=#collapseplatforms > .form-check:nth-child(8) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(8) > .form-check-input")).click();
+    // 35 | click | css=#collapseplatforms > .form-check:nth-child(9) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(9) > .form-check-input")).click();
+    // 36 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 37 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 38 | click | css=#collapseplatforms > .form-check:nth-child(9) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(9) > .form-check-input")).click();
+    // 39 | click | css=#collapseplatforms > .form-check:nth-child(10) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(10) > .form-check-input")).click();
+    // 40 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 41 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 42 | click | css=#collapseplatforms > .form-check:nth-child(10) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(10) > .form-check-input")).click();
+    // 43 | click | css=#collapseplatforms > .form-check:nth-child(11) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(11) > .form-check-input")).click();
+    // 44 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 45 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 46 | click | css=#collapseplatforms > .form-check:nth-child(11) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(11) > .form-check-input")).click();
+    // 47 | click | css=#collapseplatforms > .form-check:nth-child(12) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(12) > .form-check-input")).click();
+    // 48 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 49 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 50 | click | css=#collapseplatforms > .form-check:nth-child(12) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(12) > .form-check-input")).click();
+    // 51 | click | css=#collapseplatforms > .form-check:nth-child(13) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(13) > .form-check-input")).click();
+    // 52 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 53 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 54 | click | css=#collapseplatforms > .form-check:nth-child(13) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(13) > .form-check-input")).click();
+    // 55 | click | css=#collapseplatforms > .form-check:nth-child(14) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(14) > .form-check-input")).click();
+    // 56 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 57 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 58 | click | css=#collapseplatforms > .form-check:nth-child(14) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(14) > .form-check-input")).click();
+    // 59 | click | css=#collapseplatforms > .form-check:nth-child(15) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(15) > .form-check-input")).click();
+    // 60 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 61 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 62 | click | css=#collapseplatforms > .form-check:nth-child(15) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(15) > .form-check-input")).click();
+    // 63 | click | css=#collapseplatforms > .form-check:nth-child(16) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(16) > .form-check-input")).click();
+    // 64 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 65 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 66 | click | css=#collapseplatforms > .form-check:nth-child(16) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(16) > .form-check-input")).click();
+    // 67 | click | css=#collapseplatforms > .form-check:nth-child(17) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(17) > .form-check-input")).click();
+    // 68 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 69 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 70 | click | css=#collapseplatforms > .form-check:nth-child(17) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(17) > .form-check-input")).click();
+    // 71 | click | css=#collapseplatforms > .form-check:nth-child(18) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(18) > .form-check-input")).click();
+    // 72 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 73 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 74 | click | css=#collapseplatforms > .form-check:nth-child(18) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(18) > .form-check-input")).click();
+    // 75 | click | css=#collapseplatforms > .form-check:nth-child(19) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(19) > .form-check-input")).click();
+    // 76 | click | css=body | 
+    driver.findElement(By.cssSelector("body")).click();
+    // 77 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 78 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 79 | click | css=#collapseplatforms > .form-check:nth-child(19) > .form-check-input | 
+    driver.findElement(By.cssSelector("#collapseplatforms > .form-check:nth-child(19) > .form-check-input")).click();
+    // 80 | click | css=.form-check:nth-child(20) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(20) > .form-check-input")).click();
+    // 81 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 82 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 83 | click | css=.form-check:nth-child(20) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(20) > .form-check-input")).click();
+    // 84 | click | css=.form-check:nth-child(21) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(21) > .form-check-input")).click();
+    // 85 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 86 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 87 | click | css=.form-check:nth-child(21) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(21) > .form-check-input")).click();
+    // 88 | click | css=.form-check:nth-child(22) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(22) > .form-check-input")).click();
+    // 89 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 90 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 91 | click | css=.form-check:nth-child(22) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(22) > .form-check-input")).click();
+    // 92 | click | css=.form-check:nth-child(23) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(23) > .form-check-input")).click();
+    // 93 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 94 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 95 | click | css=.form-check:nth-child(23) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(23) > .form-check-input")).click();
+    // 96 | click | css=.form-check:nth-child(24) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(24) > .form-check-input")).click();
+    // 97 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 98 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 99 | click | css=.form-check:nth-child(25) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(25) > .form-check-input")).click();
+    // 100 | click | css=.form-check:nth-child(24) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(24) > .form-check-input")).click();
+    // 101 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 102 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 103 | click | css=.form-check:nth-child(26) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(26) > .form-check-input")).click();
+    // 104 | click | css=.form-check:nth-child(25) | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(25)")).click();
+    // 105 | click | css=.form-check:nth-child(25) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(25) > .form-check-input")).click();
+    // 106 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 107 | click | css=.collapsed:nth-child(7) | 
+    driver.findElement(By.cssSelector(".collapsed:nth-child(7)")).click();
+    // 108 | click | css=.form-check:nth-child(26) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(26) > .form-check-input")).click();
+    // 109 | click | css=.form-check:nth-child(27) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(27) > .form-check-input")).click();
+    // 110 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+  }
+  @Test
+  public void filterGamesByRating() {
+    // Test name: filter Games By Rating
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | linkText=Games | 
+    driver.findElement(By.linkText("Games")).click();
+    // 4 | click | css=.star-1:nth-child(2) | 
+    driver.findElement(By.cssSelector(".star-1:nth-child(2)")).click();
+    // 5 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 6 | click | css=.star-1:nth-child(2) | 
+    driver.findElement(By.cssSelector(".star-1:nth-child(2)")).click();
+    // 7 | click | css=.star-2:nth-child(4) | 
+    driver.findElement(By.cssSelector(".star-2:nth-child(4)")).click();
+    // 8 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 9 | click | css=.star-3:nth-child(6) | 
+    driver.findElement(By.cssSelector(".star-3:nth-child(6)")).click();
+    // 10 | click | id=filter | 
+    driver.findElement(By.id("filter")).click();
+    // 11 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 12 | click | css=.star-4:nth-child(8) | 
+    driver.findElement(By.cssSelector(".star-4:nth-child(8)")).click();
+    // 13 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 14 | click | css=.star-5:nth-child(10) | 
+    driver.findElement(By.cssSelector(".star-5:nth-child(10)")).click();
+    // 15 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+  }
+  @Test
+  public void filterPublishersByNumberOfGamesPublished() {
+    // Test name: filter Publishers By Number Of Games Published
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | linkText=Publishers | 
+    driver.findElement(By.linkText("Publishers")).click();
+    // 4 | click | id=filter | 
+    driver.findElement(By.id("filter")).click();
+    // 5 | click | css=.form-check:nth-child(2) | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(2)")).click();
+    // 6 | click | name=numbers | 
+    driver.findElement(By.name("numbers")).click();
+    // 7 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 8 | click | css=.form-check:nth-child(3) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(3) > .form-check-input")).click();
+    // 9 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 10 | click | css=.form-check:nth-child(4) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(4) > .form-check-input")).click();
+    // 11 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 12 | click | css=.form-check:nth-child(5) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(5) > .form-check-input")).click();
+    // 13 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 14 | click | css=.form-check:nth-child(6) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(6) > .form-check-input")).click();
+    // 15 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 16 | click | css=.form-check:nth-child(7) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(7) > .form-check-input")).click();
+    // 17 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 18 | click | css=.form-check:nth-child(8) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(8) > .form-check-input")).click();
+    // 19 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 20 | click | css=.form-check:nth-child(9) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(9) > .form-check-input")).click();
+    // 21 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 22 | click | css=.form-check:nth-child(10) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(10) > .form-check-input")).click();
+    // 23 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+    // 24 | click | css=.form-check:nth-child(11) > .form-check-input | 
+    driver.findElement(By.cssSelector(".form-check:nth-child(11) > .form-check-input")).click();
+    // 25 | click | css=.btn:nth-child(13) | 
+    driver.findElement(By.cssSelector(".btn:nth-child(13)")).click();
+  }
+  @Test
+  public void inDepthStats() {
+    // Test name: in Depth Stats
+    // Step # | name | target | value
+    // 1 | open | /game?id=5e9f234d77acff5a7428ecab | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/game?id=5e9f234d77acff5a7428ecab");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | linkText=In Depth Stats | 
+    driver.findElement(By.linkText("In Depth Stats")).click();
+  }
+  @Test
+  public void newsForSpecificGameRocketLeague() {
+    // Test name: news For Specific Game (Rocket League)
+    // Step # | name | target | value
+    // 1 | open | /game?id=5e9f234d77acff5a7428ecab | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/game?id=5e9f234d77acff5a7428ecab");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | css=.media:nth-child(1) a > .mt-0 | 
+    vars.put("window_handles", driver.getWindowHandles());
+    // 4 | click | css=.media:nth-child(3) a > .mt-0 | 
+    driver.findElement(By.cssSelector(".media:nth-child(1) a > .mt-0")).click();
+    // 5 | click | css=.media:nth-child(5) a > .mt-0 | 
+    vars.put("win3161", waitForWindow(2000));
+    vars.put("window_handles", driver.getWindowHandles());
+    driver.findElement(By.cssSelector(".media:nth-child(3) a > .mt-0")).click();
+    vars.put("win3342", waitForWindow(2000));
+    vars.put("window_handles", driver.getWindowHandles());
+    driver.findElement(By.cssSelector(".media:nth-child(5) a > .mt-0")).click();
+    vars.put("win8412", waitForWindow(2000));
+  }
+  @Test
+  public void pricesForGames() {
+    // Test name: prices For Games
+    // Step # | name | target | value
+    // 1 | open | /game?id=5e9f234d77acff5a7428ecab | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/game?id=5e9f234d77acff5a7428ecab");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | linkText=$19.99 | 
+    vars.put("window_handles", driver.getWindowHandles());
+    // 4 | click | css=.list-unstyled:nth-child(8) > li:nth-child(4) > a | 
+    driver.findElement(By.linkText("$19.99")).click();
+    // 5 | click | linkText=More Info | 
+    vars.put("win4542", waitForWindow(2000));
+    vars.put("window_handles", driver.getWindowHandles());
+    driver.findElement(By.cssSelector(".list-unstyled:nth-child(8) > li:nth-child(4) > a")).click();
+    vars.put("win8872", waitForWindow(2000));
+    vars.put("window_handles", driver.getWindowHandles());
+    driver.findElement(By.linkText("More Info")).click();
+    vars.put("win2046", waitForWindow(2000));
+  }
+  @Test
+  public void searchForDeveloperNintendo() {
+    // Test name: search For Developer (Nintendo)
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | css=.dropdown-toggle | 
+    driver.findElement(By.cssSelector(".dropdown-toggle")).click();
+    // 4 | click | css=.dropdown-item:nth-child(2) | 
+    driver.findElement(By.cssSelector(".dropdown-item:nth-child(2)")).click();
+    // 5 | click | name=search | 
+    driver.findElement(By.name("search")).click();
+    // 6 | type | name=search | Nintendo
+    driver.findElement(By.name("search")).sendKeys("Nintendo");
+    // 7 | sendKeys | name=search | ${KEY_ENTER}
+    driver.findElement(By.name("search")).sendKeys(Keys.ENTER);
+  }
+  @Test
+  public void searchForFakeDeveloper() {
+    // Test name: search For Fake Developer
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | css=.dropdown-toggle | 
+    driver.findElement(By.cssSelector(".dropdown-toggle")).click();
+    // 4 | click | css=.dropdown-item:nth-child(2) | 
+    driver.findElement(By.cssSelector(".dropdown-item:nth-child(2)")).click();
+    // 5 | click | name=search | 
+    driver.findElement(By.name("search")).click();
+    // 6 | type | name=search | !@#$%^&
+    driver.findElement(By.name("search")).sendKeys("!@#$%^&");
+    // 7 | sendKeys | name=search | ${KEY_ENTER}
+    driver.findElement(By.name("search")).sendKeys(Keys.ENTER);
+  }
+  @Test
+  public void searchForFakeGame() {
+    // Test name: search For Fake Game
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | name=search | 
+    driver.findElement(By.name("search")).click();
+    // 4 | type | name=search | ~!@#$
+    driver.findElement(By.name("search")).sendKeys("~!@#$");
+    // 5 | sendKeys | name=search | ${KEY_ENTER}
+    driver.findElement(By.name("search")).sendKeys(Keys.ENTER);
+  }
+  @Test
+  public void searchForFakePublisher() {
+    // Test name: search For Fake Publisher
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | css=.dropdown-toggle | 
+    driver.findElement(By.cssSelector(".dropdown-toggle")).click();
+    // 4 | click | css=.dropdown-item:nth-child(3) | 
+    driver.findElement(By.cssSelector(".dropdown-item:nth-child(3)")).click();
+    // 5 | click | name=search | 
+    driver.findElement(By.name("search")).click();
+    // 6 | type | name=search | ~!@$
+    driver.findElement(By.name("search")).sendKeys("~!@$");
+    // 7 | sendKeys | name=search | ${KEY_ENTER}
+    driver.findElement(By.name("search")).sendKeys(Keys.ENTER);
+  }
+  @Test
+  public void searchForGamesonic() {
+    // Test name: search For Game (sonic)
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | name=search | 
+    driver.findElement(By.name("search")).click();
+    // 4 | type | name=search | sonic
+    driver.findElement(By.name("search")).sendKeys("sonic");
+    // 5 | sendKeys | name=search | ${KEY_ENTER}
+    driver.findElement(By.name("search")).sendKeys(Keys.ENTER);
+  }
+  @Test
+  public void searchForPublisherNintendo() {
+    // Test name: search For Publisher (Nintendo)
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | css=.dropdown-toggle | 
+    driver.findElement(By.cssSelector(".dropdown-toggle")).click();
+    // 4 | click | css=.dropdown-item:nth-child(3) | 
+    driver.findElement(By.cssSelector(".dropdown-item:nth-child(3)")).click();
+    // 5 | click | name=search | 
+    driver.findElement(By.name("search")).click();
+    // 6 | type | name=search | Nintendo
+    driver.findElement(By.name("search")).sendKeys("Nintendo");
+    // 7 | sendKeys | name=search | ${KEY_ENTER}
+    driver.findElement(By.name("search")).sendKeys(Keys.ENTER);
+  }
+  @Test
+  public void shareButtons() {
+    // Test name: share Buttons
+    // Step # | name | target | value
+    // 1 | open | /game?id=5e9f234d77acff5a7428ecab | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/game?id=5e9f234d77acff5a7428ecab");
+    // 2 | setWindowSize | 892x777 | 
+    driver.manage().window().setSize(new Dimension(892, 777));
+    // 3 | click | css=.resp-sharing-button--facebook | 
+    vars.put("window_handles", driver.getWindowHandles());
+    // 4 | click | css=.resp-sharing-button--twitter | 
+    driver.findElement(By.cssSelector(".resp-sharing-button--facebook")).click();
+    // 5 | click | css=.resp-sharing-button--email svg | 
+    vars.put("win2180", waitForWindow(2000));
+    // 6 | click | css=.resp-sharing-button--reddit | 
+    vars.put("window_handles", driver.getWindowHandles());
+    driver.findElement(By.cssSelector(".resp-sharing-button--twitter")).click();
+    vars.put("win6055", waitForWindow(2000));
+    vars.put("window_handles", driver.getWindowHandles());
+    driver.findElement(By.cssSelector(".resp-sharing-button--email svg")).click();
+    vars.put("win2659", waitForWindow(2000));
+    vars.put("window_handles", driver.getWindowHandles());
+    driver.findElement(By.cssSelector(".resp-sharing-button--reddit")).click();
+    vars.put("win9690", waitForWindow(2000));
+  }
+  @Test
+  public void sortingDevelopers() {
+    // Test name: sorting Developers
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | linkText=Developers | 
+    driver.findElement(By.linkText("Developers")).click();
+    // 4 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 5 | click | css=#dropdownlist > .dropdown-item:nth-child(1) | 
+    driver.findElement(By.cssSelector("#dropdownlist > .dropdown-item:nth-child(1)")).click();
+    // 6 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 7 | click | css=#dropdownlist > .dropdown-item:nth-child(2) | 
+    driver.findElement(By.cssSelector("#dropdownlist > .dropdown-item:nth-child(2)")).click();
+    // 8 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 9 | click | css=.dropdown-item:nth-child(4) | 
+    driver.findElement(By.cssSelector(".dropdown-item:nth-child(4)")).click();
+    // 10 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 11 | click | css=.dropdown-item:nth-child(5) | 
+    driver.findElement(By.cssSelector(".dropdown-item:nth-child(5)")).click();
+  }
+  @Test
+  public void sortingGames() {
+    // Test name: sorting Games
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | linkText=Games | 
+    driver.findElement(By.linkText("Games")).click();
+    // 4 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 5 | click | css=#dropdownlist > .dropdown-item:nth-child(1) | 
+    driver.findElement(By.cssSelector("#dropdownlist > .dropdown-item:nth-child(1)")).click();
+    // 6 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 7 | click | css=#dropdownlist > .dropdown-item:nth-child(2) | 
+    driver.findElement(By.cssSelector("#dropdownlist > .dropdown-item:nth-child(2)")).click();
+    // 8 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 9 | click | css=#dropdownlist > .dropdown-item:nth-child(3) | 
+    driver.findElement(By.cssSelector("#dropdownlist > .dropdown-item:nth-child(3)")).click();
+    // 10 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 11 | click | css=.dropdown-item:nth-child(4) | 
+    driver.findElement(By.cssSelector(".dropdown-item:nth-child(4)")).click();
+    // 12 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 13 | click | css=.dropdown-item:nth-child(5) | 
+    driver.findElement(By.cssSelector(".dropdown-item:nth-child(5)")).click();
+    // 14 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 15 | click | css=.dropdown-item:nth-child(6) | 
+    driver.findElement(By.cssSelector(".dropdown-item:nth-child(6)")).click();
+    // 16 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 17 | click | css=.dropdown-item:nth-child(7) | 
+    driver.findElement(By.cssSelector(".dropdown-item:nth-child(7)")).click();
+  }
+  @Test
+  public void sortingPublishers() {
+    // Test name: sorting Publishers
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | linkText=Publishers | 
+    driver.findElement(By.linkText("Publishers")).click();
+    // 4 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 5 | click | css=#dropdownlist > .dropdown-item:nth-child(1) | 
+    driver.findElement(By.cssSelector("#dropdownlist > .dropdown-item:nth-child(1)")).click();
+    // 6 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 7 | click | css=#dropdownlist > .dropdown-item:nth-child(2) | 
+    driver.findElement(By.cssSelector("#dropdownlist > .dropdown-item:nth-child(2)")).click();
+    // 8 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 9 | click | css=#dropdownlist > .dropdown-item:nth-child(3) | 
+    driver.findElement(By.cssSelector("#dropdownlist > .dropdown-item:nth-child(3)")).click();
+    // 10 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 11 | click | css=.dropdown-item:nth-child(4) | 
+    driver.findElement(By.cssSelector(".dropdown-item:nth-child(4)")).click();
+    // 12 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 13 | click | css=.dropdown-item:nth-child(5) | 
+    driver.findElement(By.cssSelector(".dropdown-item:nth-child(5)")).click();
+  }
+  @Test
+  public void toggleDarkMode() {
+    // Test name: toggle Dark Mode
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | css=.toggle-off | 
+    driver.findElement(By.cssSelector(".toggle-off")).click();
+    // 4 | click | css=.toggle-on | 
+    driver.findElement(By.cssSelector(".toggle-on")).click();
+    // 5 | click | css=.toggle-off | 
+    driver.findElement(By.cssSelector(".toggle-off")).click();
+    // 6 | click | css=.toggle-on | 
+    driver.findElement(By.cssSelector(".toggle-on")).click();
+    // 7 | click | css=.toggle-off | 
+    driver.findElement(By.cssSelector(".toggle-off")).click();
+    // 8 | click | css=.toggle-on | 
+    driver.findElement(By.cssSelector(".toggle-on")).click();
+  }
+  @Test
+  public void gameDBPoweredByLinks() {
+    // Test name: GameDB Powered By Links
+    // Step # | name | target | value
+    // 1 | open | / | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/");
+    // 2 | setWindowSize | 1280x777 | 
+    driver.manage().window().setSize(new Dimension(1280, 777));
+    // 3 | click | linkText=Steam | 
+    vars.put("window_handles", driver.getWindowHandles());
+    // 4 | click | linkText=YouTube | 
+    driver.findElement(By.linkText("Steam")).click();
+    // 5 | click | linkText=Twitch | 
+    vars.put("win2956", waitForWindow(2000));
+    // 6 | click | linkText=RAWG | 
+    vars.put("window_handles", driver.getWindowHandles());
+    driver.findElement(By.linkText("YouTube")).click();
+    vars.put("win4834", waitForWindow(2000));
+    vars.put("window_handles", driver.getWindowHandles());
+    driver.findElement(By.linkText("Twitch")).click();
+    vars.put("win6999", waitForWindow(2000));
+    vars.put("window_handles", driver.getWindowHandles());
+    driver.findElement(By.linkText("RAWG")).click();
+    vars.put("win3840", waitForWindow(2000));
   }
 }

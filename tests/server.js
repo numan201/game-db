@@ -1,9 +1,20 @@
 const expect  = require("chai").expect;
+//const chaiHttp = require('chai-http');
 const request = require("request");
 const express = require('express');
+const axios = require('axios');
 const app = express();
+const { youtubeKey, twitchKey, steamKey, newsKey, gitHubKey } = require('../keys');
 
 const pages = ["about", "news", "games", "developers", "publishers"];
+const APIs = {"News" : ["http://newsapi.org/v2/everything?q=videogames&apiKey=0ad0b0564e6e414484adf96ebb116a81", "articles", newsKey],
+                "Steam" : ["http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=377160&count=3&maxlength=0&format=json", "appnews", steamKey]};
+// "YouTube" : "http://somelink",
+//     "GitHub" : "",
+//     "Twitch" : "",
+//     "GoogleOAuth" : "",
+//     "News": "",
+
 //const app = require('../app');
 
 
@@ -17,6 +28,58 @@ describe("Load Splash Page", function() {
         });
     });
 });
+
+describe("Test Twitch API", function() {
+    this.timeout(5000);
+    it("Returns successfully with expected data.", function(done){
+        axios({
+            method: 'get',
+            url: 'https://api.twitch.tv/helix/games',
+            params: {name: "Fortnite"},
+            headers: {'Client-ID': twitchKey}
+        })
+            .then((response) => {
+                expect(response.data.data[0]).to.have.property("id");
+                done();
+            })
+    });
+});
+
+describe("Test GitHub API", function() {
+    this.timeout(5000);
+    it("Returns sucessfully with expected data.", function(done){
+        let url = "https://api.github.com/search/issues?q=repo:numan201/game-db type:issue";
+
+        let config = {
+            method: 'get',
+            headers: {
+                "Authorization" : 'Token ' + gitHubKey,
+                "per_page" : "100"
+            }
+
+        };
+        axios.get(url, config).then((response) => {
+            expect(response.data).to.have.property("items");
+            done();
+        });
+    });
+});
+
+
+Object.keys(APIs).forEach((API, i ) => {
+    describe("Test " + API + " API.", function() {
+        this.timeout(5000);
+        var url = APIs[API][0];
+        it("Returns successfully with expected member " + APIs[API][1], function(done){
+            request(url, function(error, response, body) {
+                expect(response.statusCode).to.equal(200);
+                expect(JSON.parse(body)).to.have.property(APIs[API][1]);
+                done();
+            });
+        });
+    });
+});
+
 
 pages.forEach((page, i) => {
     describe("Load " + page + " Page", function() {
