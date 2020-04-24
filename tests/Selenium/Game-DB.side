@@ -1050,26 +1050,6 @@
       "value": ""
     }]
   }, {
-    "id": "c6d8a75c-dfec-4c23-b509-66e27db7f4a7",
-    "name": "games Tab",
-    "commands": []
-  }, {
-    "id": "4e81276d-0039-44a1-9d2e-0e3be080401b",
-    "name": "developers Tab",
-    "commands": []
-  }, {
-    "id": "50db78ee-72eb-41b7-88d1-e9fa45a75e51",
-    "name": "publishers Tab",
-    "commands": []
-  }, {
-    "id": "bb448a57-5f36-42ab-a790-ae6cb9c58539",
-    "name": "news Tab",
-    "commands": []
-  }, {
-    "id": "43f3ba98-3c96-4dd1-af9c-c611e3b8e1c6",
-    "name": "about Tab",
-    "commands": []
-  }, {
     "id": "b9b10708-03a9-47c6-b4de-9ae2b908510b",
     "name": "wishlist Tab_(Logged In)",
     "commands": []
@@ -1407,21 +1387,21 @@
     "id": "1d1db709-5fb0-4043-bfb5-500fc06c8911",
     "name": "games -> Developers (GTA)",
     "commands": [{
-      "id": "5c103866-4bc8-4117-aecc-17d11e2205f3",
+      "id": "d6a4d048-22dc-4a97-ad6c-9b94bf62a7bd",
       "comment": "",
       "command": "open",
-      "target": "/game?id=5e7ab0b26b5b29159f027d84",
+      "target": "/game?id=5e9f234d77acff5a7428ec94",
       "targets": [],
       "value": ""
     }, {
-      "id": "95f0a4e0-5f0c-4dcb-a682-ea2f76f6cf6f",
+      "id": "538f1a12-f324-40d4-9efe-b7e57ef847ba",
       "comment": "",
       "command": "setWindowSize",
-      "target": "1280x800",
+      "target": "1218x641",
       "targets": [],
       "value": ""
     }, {
-      "id": "4b5bba52-e9c5-45fe-be44-376ec804c741",
+      "id": "7ebe4071-3477-45eb-8a75-bc9f8594e5e6",
       "comment": "",
       "command": "click",
       "target": "linkText=Rockstar Games",
@@ -1429,7 +1409,7 @@
         ["linkText=Rockstar Games", "linkText"],
         ["css=p:nth-child(4) > a:nth-child(2)", "css:finder"],
         ["xpath=//a[contains(text(),'Rockstar Games')]", "xpath:link"],
-        ["xpath=//a[contains(@href, '/developer?id=5e7abdffbd80cf188df3765f')]", "xpath:href"],
+        ["xpath=//a[contains(@href, '/developer?id=5e9f25699041cf0f20aacfdd')]", "xpath:href"],
         ["xpath=//p/a", "xpath:position"],
         ["xpath=//a[contains(.,'Rockstar Games')]", "xpath:innerText"]
       ],
@@ -1442,25 +1422,18 @@
       "id": "098dfcb3-c7ea-41c9-90f5-229c3ffe09f8",
       "comment": "",
       "command": "open",
-      "target": "/game?id=5e7ab0b26b5b29159f027d84",
+      "target": "/game?id=5e9f234d77acff5a7428ec94",
       "targets": [],
       "value": ""
     }, {
-      "id": "36217765-ad25-4011-a146-0532ccd0c491",
-      "comment": "",
-      "command": "setWindowSize",
-      "target": "1280x800",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "abd97252-1f8a-48ab-af14-d519c16d52ce",
+      "id": "736a9030-7317-48a0-85d4-3ad4d283847f",
       "comment": "",
       "command": "click",
       "target": "css=p:nth-child(5) > a",
       "targets": [
         ["css=p:nth-child(5) > a", "css:finder"],
         ["xpath=(//a[contains(text(),'Rockstar Games')])[2]", "xpath:link"],
-        ["xpath=//a[contains(@href, '/publisher?id=5e7ac43ae4464f1993258e34')]", "xpath:href"],
+        ["xpath=//a[contains(@href, '/publisher?id=5e9f25a81942444a40a43448')]", "xpath:href"],
         ["xpath=//p[2]/a", "xpath:position"]
       ],
       "value": ""
@@ -1469,31 +1442,28 @@
     "id": "ac7c73ba-d058-414d-91f8-bdafd109e6d8",
     "name": "developers -> Games (Sony)",
     "commands": [{
-      "id": "b98bf91f-a1e3-438d-8b48-7745f16837ac",
+      "id": "3e4ff8d9-e3bf-491f-b397-38777bd7aaf5",
       "comment": "",
       "command": "open",
-      "target": "/developer?id=5e7abdffbd80cf188df37652",
+      "target": "/developer?id=5e9f25699041cf0f20aacfd1",
       "targets": [],
       "value": ""
     }, {
-      "id": "4d192fa9-a369-4739-bc0a-f35f6b98a350",
+      "id": "08bc7db6-6603-4e63-8056-5fa40fedcef3",
       "comment": "",
       "command": "setWindowSize",
-      "target": "1280x800",
+      "target": "1218x641",
       "targets": [],
       "value": ""
     }, {
-      "id": "f1f4c073-c93d-4e81-bbfa-c8af7307936f",
+      "id": "3b5b2c9f-93af-439e-aff2-f401f768e7a1",
       "comment": "",
       "command": "click",
-      "target": "linkText=See More",
+      "target": "css=.card-deck:nth-child(5) > .card:nth-child(1) .card-img-top",
       "targets": [
-        ["linkText=See More", "linkText"],
-        ["css=.card-deck:nth-child(5) > .card:nth-child(1) .btn", "css:finder"],
-        ["xpath=//a[contains(text(),'See More')]", "xpath:link"],
-        ["xpath=(//a[contains(@href, '/game?id=5e7ab0b46b5b29159f027dc4')])[3]", "xpath:href"],
-        ["xpath=//a[2]", "xpath:position"],
-        ["xpath=//a[contains(.,'See More')]", "xpath:innerText"]
+        ["css=.card-deck:nth-child(5) > .card:nth-child(1) .card-img-top", "css:finder"],
+        ["xpath=//img[contains(@src,'https://media.rawg.io/media/games/238/238ff9c62fcc94f152a7d4b612907c43.jpg')]", "xpath:img"],
+        ["xpath=//img", "xpath:position"]
       ],
       "value": ""
     }]
@@ -1561,29 +1531,28 @@
     "id": "92718f48-7ff5-47e1-afa5-03aaab36ba09",
     "name": "publishers -> Games (Electronic Arts)",
     "commands": [{
-      "id": "7bd281a7-8c53-4941-97e3-511f7073f9dc",
+      "id": "e8e37536-7084-4816-90d5-2dc79a8dbcea",
       "comment": "",
       "command": "open",
-      "target": "/publisher?id=5e7ac43ae4464f1993258e22",
+      "target": "/publisher?id=5e9f25a81942444a40a43437",
       "targets": [],
       "value": ""
     }, {
-      "id": "46a42dbf-f35d-4f10-bec0-0feb23a5808e",
+      "id": "4733458e-befc-477b-9866-be2f921d337e",
       "comment": "",
       "command": "setWindowSize",
-      "target": "1280x800",
+      "target": "1218x641",
       "targets": [],
       "value": ""
     }, {
-      "id": "b3a78ccd-ae0d-452c-8bbb-9856fd0fc1a6",
+      "id": "2fa976ed-cc69-482b-a6ef-6de9747124ee",
       "comment": "",
       "command": "click",
-      "target": "css=.card-deck:nth-child(9) > .card:nth-child(1) .btn",
+      "target": "css=.card-deck:nth-child(9) > .card:nth-child(2) .card-img-top",
       "targets": [
-        ["css=.card-deck:nth-child(9) > .card:nth-child(1) .btn", "css:finder"],
-        ["xpath=(//a[contains(text(),'See More')])[9]", "xpath:link"],
-        ["xpath=(//a[contains(@href, '/game?id=5e7ab0b26b5b29159f027d85')])[3]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a[2]", "xpath:position"]
+        ["css=.card-deck:nth-child(9) > .card:nth-child(2) .card-img-top", "css:finder"],
+        ["xpath=//img[contains(@src,'https://media.rawg.io/media/games/328/3283617cb7d75d67257fc58339188742.jpg')]", "xpath:img"],
+        ["xpath=//div[2]/div[2]/a/img", "xpath:position"]
       ],
       "value": ""
     }]
@@ -1591,31 +1560,28 @@
     "id": "24e923d9-7644-46da-8835-7f8fa1b74a3d",
     "name": "publishers -> Developers (Electronic Arts)",
     "commands": [{
-      "id": "cec2ce55-8c38-4bb8-bb03-a93545109884",
+      "id": "3f9c21e3-cc15-4902-ac6e-b3dd03894225",
       "comment": "",
       "command": "open",
-      "target": "/publisher?id=5e7ac43ae4464f1993258e22",
+      "target": "/publisher?id=5e9f25a81942444a40a43437",
       "targets": [],
       "value": ""
     }, {
-      "id": "e470ea5d-4344-4dd8-bf88-221d8f52caf2",
+      "id": "32f64e5d-3ce8-4a39-b7f1-783cc4b0bdf6",
       "comment": "",
       "command": "setWindowSize",
-      "target": "1280x800",
+      "target": "1218x641",
       "targets": [],
       "value": ""
     }, {
-      "id": "de136aab-b026-4abb-8b02-551ea6e2875e",
+      "id": "39eb09ea-8dfc-4ff2-a8fa-3dc1ff00d2a8",
       "comment": "",
       "command": "click",
-      "target": "linkText=See More",
+      "target": "css=.card-deck:nth-child(5) > .card:nth-child(1) .card-img-top",
       "targets": [
-        ["linkText=See More", "linkText"],
-        ["css=.card-deck:nth-child(5) > .card:nth-child(1) .btn", "css:finder"],
-        ["xpath=//a[contains(text(),'See More')]", "xpath:link"],
-        ["xpath=(//a[contains(@href, '/developer?id=5e7abdffbd80cf188df37653')])[3]", "xpath:href"],
-        ["xpath=//a[2]", "xpath:position"],
-        ["xpath=//a[contains(.,'See More')]", "xpath:innerText"]
+        ["css=.card-deck:nth-child(5) > .card:nth-child(1) .card-img-top", "css:finder"],
+        ["xpath=//img[contains(@src,'https://media.rawg.io/media/screenshots/dba/dbacb00b6ad30fae992c93173171ded4.jpg')]", "xpath:img"],
+        ["xpath=//img", "xpath:position"]
       ],
       "value": ""
     }]
@@ -6019,7 +5985,7 @@
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": ["042e86bc-0118-4124-b3c3-4cc6a93aae7d", "353c190b-c4f5-47f1-9ee9-51a1dfa5cd0c", "4d1fdd6e-3799-464b-8b64-209f24e3bef6", "f2ac7c01-5e47-4790-9973-59bbcd428f21", "2d9f2c6e-b662-4d2e-b887-35d166489631", "41fb34f3-421c-4b10-bbd6-7f777bd31b45", "12e53ab9-04c3-4ca7-8319-9b35dd485e3b", "a0a61e82-50e7-4ba9-9ddc-65a49b0da8c7", "861a3f08-5aa0-469d-81b8-1f51c878486f", "43f3ba98-3c96-4dd1-af9c-c611e3b8e1c6", "d134ef37-631f-4bfb-8280-cbba8da5f2f0", "bbde44b7-525e-485c-8dfc-893f10e5c48b", "f9a9d3b2-31d9-4b55-a7e0-a7a9e79db781", "0820532a-cf07-4170-9599-44ddefa87f70", "e9d9ea64-32b3-4720-b60a-9c08b218f624", "4e81276d-0039-44a1-9d2e-0e3be080401b", "c6d8a75c-dfec-4c23-b509-66e27db7f4a7", "ddb9afae-0199-42e7-b31d-4d84d6dc5698", "c8dbf93e-4e2e-4a67-b45c-e0a65062da6c", "55080284-c385-43cf-8d35-1df197e8df73", "51afe5a4-4955-42a8-8ebd-9d21fdbf609e", "008e4eba-cfbd-4453-93fd-1d42fa72d8f3", "99c0a057-52ef-49af-bab5-de5f334f19cd", "c301f798-fec9-490d-a82a-b8f8ecef78db", "d8f10e78-fee3-4aef-863e-123090feb4f3", "bb448a57-5f36-42ab-a790-ae6cb9c58539", "27c61551-4522-4662-9943-853b91eaa3cf", "50db78ee-72eb-41b7-88d1-e9fa45a75e51", "b9b10708-03a9-47c6-b4de-9ae2b908510b", "92718f48-7ff5-47e1-afa5-03aaab36ba09", "24e923d9-7644-46da-8835-7f8fa1b74a3d", "23151ed2-102c-4f1f-b079-ee7bbaa6384d", "c1ff9f01-b6ae-43db-b3cb-f25c64694de2", "1d1db709-5fb0-4043-bfb5-500fc06c8911", "740223fe-ac3b-4176-8038-4a9cb5bd692b", "ac7c73ba-d058-414d-91f8-bdafd109e6d8", "b89a2300-f060-448e-a721-581df6baca1c", "c5ae2e1d-8203-494e-9b7a-e00baf183191", "52377b88-8c0e-4f51-9415-a6a932283d62", "d9c5a3a5-9044-4fc9-b1bd-8ec80da3e40c", "db2d29c5-3e6d-4ceb-befa-556d7b80241c", "cad23005-ecd0-4ed0-9ab3-312cb4c855f5", "950b2043-c3c8-467e-a689-41b1df3877e1", "224c1a4b-0def-4f34-b9e9-9adaaaead387", "c655d12a-0099-4bbb-895e-3d207a3b88f7", "1739b16e-c196-45bf-aed5-67abd47d1357", "97f8b686-f29f-4c41-b945-e921306da70a", "6f9a8ac3-60f2-43be-834c-bacaa5acf9d5", "9881b8c1-1b31-408d-a97f-5288ee4f8999", "3ec1bde0-57e3-47e5-a38d-a59a047f180b", "5c5e7d4f-81a5-4853-9cd2-8fad46c55e8d", "dddd29c8-4016-4223-9ada-df69f6e21efc", "442b77a8-8727-4f7a-b462-d3c1997b84d5", "545f4f0f-39c4-4f1f-8609-020e523b0cbe", "56a835b6-f417-45ec-90ac-3fc11ab11720", "6ec47d0b-c408-4b36-a1d2-781ce628cff3", "36fc9250-743b-4014-baef-54d906d80722"]
+    "tests": ["042e86bc-0118-4124-b3c3-4cc6a93aae7d", "353c190b-c4f5-47f1-9ee9-51a1dfa5cd0c", "4d1fdd6e-3799-464b-8b64-209f24e3bef6", "f2ac7c01-5e47-4790-9973-59bbcd428f21", "2d9f2c6e-b662-4d2e-b887-35d166489631", "41fb34f3-421c-4b10-bbd6-7f777bd31b45", "12e53ab9-04c3-4ca7-8319-9b35dd485e3b", "a0a61e82-50e7-4ba9-9ddc-65a49b0da8c7", "861a3f08-5aa0-469d-81b8-1f51c878486f", "d134ef37-631f-4bfb-8280-cbba8da5f2f0", "bbde44b7-525e-485c-8dfc-893f10e5c48b", "f9a9d3b2-31d9-4b55-a7e0-a7a9e79db781", "0820532a-cf07-4170-9599-44ddefa87f70", "e9d9ea64-32b3-4720-b60a-9c08b218f624", "ddb9afae-0199-42e7-b31d-4d84d6dc5698", "c8dbf93e-4e2e-4a67-b45c-e0a65062da6c", "55080284-c385-43cf-8d35-1df197e8df73", "51afe5a4-4955-42a8-8ebd-9d21fdbf609e", "008e4eba-cfbd-4453-93fd-1d42fa72d8f3", "99c0a057-52ef-49af-bab5-de5f334f19cd", "c301f798-fec9-490d-a82a-b8f8ecef78db", "d8f10e78-fee3-4aef-863e-123090feb4f3", "27c61551-4522-4662-9943-853b91eaa3cf", "b9b10708-03a9-47c6-b4de-9ae2b908510b", "92718f48-7ff5-47e1-afa5-03aaab36ba09", "24e923d9-7644-46da-8835-7f8fa1b74a3d", "23151ed2-102c-4f1f-b079-ee7bbaa6384d", "c1ff9f01-b6ae-43db-b3cb-f25c64694de2", "1d1db709-5fb0-4043-bfb5-500fc06c8911", "740223fe-ac3b-4176-8038-4a9cb5bd692b", "ac7c73ba-d058-414d-91f8-bdafd109e6d8", "b89a2300-f060-448e-a721-581df6baca1c", "c5ae2e1d-8203-494e-9b7a-e00baf183191", "52377b88-8c0e-4f51-9415-a6a932283d62", "d9c5a3a5-9044-4fc9-b1bd-8ec80da3e40c", "db2d29c5-3e6d-4ceb-befa-556d7b80241c", "cad23005-ecd0-4ed0-9ab3-312cb4c855f5", "950b2043-c3c8-467e-a689-41b1df3877e1", "224c1a4b-0def-4f34-b9e9-9adaaaead387", "c655d12a-0099-4bbb-895e-3d207a3b88f7", "1739b16e-c196-45bf-aed5-67abd47d1357", "97f8b686-f29f-4c41-b945-e921306da70a", "6f9a8ac3-60f2-43be-834c-bacaa5acf9d5", "9881b8c1-1b31-408d-a97f-5288ee4f8999", "3ec1bde0-57e3-47e5-a38d-a59a047f180b", "5c5e7d4f-81a5-4853-9cd2-8fad46c55e8d", "dddd29c8-4016-4223-9ada-df69f6e21efc", "442b77a8-8727-4f7a-b462-d3c1997b84d5", "545f4f0f-39c4-4f1f-8609-020e523b0cbe", "56a835b6-f417-45ec-90ac-3fc11ab11720", "6ec47d0b-c408-4b36-a1d2-781ce628cff3", "36fc9250-743b-4014-baef-54d906d80722"]
   }, {
     "id": "d8a77d43-8eca-401d-b0bd-07a1e42640ef",
     "name": "Logged In",
@@ -6040,7 +6006,7 @@
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": ["a0a61e82-50e7-4ba9-9ddc-65a49b0da8c7", "861a3f08-5aa0-469d-81b8-1f51c878486f", "43f3ba98-3c96-4dd1-af9c-c611e3b8e1c6", "f2ac7c01-5e47-4790-9973-59bbcd428f21", "ac7c73ba-d058-414d-91f8-bdafd109e6d8", "740223fe-ac3b-4176-8038-4a9cb5bd692b", "f9a9d3b2-31d9-4b55-a7e0-a7a9e79db781", "4e81276d-0039-44a1-9d2e-0e3be080401b", "0820532a-cf07-4170-9599-44ddefa87f70", "1d1db709-5fb0-4043-bfb5-500fc06c8911", "c1ff9f01-b6ae-43db-b3cb-f25c64694de2", "e9d9ea64-32b3-4720-b60a-9c08b218f624", "c6d8a75c-dfec-4c23-b509-66e27db7f4a7", "ddb9afae-0199-42e7-b31d-4d84d6dc5698", "c8dbf93e-4e2e-4a67-b45c-e0a65062da6c", "23151ed2-102c-4f1f-b079-ee7bbaa6384d", "55080284-c385-43cf-8d35-1df197e8df73", "51afe5a4-4955-42a8-8ebd-9d21fdbf609e", "008e4eba-cfbd-4453-93fd-1d42fa72d8f3", "c301f798-fec9-490d-a82a-b8f8ecef78db", "99c0a057-52ef-49af-bab5-de5f334f19cd", "d8f10e78-fee3-4aef-863e-123090feb4f3", "bb448a57-5f36-42ab-a790-ae6cb9c58539", "2d9f2c6e-b662-4d2e-b887-35d166489631", "41fb34f3-421c-4b10-bbd6-7f777bd31b45", "12e53ab9-04c3-4ca7-8319-9b35dd485e3b", "24e923d9-7644-46da-8835-7f8fa1b74a3d", "92718f48-7ff5-47e1-afa5-03aaab36ba09", "27c61551-4522-4662-9943-853b91eaa3cf", "50db78ee-72eb-41b7-88d1-e9fa45a75e51", "b89a2300-f060-448e-a721-581df6baca1c", "c5ae2e1d-8203-494e-9b7a-e00baf183191", "52377b88-8c0e-4f51-9415-a6a932283d62", "d9c5a3a5-9044-4fc9-b1bd-8ec80da3e40c", "db2d29c5-3e6d-4ceb-befa-556d7b80241c", "cad23005-ecd0-4ed0-9ab3-312cb4c855f5", "950b2043-c3c8-467e-a689-41b1df3877e1", "224c1a4b-0def-4f34-b9e9-9adaaaead387", "c655d12a-0099-4bbb-895e-3d207a3b88f7", "1739b16e-c196-45bf-aed5-67abd47d1357", "97f8b686-f29f-4c41-b945-e921306da70a", "6f9a8ac3-60f2-43be-834c-bacaa5acf9d5", "9881b8c1-1b31-408d-a97f-5288ee4f8999", "3ec1bde0-57e3-47e5-a38d-a59a047f180b", "5c5e7d4f-81a5-4853-9cd2-8fad46c55e8d", "dddd29c8-4016-4223-9ada-df69f6e21efc", "442b77a8-8727-4f7a-b462-d3c1997b84d5", "545f4f0f-39c4-4f1f-8609-020e523b0cbe", "56a835b6-f417-45ec-90ac-3fc11ab11720", "042e86bc-0118-4124-b3c3-4cc6a93aae7d", "6ec47d0b-c408-4b36-a1d2-781ce628cff3", "b9b10708-03a9-47c6-b4de-9ae2b908510b", "36fc9250-743b-4014-baef-54d906d80722"]
+    "tests": ["a0a61e82-50e7-4ba9-9ddc-65a49b0da8c7", "861a3f08-5aa0-469d-81b8-1f51c878486f", "f2ac7c01-5e47-4790-9973-59bbcd428f21", "ac7c73ba-d058-414d-91f8-bdafd109e6d8", "740223fe-ac3b-4176-8038-4a9cb5bd692b", "f9a9d3b2-31d9-4b55-a7e0-a7a9e79db781", "0820532a-cf07-4170-9599-44ddefa87f70", "1d1db709-5fb0-4043-bfb5-500fc06c8911", "c1ff9f01-b6ae-43db-b3cb-f25c64694de2", "e9d9ea64-32b3-4720-b60a-9c08b218f624", "ddb9afae-0199-42e7-b31d-4d84d6dc5698", "c8dbf93e-4e2e-4a67-b45c-e0a65062da6c", "23151ed2-102c-4f1f-b079-ee7bbaa6384d", "55080284-c385-43cf-8d35-1df197e8df73", "51afe5a4-4955-42a8-8ebd-9d21fdbf609e", "008e4eba-cfbd-4453-93fd-1d42fa72d8f3", "c301f798-fec9-490d-a82a-b8f8ecef78db", "99c0a057-52ef-49af-bab5-de5f334f19cd", "d8f10e78-fee3-4aef-863e-123090feb4f3", "2d9f2c6e-b662-4d2e-b887-35d166489631", "41fb34f3-421c-4b10-bbd6-7f777bd31b45", "12e53ab9-04c3-4ca7-8319-9b35dd485e3b", "24e923d9-7644-46da-8835-7f8fa1b74a3d", "92718f48-7ff5-47e1-afa5-03aaab36ba09", "27c61551-4522-4662-9943-853b91eaa3cf", "b89a2300-f060-448e-a721-581df6baca1c", "c5ae2e1d-8203-494e-9b7a-e00baf183191", "52377b88-8c0e-4f51-9415-a6a932283d62", "d9c5a3a5-9044-4fc9-b1bd-8ec80da3e40c", "db2d29c5-3e6d-4ceb-befa-556d7b80241c", "cad23005-ecd0-4ed0-9ab3-312cb4c855f5", "950b2043-c3c8-467e-a689-41b1df3877e1", "224c1a4b-0def-4f34-b9e9-9adaaaead387", "c655d12a-0099-4bbb-895e-3d207a3b88f7", "1739b16e-c196-45bf-aed5-67abd47d1357", "97f8b686-f29f-4c41-b945-e921306da70a", "6f9a8ac3-60f2-43be-834c-bacaa5acf9d5", "9881b8c1-1b31-408d-a97f-5288ee4f8999", "3ec1bde0-57e3-47e5-a38d-a59a047f180b", "5c5e7d4f-81a5-4853-9cd2-8fad46c55e8d", "dddd29c8-4016-4223-9ada-df69f6e21efc", "442b77a8-8727-4f7a-b462-d3c1997b84d5", "545f4f0f-39c4-4f1f-8609-020e523b0cbe", "56a835b6-f417-45ec-90ac-3fc11ab11720", "042e86bc-0118-4124-b3c3-4cc6a93aae7d", "6ec47d0b-c408-4b36-a1d2-781ce628cff3", "b9b10708-03a9-47c6-b4de-9ae2b908510b", "36fc9250-743b-4014-baef-54d906d80722"]
   }],
   "urls": ["http://gamedb.us-east-1.elasticbeanstalk.com/"],
   "plugins": []

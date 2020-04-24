@@ -232,11 +232,6 @@ public class AllTestsTest {
     driver.findElement(By.linkText("RAWG")).click();
   }
   @Test
-  public void aboutTab() {
-    // Test name: about Tab
-    // Step # | name | target | value
-  }
-  @Test
   public void clickLogOutButtonLoggedIn() {
     // Test name: click Log Out Button_(Logged In)
     // Step # | name | target | value
@@ -294,16 +289,6 @@ public class AllTestsTest {
     driver.findElement(By.linkText("Games")).click();
     // 4 | click | linkText=See More | 
     driver.findElement(By.linkText("See More")).click();
-  }
-  @Test
-  public void developersTab() {
-    // Test name: developers Tab
-    // Step # | name | target | value
-  }
-  @Test
-  public void gamesTab() {
-    // Test name: games Tab
-    // Step # | name | target | value
   }
   @Test
   public void homeTab() {
@@ -404,11 +389,6 @@ public class AllTestsTest {
     driver.findElement(By.cssSelector(".media:nth-child(1) a > .mt-0")).click();
   }
   @Test
-  public void newsTab() {
-    // Test name: news Tab
-    // Step # | name | target | value
-  }
-  @Test
   public void publishersClickFirstOne() {
     // Test name: publishers Click First One
     // Step # | name | target | value
@@ -422,11 +402,6 @@ public class AllTestsTest {
     driver.findElement(By.linkText("See More")).click();
   }
   @Test
-  public void publishersTab() {
-    // Test name: publishers Tab
-    // Step # | name | target | value
-  }
-  @Test
   public void wishlistTabLoggedIn() {
     // Test name: wishlist Tab_(Logged In)
     // Step # | name | target | value
@@ -435,23 +410,23 @@ public class AllTestsTest {
   public void publishersGamesElectronicArts() {
     // Test name: publishers -> Games (Electronic Arts)
     // Step # | name | target | value
-    // 1 | open | /publisher?id=5e7ac43ae4464f1993258e22 | 
-    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/publisher?id=5e7ac43ae4464f1993258e22");
-    // 2 | setWindowSize | 1280x800 | 
-    driver.manage().window().setSize(new Dimension(1280, 800));
-    // 3 | click | css=.card-deck:nth-child(9) > .card:nth-child(1) .btn | 
-    driver.findElement(By.cssSelector(".card-deck:nth-child(9) > .card:nth-child(1) .btn")).click();
+    // 1 | open | /publisher?id=5e9f25a81942444a40a43437 | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/publisher?id=5e9f25a81942444a40a43437");
+    // 2 | setWindowSize | 1218x641 | 
+    driver.manage().window().setSize(new Dimension(1218, 641));
+    // 3 | click | css=.card-deck:nth-child(9) > .card:nth-child(2) .card-img-top | 
+    driver.findElement(By.cssSelector(".card-deck:nth-child(9) > .card:nth-child(2) .card-img-top")).click();
   }
   @Test
   public void publishersDevelopersElectronicArts() {
     // Test name: publishers -> Developers (Electronic Arts)
     // Step # | name | target | value
-    // 1 | open | /publisher?id=5e7ac43ae4464f1993258e22 | 
-    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/publisher?id=5e7ac43ae4464f1993258e22");
-    // 2 | setWindowSize | 1280x800 | 
-    driver.manage().window().setSize(new Dimension(1280, 800));
-    // 3 | click | linkText=See More | 
-    driver.findElement(By.linkText("See More")).click();
+    // 1 | open | /publisher?id=5e9f25a81942444a40a43437 | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/publisher?id=5e9f25a81942444a40a43437");
+    // 2 | setWindowSize | 1218x641 | 
+    driver.manage().window().setSize(new Dimension(1218, 641));
+    // 3 | click | css=.card-deck:nth-child(5) > .card:nth-child(1) .card-img-top | 
+    driver.findElement(By.cssSelector(".card-deck:nth-child(5) > .card:nth-child(1) .card-img-top")).click();
   }
   @Test
   public void homepageCarouselLinks() {
@@ -468,21 +443,19 @@ public class AllTestsTest {
   public void gamesPublishersGTA() {
     // Test name: games -> Publishers (GTA)
     // Step # | name | target | value
-    // 1 | open | /game?id=5e7ab0b26b5b29159f027d84 | 
-    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/game?id=5e7ab0b26b5b29159f027d84");
-    // 2 | setWindowSize | 1280x800 | 
-    driver.manage().window().setSize(new Dimension(1280, 800));
-    // 3 | click | css=p:nth-child(5) > a | 
+    // 1 | open | /game?id=5e9f234d77acff5a7428ec94 | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/game?id=5e9f234d77acff5a7428ec94");
+    // 2 | click | css=p:nth-child(5) > a | 
     driver.findElement(By.cssSelector("p:nth-child(5) > a")).click();
   }
   @Test
   public void gamesDevelopersGTA() {
     // Test name: games -> Developers (GTA)
     // Step # | name | target | value
-    // 1 | open | /game?id=5e7ab0b26b5b29159f027d84 | 
-    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/game?id=5e7ab0b26b5b29159f027d84");
-    // 2 | setWindowSize | 1280x800 | 
-    driver.manage().window().setSize(new Dimension(1280, 800));
+    // 1 | open | /game?id=5e9f234d77acff5a7428ec94 | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/game?id=5e9f234d77acff5a7428ec94");
+    // 2 | setWindowSize | 1218x641 | 
+    driver.manage().window().setSize(new Dimension(1218, 641));
     // 3 | click | linkText=Rockstar Games | 
     driver.findElement(By.linkText("Rockstar Games")).click();
   }
@@ -501,12 +474,12 @@ public class AllTestsTest {
   public void developersGamesSony() {
     // Test name: developers -> Games (Sony)
     // Step # | name | target | value
-    // 1 | open | /developer?id=5e7abdffbd80cf188df37652 | 
-    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/developer?id=5e7abdffbd80cf188df37652");
-    // 2 | setWindowSize | 1280x800 | 
-    driver.manage().window().setSize(new Dimension(1280, 800));
-    // 3 | click | linkText=See More | 
-    driver.findElement(By.linkText("See More")).click();
+    // 1 | open | /developer?id=5e9f25699041cf0f20aacfd1 | 
+    driver.get("http://gamedb.us-east-1.elasticbeanstalk.com/developer?id=5e9f25699041cf0f20aacfd1");
+    // 2 | setWindowSize | 1218x641 | 
+    driver.manage().window().setSize(new Dimension(1218, 641));
+    // 3 | click | css=.card-deck:nth-child(5) > .card:nth-child(1) .card-img-top | 
+    driver.findElement(By.cssSelector(".card-deck:nth-child(5) > .card:nth-child(1) .card-img-top")).click();
   }
   @Test
   public void feelingCurious() {
