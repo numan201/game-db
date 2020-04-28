@@ -80,15 +80,7 @@ function optionSelected(type, option) {
             <span></span>
         </div>
         <script>
-            //Deselect rating buttons if user holds down ctrl and clicks
-            let radios = document.getElementsByName('star');
-            for(let i=0; i<radios.length; i++ ) {
-                radios[i].onclick = function(e) {
-                    if(e.shiftKey) {
-                        this.checked = false;
-                    }
-                }
-            }
+            initializeRadios('star');
         </script>
         <br>
         <button type="submit" class="btn btn-primary">Filter</button>

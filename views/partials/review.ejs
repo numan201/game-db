@@ -1,0 +1,34 @@
+<br>
+<h2>User Reviews</h2>
+<div class="container-fluid text-left">
+    <%if(reviews.length != 0){
+        reviewslength = reviews.length;
+        if(reviewslength > 5){
+            reviewslength = 5;
+        }
+    for(var i = 0; i < reviewslength; i++){ %>
+    <div class="media">
+        <img class="mr-3" src="<%=reviews[i].userpicture%>" height="100" width="100" alt="...">
+        <div class="media-body">
+            <h5 class="mt-0"><%=reviews[i].title%></h5>
+            <%=reviews[i].review%>
+            <%
+                var rating = reviews[i].rating;
+                rating = rating.slice(-1);
+            %>
+            <h6 class="mt-0">Rating: <%=rating%>/5</h6>
+            <h6 class="mt-0">Written by: <%=reviews[i].username%></h6>
+            <%
+                var reviewDate = new Date(reviews[i].time);
+                var formattedTime = reviewDate.toLocaleDateString() + " " + reviewDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+            %>
+            <h6 class="mt-0"><small><i>Date: <%=formattedTime%></i></small></h6>
+        </div>
+    </div>
+    <%}
+    %>
+    <%} else {%>
+        <h6 class="text-center">There are currently no user reviews. Own the game? Be the first to put a review!</h6>
+    <%}%>
+</div>

@@ -3,30 +3,13 @@
   height: 100%;
 }
 
+main {
+    min-height:700px;
+}
+
 img.card-img-top {
     height: 250px;
     object-fit: cover;
-}
-hr {
-  background: #cec8c8;
-}
-
-main {
-  min-height:700px;
-}
-
-#cardtitle{
-    color:black;
-}
-.footer {
-  position:static;
-  margin-top:30px;
-}
-.carousel-caption{
-    color: black;
-    position: relative;
-    left: auto;
-    right: auto;
 }
 
 #filter a.collapsed:after {
