@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {getCurrentPage, paginationObject, skipCalc, resultsPerPage} = require("../paginationHelper");
 const {searchQuery, sortBy} = require("../searchSortHelper");
+const {buildSearchQuery, buildFilterQuery, buildSortQuery, buildMongoQuery} = require("../models/developersPublishersModel");
 
 /* GET publishers listing. */
 router.get('/', function(req, res, next) {
@@ -11,41 +12,13 @@ router.get('/', function(req, res, next) {
     let filtersCondition = {$match : {}};
     let paginationQuery = [{$skip: skipCalc(currentPage)}, {$limit: resultsPerPage} ];
 
-    let sortQuery = [];
+    let sortQuery = buildSearchQuery(filtersCondition, req);
 
-    if ('search' in req.query && req.query.search.trim() !== '') {
-        filtersCondition['$match']['$text'] = { $search : req.query.search };
-        sortQuery = { $sort: { score: { $meta: "textScore" } } };
-    }
+    buildFilterQuery(filtersCondition, req, 'publishers');
 
-    if ('numbers' in req.query) {
-        let numbers = req.query.numbers;
+    sortQuery = buildSortQuery(sortQuery, req);
 
-        numbers = parseInt(numbers);
-        if (numbers === 500) {
-            filtersCondition['$match']['games_count'] = {$gt: numbers};
-        } else {
-            filtersCondition['$match']['games_count'] = {$gt: numbers, $lt: numbers + 50};
-        }
-    }
-
-    if ('sorts' in req.query && req.query.sorts.trim() !== '') {
-        if(req.query.sorts !== 'Relevance') {
-            let type = req.query.sorts.slice(0, 3);
-            let descending = req.query.sorts.slice(-3) === "Des";
-            let field = '';
-            if (type === 'Alp') {
-                field = "name";
-            } else {
-                field = "games_count";
-            }
-            let order = descending ? -1 : 1;
-            sortQuery = {$sort: {[field]: order}};
-        }
-    }
-
-    let baseQuery = [filtersCondition].concat(sortQuery);
-    let paginatedQuery = baseQuery.concat(paginationQuery);
+    let paginatedQuery = buildMongoQuery(filtersCondition, sortQuery, paginationQuery);
 
     let countQuery = [filtersCondition].concat( { $count: 'totalCount' });
 

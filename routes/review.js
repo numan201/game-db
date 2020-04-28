@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {findId, buildURL, buildReview} = require("../models/modelreviews");
+const {findId, buildURL, buildReview} = require("../models/reviewModel");
 
 router.post('/', (req, res) => {
     let id = findId(req);

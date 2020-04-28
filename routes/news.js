@@ -6,7 +6,6 @@ const { newsKey } = require('../keys');
 /* GET games listing. */
 router.get('/', function(req, res, next) {
     req.app.locals.db.collection('cachednews').find({ news_page : { $exists : 1 } }).count().then(articles_count => {
-        console.log("Articles count : " + articles_count);
         if(articles_count === 0){
             return axios({
                 method: 'get',
@@ -39,5 +38,4 @@ router.get('/', function(req, res, next) {
         }
     });
 });
-//res.render('news', { title: 'News', news: news, steamGames: steamGames});
 module.exports = router;
