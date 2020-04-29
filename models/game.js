@@ -155,13 +155,13 @@ function getSteamNews(resolve, steamAppId, name, req) {
     });
 }
 
-function getTwitchIntegration(resolve, data){
+function getTwitchIntegration(resolve, name){
     // Twitch Integration
-    data.twitchUsername = null;
+    let twitchUsername = {key:'twitchUsername', value:null};
     return axios({
         method: 'get',
         url: 'https://api.twitch.tv/helix/games',
-        params: {name: data.game.name},
+        params: {name: name},
         headers: {'Client-ID': twitchKey}
     })
         .then((response) => {
@@ -178,40 +178,40 @@ function getTwitchIntegration(resolve, data){
                 headers: {'Client-ID': twitchKey}
             })
                 .then((response) => {
-                    data.twitchUsername = response.data.data[0].user_name;
-                    resolve(data);
+                    twitchUsername.value = response.data.data[0].user_name;
+                    resolve(twitchUsername);
                 })
-                .catch(err => resolve(data));
+                .catch(err => resolve(twitchUsername));
         })
-        .catch(err => resolve(data));
+        .catch(err => resolve(twitchUsername));
 }
 
-function getHLTB(resolve, data){
+function getHLTB(resolve, name){
     // How Long to Beat
-    data.hltb = null;
-    return hltbService.search(data.game.name).then(result => {
-        data.hltb = {};
+    let hltb = {key:'hltb', value:null};
+    return hltbService.search(name).then(result => {
+        hltb.value = {};
 
         if (result.length === 0) {
-            data.hltb.exists = false;
+            hltb.value.exists = false;
         } else {
-            data.hltb.exists = result[0].similarity > 0.5;
-            data.hltb.id = result[0].id;
-            data.hltb.main = result[0].gameplayMain;
-            data.hltb.mainExtra = result[0].gameplayMainExtra;
-            data.hltb.completionist = result[0].gameplayCompletionist;
-            if(data.hltb.main == 0 && data.hltb.mainExtra == 0 && data.hltb.completionist == 0) data.hltb.exists = false;
+            hltb.value.exists = result[0].similarity > 0.5;
+            hltb.value.id = result[0].id;
+            hltb.value.main = result[0].gameplayMain;
+            hltb.value.mainExtra = result[0].gameplayMainExtra;
+            hltb.value.completionist = result[0].gameplayCompletionist;
+            if(hltb.value.main == 0 && hltb.value.mainExtra == 0 && hltb.value.completionist == 0) hltb.value.exists = false;
         }
-        resolve(data);
+        resolve(hltb);
     })
-        .catch(err => resolve(data));
+        .catch(err => resolve(hltb));
 }
 
-function getYoutube(resolve, data){
-    data.videos = [];
+function getYoutube(resolve, name){
+    let videos = {key: 'videos', value:[]};
 
     let options = {
-        q: data.game.name,
+        q: name,
         part: 'snippet',
         type:' video'
     };
@@ -219,11 +219,11 @@ function getYoutube(resolve, data){
     return youtubeApiV3Search(youtubeKey, options)
         .then((response) => {
             response.items.forEach((item) => {
-                data.videos.push(item.id.videoId);
+                videos.value.push(item.id.videoId);
             });
-            resolve(data);
+            resolve(videos);
         })
-        .catch(err => resolve(data));
+        .catch(err => resolve(videos));
 }
 
 function getReviews(resolve, req, id) {
@@ -302,42 +302,43 @@ function getGameData(promise, req, res) {
         .then(game => {
             let data = {title: game.name, game, page: req.baseUrl};
             data._id = id;
-            //Allowing Concurrency in our page load
-            data.steamAppId = getSteamAppId(data.game.stores);
-            const hiddenPromises = [
-                new Promise(resolve => getSteamAchievements(resolve, data.steamAppId, req, id)),
-                new Promise(resolve => getWishlist(resolve, data._id, req, res)),
-                new Promise(resolve => getReviewsCounts(resolve, data.game.ratings)),
-                new Promise(resolve => getReviews(resolve, req, id)),
-                new Promise(resolve => getPublishers(resolve, data.game.id, req)),
-                new Promise(resolve => getDevelopers(resolve, data.game.id, req)),
-                new Promise(resolve => getSteamPlayerCount(resolve, data.steamAppId)),
-                new Promise(resolve => getPS4Price(resolve, data.game.name)),
-                new Promise(resolve => getXB1Link(resolve, data.game.name)),
-                new Promise(resolve => getSteamNews(resolve, data.steamAppId, data.game.name, req)),
-                new Promise(resolve => getSteamPrice(resolve, data.steamAppId))];
-            const promises = [
-                new Promise(resolve => getTwitchIntegration(resolve, data)),
-                new Promise(resolve => getHLTB(resolve, data)),
-                new Promise(resolve => getYoutube(resolve, data))
-            ];
-            Promise.all(promises).then(out => {
-                //Out is actually an array of all the promises output, so here we merge them
-                let game = Object.assign({}, ...out);
-                Promise.all(hiddenPromises).then(output => {
-                    output.forEach(entry => {
-                        game[entry.key] = entry.value;
-                    });
-                    game.date = new Date();
-                    cachePromise.then(cached => {
-                        if(cached == false){
-                            promise(game);
-                        }
-                        req.app.locals.db.collection('cachedgames').replaceOne({_id: id}, game, {upsert:true});
-                    });
-                    return data;
-                });
 
+            data.steamAppId = getSteamAppId(data.game.stores);
+
+            const name = data.game.name;
+            const gameId = data.game.id;
+            const steamAppId = data.steamAppId;
+            const uniqueId = data._id;
+            const ratings = data.game.ratings;
+
+            const hiddenPromises = [
+                new Promise(resolve => getSteamAchievements(resolve, steamAppId, req, id)),
+                new Promise(resolve => getWishlist(resolve, uniqueId, req, res)),
+                new Promise(resolve => getReviewsCounts(resolve, ratings)),
+                new Promise(resolve => getReviews(resolve, req, id)),
+                new Promise(resolve => getPublishers(resolve, gameId, req)),
+                new Promise(resolve => getDevelopers(resolve, gameId, req)),
+                new Promise(resolve => getSteamPlayerCount(resolve, steamAppId)),
+                new Promise(resolve => getPS4Price(resolve, name)),
+                new Promise(resolve => getXB1Link(resolve, name)),
+                new Promise(resolve => getSteamNews(resolve, steamAppId, name, req)),
+                new Promise(resolve => getSteamPrice(resolve, steamAppId)),
+                new Promise(resolve => getTwitchIntegration(resolve, name)),
+                new Promise(resolve => getHLTB(resolve, name)),
+                new Promise(resolve => getYoutube(resolve, name))];
+            Promise.all(hiddenPromises).then(output => {
+                let game = data;
+                output.forEach(entry => {
+                    game[entry.key] = entry.value;
+                });
+                game.date = new Date();
+                cachePromise.then(cached => {
+                    if(cached == false){
+                        promise(game);
+                    }
+                    req.app.locals.db.collection('cachedgames').replaceOne({_id: id}, game, {upsert:true});
+                });
+                return data;
             });
         });
 
