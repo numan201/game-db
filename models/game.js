@@ -6,21 +6,7 @@ const { youtubeKey, twitchKey, steamKey } = require('../keys');
 const stringSimilarity = require('string-similarity');
 
 
-function getSteamAppId(game) {
-    let steamAppId = null;
-
-    for (let store of game.stores) {
-        if (store.store.name === "Steam") {
-            let steamURLParts = store.url_en.split('/');
-            steamAppId = steamURLParts[steamURLParts.indexOf('app') + 1];
-            break;
-        }
-    }
-
-    return steamAppId;
-}
-
-function getSteamAppIdModded(stores) {
+function getSteamAppId(stores) {
     let steamAppId = null;
 
     for (let store of stores) {
@@ -58,8 +44,7 @@ function getPublishers(resolve, id, req){
     })
 }
 
-function getSteamPlayerCount(resolve, stores){
-    let steamAppId = getSteamAppIdModded(stores);
+function getSteamPlayerCount(resolve, steamAppId){
     if(steamAppId == null) resolve({key:'steamPlayerCount', value:0});
     axios.get('https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=' + steamAppId)
         .then((resp) => {
@@ -121,32 +106,30 @@ function getXB1Link(resolve, name){
         }).catch(err => resolve(xb1Price));
 }
 
-function getSteamPrice(resolve, data) {
+function getSteamPrice(resolve, steamAppId) {
     // Steam Price
-    data.steamPrice = null;
-    data.steamAppId = getSteamAppId(data.game);
-    if(data.steamAppId == null) resolve(data);
-    return axios.get('http://store.steampowered.com/api/appdetails?appids=' + data.steamAppId)
+    let steamPrice = {key:'steamPrice', value:null};
+    if(steamAppId == null) resolve(steamPrice);
+    return axios.get('http://store.steampowered.com/api/appdetails?appids=' + steamAppId)
         .then((resp) => {
-            data.steamPrice = {};
-            if(resp.data[data.steamAppId].data.is_free == true){
-                data.steamPrice.final_formatted = "Free";
+            steamPrice.value = {};
+            if(resp.data[steamAppId].data.is_free == true){
+                steamPrice.value.final_formatted = "Free";
             }
             else{
-                data.steamPrice = resp.data[data.steamAppId].data.price_overview;
+                steamPrice.value = resp.data[steamAppId].data.price_overview;
             }
-            data.steamPrice.developers = resp.data[data.steamAppId].data.developers;
-            data.steamPrice.publishers = resp.data[data.steamAppId].data.publishers;
-            data.steamPrice.link = 'http://store.steampowered.com/app/' + data.steamAppId + '/';
-            resolve(data);
+            steamPrice.value.developers = resp.data[data.steamAppId].data.developers;
+            steamPrice.value.publishers = resp.data[data.steamAppId].data.publishers;
+            steamPrice.value.link = 'http://store.steampowered.com/app/' + steamAppId + '/';
+            resolve(steamPrice);
         })
-        .catch(err => {resolve(data);});
+        .catch(err => {resolve(steamPrice);});
 }
 
-function getSteamNews(resolve, stores, name, req) {
+function getSteamNews(resolve, steamAppId, name, req) {
     // Steam News
     let news = {key:'news', value:null};
-    let steamAppId = getSteamAppIdModded(stores);
     if (steamAppId == null) resolve(data);
     req.app.locals.db.collection('cachednews').find({ game_name : {$eq: name}}).toArray().then(articles => {
         if(articles.length === 0) {
@@ -274,9 +257,8 @@ function getWishlist(resolve, game_id, req, res){
     }
 }
 
-function getSteamAchievements(resolve, stores, req, res){
+function getSteamAchievements(resolve, steamAppId, req, res){
     let achievements = { key: 'achievements', value: null};
-    let steamAppId = getSteamAppIdModded(stores);
     if(steamAppId == null){ resolve(achievements); }
     axios.get("http://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=" + steamKey + "&appid=" + steamAppId).then((resp) => {
         achievements.value = resp.data.game.availableGameStats.achievements;
@@ -321,22 +303,23 @@ function getGameData(promise, req, res) {
             let data = {title: game.name, game, page: req.baseUrl};
             data._id = id;
             //Allowing Concurrency in our page load
+            data.steamAppId = getSteamAppId(data.game.stores);
             const hiddenPromises = [
-                new Promise(resolve => getSteamAchievements(resolve, data.game.stores, req, id)),
+                new Promise(resolve => getSteamAchievements(resolve, data.steamAppId, req, id)),
                 new Promise(resolve => getWishlist(resolve, data._id, req, res)),
                 new Promise(resolve => getReviewsCounts(resolve, data.game.ratings)),
                 new Promise(resolve => getReviews(resolve, req, id)),
                 new Promise(resolve => getPublishers(resolve, data.game.id, req)),
                 new Promise(resolve => getDevelopers(resolve, data.game.id, req)),
-                new Promise(resolve => getSteamPlayerCount(resolve, data.game.stores)),
+                new Promise(resolve => getSteamPlayerCount(resolve, data.steamAppId)),
                 new Promise(resolve => getPS4Price(resolve, data.game.name)),
                 new Promise(resolve => getXB1Link(resolve, data.game.name)),
-                new Promise(resolve => getSteamNews(resolve, data.game.stores, data.game.name, req))];
+                new Promise(resolve => getSteamNews(resolve, data.steamAppId, data.game.name, req)),
+                new Promise(resolve => getSteamPrice(resolve, data.steamAppId))];
             const promises = [
                 new Promise(resolve => getTwitchIntegration(resolve, data)),
                 new Promise(resolve => getHLTB(resolve, data)),
-                new Promise(resolve => getYoutube(resolve, data)),
-                new Promise(resolve => getSteamPrice(resolve, data, req, id))
+                new Promise(resolve => getYoutube(resolve, data))
             ];
             Promise.all(promises).then(out => {
                 //Out is actually an array of all the promises output, so here we merge them
