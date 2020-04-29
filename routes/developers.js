@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {getCurrentPage, paginationObject, skipCalc, resultsPerPage} = require("../paginationHelper");
 const {searchQuery, sortBy} = require("../searchSortHelper");
-const {buildSearchQuery, buildFilterQuery, buildSortQuery, buildMongoQuery} = require("../models/developersPublishersModel");
+const {buildSearchQuery, buildFilterQuery, buildSortQuery, buildMongoQuery} = require("../models/developersPublishers");
 
 /* GET developers listing. */
 router.get('/', function(req, res, next) {

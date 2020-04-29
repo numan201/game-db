@@ -2,40 +2,17 @@ const axios = require('axios');
 const express = require('express');
 const router = express.Router();
 const { newsKey } = require('../keys');
+const {getNews} = require('../models/news');
 
 /* GET games listing. */
 router.get('/', function(req, res, next) {
-    req.app.locals.db.collection('cachednews').find({ news_page : { $exists : 1 } }).count().then(articles_count => {
-        if(articles_count === 0){
-            return axios({
-                method: 'get',
-                url: 'http://newsapi.org/v2/everything',
-                params: {q: "videogames", pageSize: 20, ApiKey: newsKey},
-            })
-                .then((response) => {
-                    response.data.articles.forEach(article => {
-                        article.news_page = true;
-                        article.createdAt = new Date();
-                    });
-                    req.app.locals.db.collection('cachednews').insertMany(response.data.articles);
-                    res.render('news', {
-                        title: 'News',
-                        news: response.data.articles,
-                        page: req.baseUrl
-                    });
-                })
-                .catch(err => news);
-        }
-        else{
-            req.app.locals.db.collection('cachednews').find({ news_page : { $exists : 1 } }).toArray().then(articles => {
-                res.render('news', {
-                    title: 'News',
-                    news: articles,
-                    page: req.baseUrl
-                });
-            })
-                .catch(err => news);
-        }
+    const promise = new Promise(resolve => {getNews(resolve, req);});
+    promise.then(articles => {
+        res.render('news', {
+            title: 'News',
+            news: articles,
+            page: req.baseUrl
+        });
     });
 });
 module.exports = router;
