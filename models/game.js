@@ -20,24 +20,42 @@ function getSteamAppId(game) {
     return steamAppId;
 }
 
-function getReviewsCounts(game) {
-    let reviewsCounts = [0, 0, 0, 0, 0];
+function getSteamAppIdModded(stores) {
+    let steamAppId = null;
 
-    game.ratings.forEach((rating) => reviewsCounts[rating.id - 1] = rating.count);
-    reviewsCounts.reverse();
+    for (let store of stores) {
+        if (store.store.name === "Steam") {
+            let steamURLParts = store.url_en.split('/');
+            steamAppId = steamURLParts[steamURLParts.indexOf('app') + 1];
+            break;
+        }
+    }
 
-    return JSON.stringify(reviewsCounts);
+    return steamAppId;
 }
 
-function getDevelopersAndPublishers(resolve, data, req){
-    let developers = req.app.locals.db.collection('developers').aggregate([{$unwind: "$games"}, {$match: { "games.id" : data.game.id}}, {$project: {"name": 1}}]).toArray();
-    let publishers = req.app.locals.db.collection('publishers').aggregate([{$unwind: "$games"}, {$match: {"games.id": data.game.id}}, {$project: {"name": 1}}]).toArray();
+function getReviewsCounts(resolve, ratings) {
+    let reviewsCounts = [0, 0, 0, 0, 0];
 
-    Promise.all([developers, publishers]).then(([developers, publishers]) => {
-        data.developers = developers;
-        data.publishers = publishers;
-        resolve(data);
+    ratings.forEach((rating) => reviewsCounts[rating.id - 1] = rating.count);
+    reviewsCounts.reverse();
+
+    let reviewsCountsReturn = {key:'reviewsCounts', value:JSON.stringify(reviewsCounts)};
+    resolve(reviewsCountsReturn);
+}
+
+function getDevelopers(resolve, id, req){
+    let developers = req.app.locals.db.collection('developers').aggregate([{$unwind: "$games"}, {$match: { "games.id" : id}}, {$project: {"name": 1}}]).toArray();
+    Promise.all([developers]).then(([developers]) => {
+        resolve({key:'developers', value:developers});
     });
+}
+
+function getPublishers(resolve, id, req){
+    let publishers = req.app.locals.db.collection('publishers').aggregate([{$unwind: "$games"}, {$match: {"games.id": id}}, {$project: {"name": 1}}]).toArray();
+    Promise.all([publishers]).then(([publishers]) => {
+        resolve({key:'publishers', value:publishers});
+    })
 }
 
 function getSteamPlayerCount(resolve, data){
@@ -229,47 +247,46 @@ function getYoutube(resolve, data){
         .catch(err => resolve(data));
 }
 
-function getReviews(resolve, data, req, id){
+function getReviews(resolve, req, id) {
     let reviews = req.app.locals.db.collection('reviews').find({id:id.toLocaleString()}).toArray();
     return Promise.all([reviews]).then(([reviews]) => {
-        data.reviews = reviews;
-        resolve(data);
+        let reviewReturn = {key: 'reviews', value: reviews};
+        resolve(reviewReturn);
     });
 }
 
-function getWishlist(resolve, data, req, res){
+function getWishlist(resolve, game_id, req, res){
     // Wishlist functionality
-    let userHasInWishlist = req.user && req.user.wishlist.includes(data._id.toString());
     if (req.user) {
         let userId = require('mongodb').ObjectID(req.user._id);
-
         if ('addWishlist' in req.query) {
-            req.app.locals.db.collection('users').updateOne({_id: userId}, {$addToSet: {wishlist: data._id.toString()}}).then( (result) => {
-                res.redirect('/game?id=' + req.query.id);
-            }).catch(err => data);;
-            return;
-
+            req.app.locals.db.collection('users').updateOne({_id: userId}, {$addToSet: {wishlist: game_id.toString()}}).then( (result) => {
+                //res.redirect('/game?id=' + req.query.id);
+                resolve({key: 'userHasInWishlist', value: true});
+            });
         } else if ('removeWishlist' in req.query) {
-            req.app.locals.db.collection('users').updateOne({_id: userId}, {$pull: {wishlist: data._id.toString()}}).then( (result) => {
-                res.redirect('/game?id=' + req.query.id);
-            }).catch(err => data);
-            return;
+            req.app.locals.db.collection('users').updateOne({_id: userId}, {$pull: {wishlist: game_id.toString()}}).then( (result) => {
+                //res.redirect('/game?id=' + req.query.id);
+                resolve({key: 'userHasInWishlist', value: false});
+            });
+        } else {
+            resolve({key: 'userHasInWishlist', value: req.user.wishlist.includes(game_id.toString())});
         }
     }
-    data.reviewsCounts = getReviewsCounts(data.game);
-    data.userHasInWishlist = userHasInWishlist;
-    resolve(data);
+    else{
+        resolve({key: 'userHasInWishlist', value: false});
+    }
 }
 
-function getSteamAchievements(resolve, data, req, res){
-    data.achievements = null;
-    data.steamAppId = getSteamAppId(data.game);
-    if(data.steamAppId == null){ resolve(data); }
-    axios.get("http://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=" + steamKey + "&appid=" + data.steamAppId).then((resp) => {
-        data.achievements = resp.data.game.availableGameStats.achievements;
-        resolve(data);
+function getSteamAchievements(resolve, stores, req, res){
+    let achievements = { key: 'achievements', value: null};
+    let steamAppId = getSteamAppIdModded(stores);
+    if(steamAppId == null){ resolve(achievements); }
+    axios.get("http://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=" + steamKey + "&appid=" + steamAppId).then((resp) => {
+        achievements.value = resp.data.game.availableGameStats.achievements;
+        resolve(achievements);
     })
-        .catch(err => { resolve(data);});
+        .catch(err => { resolve(achievements);});
 }
 
 //checks if the game is cached, returns 0 if we're up to date, 1 if cache is too old and 2 if game isn't cached
@@ -281,10 +298,15 @@ function checkCached(promise, resolve, req, res, id){
             }
             else{
                 const promises = [
-                    new Promise(wish => getWishlist(wish, game, req, res)),
-                    new Promise(wish => getReviews(wish, game, req, id))
+                    new Promise(resolve => getWishlist(resolve, id, req, res)),
+                    new Promise(resolve => getReviews(resolve, req, id))
                 ];
-                Promise.all(promises).then( game => { promise(Object.assign({}, ...game));});
+                Promise.all(promises).then( output => {
+                    output.forEach(entry => {
+                        game[entry.key] = entry.value;
+                    });
+                    promise(game);
+                });
                 resolve(true);
             }
         }).catch(err => resolve(false));
@@ -303,9 +325,14 @@ function getGameData(promise, req, res) {
             let data = {title: game.name, game, page: req.baseUrl};
             data._id = id;
             //Allowing Concurrency in our page load
+            const hiddenPromises = [
+                new Promise(resolve => getSteamAchievements(resolve, data.game.stores, req, id)),
+                new Promise(resolve => getWishlist(resolve, data._id, req, res)),
+                new Promise(resolve => getReviewsCounts(resolve, data.game.ratings)),
+                new Promise(resolve => getReviews(resolve, req, id)),
+                new Promise(resolve => getPublishers(resolve, data.game.id, req)),
+                new Promise(resolve => getDevelopers(resolve, data.game.id, req))];
             const promises = [
-                new Promise(resolve => getWishlist(resolve, data, req, res)),
-                new Promise(resolve => getDevelopersAndPublishers(resolve, data, req)),
                 new Promise(resolve => getSteamPlayerCount(resolve, data)),
                 new Promise(resolve => getPS4Price(resolve, data)),
                 new Promise(resolve => getXB1Link(resolve, data)),
@@ -313,21 +340,25 @@ function getGameData(promise, req, res) {
                 new Promise(resolve => getTwitchIntegration(resolve, data)),
                 new Promise(resolve => getHLTB(resolve, data)),
                 new Promise(resolve => getYoutube(resolve, data)),
-                new Promise(resolve => getReviews(resolve, data, req, id)),
-                new Promise(resolve => getSteamPrice(resolve, data, req, id)),
-                new Promise(resolve => getSteamAchievements(resolve, data, req, id))
+                new Promise(resolve => getSteamPrice(resolve, data, req, id))
             ];
             Promise.all(promises).then(out => {
                 //Out is actually an array of all the promises output, so here we merge them
                 let game = Object.assign({}, ...out);
-                game.date = new Date();
-                cachePromise.then(cached => {
-                    if(cached == false){
-                        promise(game);
-                    }
-                    req.app.locals.db.collection('cachedgames').replaceOne({_id: id}, game, {upsert:true});
+                Promise.all(hiddenPromises).then(output => {
+                    output.forEach(entry => {
+                        game[entry.key] = entry.value;
+                    });
+                    game.date = new Date();
+                    cachePromise.then(cached => {
+                        if(cached == false){
+                            promise(game);
+                        }
+                        req.app.locals.db.collection('cachedgames').replaceOne({_id: id}, game, {upsert:true});
+                    });
+                    return data;
                 });
-                return data;
+
             });
         });
 
