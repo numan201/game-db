@@ -58,71 +58,67 @@ function getPublishers(resolve, id, req){
     })
 }
 
-function getSteamPlayerCount(resolve, data){
-    data.steamPlayerCount = 0;
-    data.steamAppId = getSteamAppId(data.game);
-    if(data.steamAppId == null) resolve(data);
-    return axios.get('https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=' + data.steamAppId)
+function getSteamPlayerCount(resolve, stores){
+    let steamAppId = getSteamAppIdModded(stores);
+    if(steamAppId == null) resolve({key:'steamPlayerCount', value:0});
+    axios.get('https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=' + steamAppId)
         .then((resp) => {
                 if (resp.data.response !== null) {
                     let steamPlayerCount = resp.data.response.player_count;
-                    data.steamPlayerCount = steamPlayerCount.toLocaleString();
-                }
-                resolve(data);
-            }
-        )
-        .catch(err => resolve(data));
-}
-
-function getPS4Price(resolve, data){
-    data.ps4Price = null;
-    return axios.get('https://store.playstation.com/store/api/chihiro/00_09_000/tumbler/US/en/99/'+ escape(data.game.name) +'?suggested_size=10')
-        .then((resp) => {
-            if(resp.data.links[0].playable_platform.includes("PS4™") ){
-                data.ps4Price = {};
-                //checking if it's on sale
-                if(resp.data.links[0].default_sku.rewards.length > 0){
-                    data.ps4Price.price = resp.data.links[0].default_sku.rewards[0].display_price;
+                    resolve({key:'steamPlayerCount', value:steamPlayerCount.toLocaleString()});
                 }
                 else{
-                    data.ps4Price.price = resp.data.links[0].default_sku.display_price;
+                    resolve({key:'steamPlayerCount', value:0});
                 }
-                data.ps4Price.publisherFallback = resp.data.links[0].provider_name;
-                data.ps4Price.link = 'https://store.playstation.com/en-us/product/' + resp.data.links[0].id;
             }
-            resolve(data);
-        })
-        .catch(err => resolve(data));
+        )
+        .catch(err => resolve({key:'steamPlayerCount', value:0}));
 }
 
-function getXB1Link(resolve, data){
-    data.xb1Price = null;
-    return axios.get('https://www.microsoft.com/services/api/v3/suggest?market=en-us&clientId=7F27B536-CF6B-4C65-8638-A0F8CBDFCA65&sources=Iris-Products%2CDCatAll-Products%2CMicrosoft-Terms&filter=%2BClientType%3AStoreWeb&counts=1%2C5%2C5&query=' + escape(data.game.name))
+function getPS4Price(resolve, name){
+    let ps4Price = {key:'ps4Price', value: null};
+    axios.get('https://store.playstation.com/store/api/chihiro/00_09_000/tumbler/US/en/99/'+ escape(name) +'?suggested_size=10')
+        .then((resp) => {
+            if(resp.data.links[0].playable_platform.includes("PS4™") ){
+                ps4Price.value = {};
+                //checking if it's on sale
+                if(resp.data.links[0].default_sku.rewards.length > 0){
+                    ps4Price.value.price = resp.data.links[0].default_sku.rewards[0].display_price;
+                }
+                else{
+                    ps4Price.value.price = resp.data.links[0].default_sku.display_price;
+                }
+                ps4Price.value.publisherFallback = resp.data.links[0].provider_name;
+                ps4Price.value.link = 'https://store.playstation.com/en-us/product/' + resp.data.links[0].id;
+            }
+            resolve(ps4Price);
+        })
+        .catch(err => resolve(ps4Price));
+}
+
+function getXB1Link(resolve, name){
+    let xb1Price = {key:'xb1Price', value:null};
+    return axios.get('https://www.microsoft.com/services/api/v3/suggest?market=en-us&clientId=7F27B536-CF6B-4C65-8638-A0F8CBDFCA65&sources=Iris-Products%2CDCatAll-Products%2CMicrosoft-Terms&filter=%2BClientType%3AStoreWeb&counts=1%2C5%2C5&query=' + escape(name))
         .then((resp) =>{
             let xb1NameSimilarity = 0.5;
-            /*  The way that Microsoft returns search data is in multiple 'sets' for each of their store fronts
-                Unfortunately these aren't slotted in any particular order so we have to check all the return values
-                for the correct game, and have to ignore apps and other invalid entries manually.
-                Also pricing information is not in an easily retrievable form, so that won't be given.
-             */
-            if(resp.data.ResultSets.length == 0) resolve(data);
+            if(resp.data.ResultSets.length == 0) resolve(xb1Price);
             resp.data.ResultSets.forEach((resultSet) => {
-                if(resultSet.Suggests==null) return;
+                if(resultSet.Suggests==null) resolve(xb1Price);
                 resultSet.Suggests.forEach((xb) => {
                     //Want to ignore the entries for "Apps"
-                    if(xb.Title == null || xb.Source == null || xb.Source == 'Apps') return;
-                    let similarity = stringSimilarity.compareTwoStrings(xb.Title, data.game.name);
+                    if(xb.Title == null || xb.Source != 'Games') return;
+                    let similarity = stringSimilarity.compareTwoStrings(xb.Title.toLowerCase(), name.toLowerCase());
                     //Only save if the game names are similar and it isn't a promo for GamePass
                     if(similarity > xb1NameSimilarity && xb.Source != 'One low monthly price'){
                         xb1NameSimilarity = similarity;
-                        data.xb1Price = {};
-                        data.xb1Price.link = 'https:' + xb.Url;
+                        xb1Price.value = {};
+                        xb1Price.value.link = 'https:' + xb.Url;
                         //Now we have a link to the page that has the price, but not easy way to get the price.
                     }
                 });
             });
-            resolve(data);
-        }).catch(err => resolve(data));
+            resolve(xb1Price);
+        }).catch(err => resolve(xb1Price));
 }
 
 function getSteamPrice(resolve, data) {
@@ -331,11 +327,11 @@ function getGameData(promise, req, res) {
                 new Promise(resolve => getReviewsCounts(resolve, data.game.ratings)),
                 new Promise(resolve => getReviews(resolve, req, id)),
                 new Promise(resolve => getPublishers(resolve, data.game.id, req)),
-                new Promise(resolve => getDevelopers(resolve, data.game.id, req))];
+                new Promise(resolve => getDevelopers(resolve, data.game.id, req)),
+                new Promise(resolve => getSteamPlayerCount(resolve, data.game.stores)),
+                new Promise(resolve => getPS4Price(resolve, data.game.name)),
+                new Promise(resolve => getXB1Link(resolve, data.game.name))];
             const promises = [
-                new Promise(resolve => getSteamPlayerCount(resolve, data)),
-                new Promise(resolve => getPS4Price(resolve, data)),
-                new Promise(resolve => getXB1Link(resolve, data)),
                 new Promise(resolve => getSteamNews(resolve, data, req)),
                 new Promise(resolve => getTwitchIntegration(resolve, data)),
                 new Promise(resolve => getHLTB(resolve, data)),
