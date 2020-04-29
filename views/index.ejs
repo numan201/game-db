@@ -115,15 +115,7 @@
             <h3>Nintendo Switch</h3>
             <br>
             <% top_rated_switch.forEach((game, i) => { %>
-            <div class="media">
-                <div class="media-left"> <img id="game_thumbnail" src="<%= game.background_image %>"></div>
-                <% let gameUrl = "/game?id=" + game._id; %>
-                <div class="media-body">
-                    <a href="<%= gameUrl%>"> <h6> <%= game.name %> </h6> </a>
-                    <p>Metacritic Score: <%= game.metacritic.toString() %></p>
-                    <br>
-                </div>
-            </div>
+                <%include partials/indexGame%>
             <% }); %>
         </div>
     </div>
@@ -135,15 +127,7 @@
             <h3>PC</h3>
             <br>
             <% top_rated_pc.forEach((game, i) => { %>
-                <div class="media">
-                    <div class="media-left"> <img id="game_thumbnail" src="<%= game.background_image %>"></div>
-                    <% let gameUrl = "/game?id=" + game._id; %>
-                    <div class="media-body">
-                        <a href="<%= gameUrl%>"> <h6> <%= game.name %> </h6> </a>
-                        <p>Metacritic Score: <%= game.metacritic.toString() %></p>
-                        <br>
-                    </div>
-                </div>
+                <%include partials/indexGame%>
             <% }); %>
         </div>
     </div>
@@ -155,15 +139,7 @@
             <h3>Playstation 4</h3>
             <br>
             <% top_rated_ps4.forEach((game, i) => { %>
-                <div class="media">
-                    <div class="media-left"> <img id="game_thumbnail" src="<%= game.background_image %>"></div>
-                    <% let gameUrl = "/game?id=" + game._id; %>
-                    <div class="media-body">
-                        <a href="<%= gameUrl%>"> <h6> <%= game.name %> </h6> </a>
-                        <p>Metacritic Score: <%= game.metacritic.toString() %></p>
-                        <br>
-                    </div>
-                </div>
+                <%include partials/indexGame%>
             <% }); %>
         </div>
     </div>
@@ -175,15 +151,7 @@
             <h3>XBox One</h3>
             <br>
             <% top_rated_ps4.forEach((game, i) => { %>
-                <div class="media">
-                    <div class="media-left"> <img id="game_thumbnail" src="<%= game.background_image %>"></div>
-                    <% let gameUrl = "/game?id=" + game._id; %>
-                    <div class="media-body">
-                        <a href="<%= gameUrl%>"> <h6> <%= game.name %> </h6> </a>
-                        <p>Metacritic Score: <%= game.metacritic.toString() %></p>
-                        <br>
-                    </div>
-                </div>
+                <%include partials/indexGame%>
             <% }); %>
         </div>
     </div>

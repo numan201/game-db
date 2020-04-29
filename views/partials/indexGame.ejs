@@ -1,0 +1,9 @@
+<div class="media">
+    <div class="media-left"> <img id="game_thumbnail" src="<%= game.background_image %>"></div>
+    <% let gameUrl = "/game?id=" + game._id; %>
+    <div class="media-body">
+        <a href="<%= gameUrl%>"> <h6> <%= game.name %> </h6> </a>
+        <p>Metacritic Score: <%= game.metacritic.toString() %></p>
+        <br>
+    </div>
+</div>

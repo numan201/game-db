@@ -1,0 +1,13 @@
+<div class="col-sm-12 text-right">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Sort by:
+    </button>
+    <ul class="dropdown-menu" id="dropdownlist" aria-labelledby="dropdownMenuButton">
+        <li class="dropdown-item" onclick="$('#sorts').val('Relevance'); $('#filterSearchSort').submit()">Relevance</li>
+        <li class="dropdown-item" onclick="$('#sorts').val('AlpAsc'); $('#filterSearchSort').submit()">Alphabetical: Ascending</li>
+        <li class="dropdown-item" onclick="$('#sorts').val('AlpDes'); $('#filterSearchSort').submit()">Alphabetical: Descending</li>
+        <li class="dropdown-item" onclick="$('#sorts').val('GamAsc'); $('#filterSearchSort').submit()"># of Games: Ascending</li>
+        <li class="dropdown-item" onclick="$('#sorts').val('GamDes'); $('#filterSearchSort').submit()"># of Games: Descending</li>
+    </ul>
+    <hr>
+</div>
