@@ -143,31 +143,31 @@ function getSteamPrice(resolve, data) {
         .catch(err => {resolve(data);});
 }
 
-function getSteamNews(resolve, data, req) {
+function getSteamNews(resolve, stores, name, req) {
     // Steam News
-    data.news = null;
-    data.steamAppId = getSteamAppId(data.game);
-    if (data.steamAppId == null) resolve(data);
-    req.app.locals.db.collection('cachednews').find({ game_name : {$eq: data.game.name}}).toArray().then(articles => {
+    let news = {key:'news', value:null};
+    let steamAppId = getSteamAppIdModded(stores);
+    if (steamAppId == null) resolve(data);
+    req.app.locals.db.collection('cachednews').find({ game_name : {$eq: name}}).toArray().then(articles => {
         if(articles.length === 0) {
-            return axios.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=' + data.steamAppId + '&count=3&maxlength=0&format=json')
+            return axios.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=' + steamAppId + '&count=3&maxlength=0&format=json')
                 .then((resp) => {
                         if (resp.data.appnews !== null) {
-                            data.news = resp.data.appnews.newsitems;
+                            news.value = resp.data.appnews.newsitems;
                             resp.data.appnews.newsitems.forEach(newsitem => {
-                                newsitem.game_name = data.game.name;
+                                newsitem.game_name = name;
                                 newsitem.createdAt = new Date();
                             });
                             req.app.locals.db.collection('cachednews').insertMany(resp.data.appnews.newsitems);
                         }
-                        resolve(data);
+                        resolve(news);
                     }
                 )
-                .catch(err => resolve(data));
+                .catch(err => resolve(news));
         }
         else{
-            data.news = articles;
-            resolve(data);
+            news.value = articles;
+            resolve(news);
         }
     });
 }
@@ -330,9 +330,9 @@ function getGameData(promise, req, res) {
                 new Promise(resolve => getDevelopers(resolve, data.game.id, req)),
                 new Promise(resolve => getSteamPlayerCount(resolve, data.game.stores)),
                 new Promise(resolve => getPS4Price(resolve, data.game.name)),
-                new Promise(resolve => getXB1Link(resolve, data.game.name))];
+                new Promise(resolve => getXB1Link(resolve, data.game.name)),
+                new Promise(resolve => getSteamNews(resolve, data.game.stores, data.game.name, req))];
             const promises = [
-                new Promise(resolve => getSteamNews(resolve, data, req)),
                 new Promise(resolve => getTwitchIntegration(resolve, data)),
                 new Promise(resolve => getHLTB(resolve, data)),
                 new Promise(resolve => getYoutube(resolve, data)),
