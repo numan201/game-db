@@ -32,7 +32,7 @@ function buildSortQuery(sortQuery, req){
         if(req.query.sorts !== 'Relevance') {
             let type = req.query.sorts.slice(0, 3);
             let descending = req.query.sorts.slice(-3) === "Des";
-            let field = '';
+            let field;
             if (type === 'Alp') {
                 field = "name";
             } else {

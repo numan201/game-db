@@ -2,7 +2,7 @@
 <hr>
 
 <div class="card-deck" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); grid-gap: 0.1rem;">
-    <% games.forEach( (game, i) => {
+    <% games.forEach( (game) => {
         let gameUrl = "/game?id=" + game._id;
     %>
     <div class="card" style="margin-bottom: 15px">

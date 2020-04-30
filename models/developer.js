@@ -45,7 +45,7 @@ class Developer {
                 cachePromise.then(cached => {
                     let publishers = publisherList.values();
                     let devRender  = {title: developer.name, page: req.baseUrl, developer: developer, games: games, publishers: publishers, reviews: games.reviews};
-                    if(cached == false){
+                    if(cached === false){
                         promise(devRender);
                     }
                     req.app.locals.db.collection('cacheddevelopers').replaceOne({_id: id}, devRender, {upsert:true});
@@ -72,7 +72,7 @@ class Developer {
                         promise(developer);
                     });
                 }
-            }).catch(err => resolve(false));
+            }).catch(() => resolve(false));
     }
 
 }

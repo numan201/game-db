@@ -3,7 +3,7 @@ function remove(req) {
     req.app.locals.db.collection('users').updateOne({_id: userId}, {$pull: {wishlist: req.query.remove}});
 }
 
-function notRemove(req, res) {
+function notRemove(req) {
     let wishlist = req.user.wishlist;
     for (let i = 0; i < wishlist.length; i++) {
         wishlist[i] = require('mongodb').ObjectID(wishlist[i]);

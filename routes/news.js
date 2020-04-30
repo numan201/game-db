@@ -1,7 +1,7 @@
-const axios = require('axios');
+require('axios');
 const express = require('express');
 const router = express.Router();
-const { newsKey } = require('../keys');
+
 const {getNews} = require('../models/news');
 
 /* GET games listing. */

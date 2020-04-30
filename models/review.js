@@ -23,7 +23,7 @@ function buildURL(id, req){
 }
 
 function buildReview(id, req){
-    var time = Date.now();
+    const time = Date.now();
     let newReview = {
         id: id,
         title: req.body.title,

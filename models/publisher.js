@@ -74,7 +74,7 @@ class Developer {
                         promise(publisher);
                     });
                 }
-            }).catch(err => resolve(false));
+            }).catch(() => resolve(false));
 
     }
 

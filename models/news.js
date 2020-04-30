@@ -1,5 +1,5 @@
 const axios = require('axios');
-const express = require('express');
+require('express');
 const { newsKey } = require('../keys');
 
 function getNews(resolve, req){
@@ -18,13 +18,13 @@ function getNews(resolve, req){
                     req.app.locals.db.collection('cachednews').insertMany(response.data.articles);
                     resolve(response.data.articles);
                 })
-                .catch(err => news);
+                .catch(() => news);
         }
         else{
             req.app.locals.db.collection('cachednews').find({ news_page : { $exists : 1 } }).toArray().then(articles => {
                 resolve(articles);
             })
-                .catch(err => news);
+                .catch(() => news);
         }
     });
 }

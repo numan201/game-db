@@ -6,7 +6,7 @@ const {remove, notRemove} = require("../models/wishlist");
 router.get('/', require('connect-ensure-login').ensureLoggedIn('/'), function(req, res, next) {
 
     if ('remove' in req.query) {
-        remove(req).then( (resp, err) => {
+        remove(req).then( () => {
             res.redirect('/wishlist');
         });
 

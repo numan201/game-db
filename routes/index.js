@@ -11,7 +11,7 @@ const axios = require('axios');
 const { newsKey } = require('../keys');
 
 function addGameToPlatform(game){
-  game.platforms.forEach((platform, i) => {
+  game.platforms.forEach((platform) => {
     let PC = platform.platform.name.localeCompare("PC");
     let PS4 = platform.platform.name.localeCompare("PlayStation 4");
     let Switch = platform.platform.name.localeCompare("Nintendo Switch");
@@ -39,7 +39,7 @@ router.get('/', function(req, res, next) {
   }).toArray().then(newest => {
     let current_date = new Date();
 
-    newest.forEach((game, i) => {
+    newest.forEach((game) => {
       let game_date = new Date(game.released);
       if (new_releases.length < 10) { //only wanna show most recent 10
         if (game_date.getTime() < current_date.getTime()){
@@ -47,9 +47,9 @@ router.get('/', function(req, res, next) {
         }
       }
     });
-  }).then(not_sure => {
+  }).then(() => {
     req.app.locals.db.collection('games').find().limit(100).sort({metacritic: -1}).toArray().then(top_rated_promise => {
-      top_rated_promise.forEach((game, i) => {
+      top_rated_promise.forEach((game) => {
           addGameToPlatform(game);
         });
     })
@@ -80,7 +80,7 @@ router.get('/', function(req, res, next) {
                     top_rated_xbone: top_rated_xbone
                   });
                 })
-                .catch(err => news);
+                .catch(() => news);
           }
           else{
             req.app.locals.db.collection('cachednews').find({ front_page : { $exists : 1 } }).toArray().then(articles => {
@@ -95,7 +95,7 @@ router.get('/', function(req, res, next) {
                 top_rated_xbone: top_rated_xbone
               });
             })
-                .catch(err => news);
+                .catch(() => news);
           }
         });
       });

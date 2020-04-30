@@ -57,7 +57,7 @@ function getSteamPlayerCount(resolve, steamAppId){
                 }
             }
         )
-        .catch(err => resolve({key:'steamPlayerCount', value:0}));
+        .catch(() => resolve({key:'steamPlayerCount', value:0}));
 }
 
 function getPS4Price(resolve, name){
@@ -78,7 +78,7 @@ function getPS4Price(resolve, name){
             }
             resolve(ps4Price);
         })
-        .catch(err => resolve(ps4Price));
+        .catch(() => resolve(ps4Price));
 }
 
 function getXB1Link(resolve, name){
@@ -103,7 +103,7 @@ function getXB1Link(resolve, name){
                 });
             });
             resolve(xb1Price);
-        }).catch(err => resolve(xb1Price));
+        }).catch(() => resolve(xb1Price));
 }
 
 function getSteamPrice(resolve, steamAppId) {
@@ -124,7 +124,7 @@ function getSteamPrice(resolve, steamAppId) {
             steamPrice.value.link = 'http://store.steampowered.com/app/' + steamAppId + '/';
             resolve(steamPrice);
         })
-        .catch(err => {resolve(steamPrice);});
+        .catch(() => {resolve(steamPrice);});
 }
 
 function getSteamNews(resolve, steamAppId, name, req) {
@@ -146,7 +146,7 @@ function getSteamNews(resolve, steamAppId, name, req) {
                         resolve(news);
                     }
                 )
-                .catch(err => resolve(news));
+                .catch(() => resolve(news));
         }
         else{
             news.value = articles;
@@ -181,9 +181,9 @@ function getTwitchIntegration(resolve, name){
                     twitchUsername.value = response.data.data[0].user_name;
                     resolve(twitchUsername);
                 })
-                .catch(err => resolve(twitchUsername));
+                .catch(() => resolve(twitchUsername));
         })
-        .catch(err => resolve(twitchUsername));
+        .catch(() => resolve(twitchUsername));
 }
 
 function getHLTB(resolve, name){
@@ -204,7 +204,7 @@ function getHLTB(resolve, name){
         }
         resolve(hltb);
     })
-        .catch(err => resolve(hltb));
+        .catch(() => resolve(hltb));
 }
 
 function getYoutube(resolve, name){
@@ -223,7 +223,7 @@ function getYoutube(resolve, name){
             });
             resolve(videos);
         })
-        .catch(err => resolve(videos));
+        .catch(() => resolve(videos));
 }
 
 function getReviews(resolve, req, id) {
@@ -234,17 +234,17 @@ function getReviews(resolve, req, id) {
     });
 }
 
-function getWishlist(resolve, game_id, req, res){
+function getWishlist(resolve, game_id, req){
     // Wishlist functionality
     if (req.user) {
         let userId = require('mongodb').ObjectID(req.user._id);
         if ('addWishlist' in req.query) {
-            req.app.locals.db.collection('users').updateOne({_id: userId}, {$addToSet: {wishlist: game_id.toString()}}).then( (result) => {
+            req.app.locals.db.collection('users').updateOne({_id: userId}, {$addToSet: {wishlist: game_id.toString()}}).then( () => {
                 //res.redirect('/game?id=' + req.query.id);
                 resolve({key: 'userHasInWishlist', value: true});
             });
         } else if ('removeWishlist' in req.query) {
-            req.app.locals.db.collection('users').updateOne({_id: userId}, {$pull: {wishlist: game_id.toString()}}).then( (result) => {
+            req.app.locals.db.collection('users').updateOne({_id: userId}, {$pull: {wishlist: game_id.toString()}}).then( () => {
                 //res.redirect('/game?id=' + req.query.id);
                 resolve({key: 'userHasInWishlist', value: false});
             });
@@ -257,14 +257,14 @@ function getWishlist(resolve, game_id, req, res){
     }
 }
 
-function getSteamAchievements(resolve, steamAppId, req, res){
+function getSteamAchievements(resolve, steamAppId){
     let achievements = { key: 'achievements', value: null};
     if(steamAppId == null){ resolve(achievements); }
     axios.get("http://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=" + steamKey + "&appid=" + steamAppId).then((resp) => {
         achievements.value = resp.data.game.availableGameStats.achievements;
         resolve(achievements);
     })
-        .catch(err => { resolve(achievements);});
+        .catch(() => { resolve(achievements);});
 }
 
 //checks if the game is cached, returns 0 if we're up to date, 1 if cache is too old and 2 if game isn't cached
@@ -276,7 +276,7 @@ function checkCached(promise, resolve, req, res, id){
             }
             else{
                 const promises = [
-                    new Promise(resolve => getWishlist(resolve, id, req, res)),
+                    new Promise(resolve => getWishlist(resolve, id, req)),
                     new Promise(resolve => getReviews(resolve, req, id))
                 ];
                 Promise.all(promises).then( output => {
@@ -287,7 +287,7 @@ function checkCached(promise, resolve, req, res, id){
                 });
                 resolve(true);
             }
-        }).catch(err => resolve(false));
+        }).catch(() => resolve(false));
 }
 
 /* GET games listing. */
@@ -312,8 +312,8 @@ function getGameData(promise, req, res) {
             const ratings = data.game.ratings;
 
             const hiddenPromises = [
-                new Promise(resolve => getSteamAchievements(resolve, steamAppId, req, id)),
-                new Promise(resolve => getWishlist(resolve, uniqueId, req, res)),
+                new Promise(resolve => getSteamAchievements(resolve, steamAppId, req)),
+                new Promise(resolve => getWishlist(resolve, uniqueId, req)),
                 new Promise(resolve => getReviewsCounts(resolve, ratings)),
                 new Promise(resolve => getReviews(resolve, req, id)),
                 new Promise(resolve => getPublishers(resolve, gameId, req)),
@@ -342,6 +342,6 @@ function getGameData(promise, req, res) {
             });
         });
 
-};
+}
 
 module.exports = { getGameData };
