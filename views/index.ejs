@@ -77,34 +77,34 @@
         </a>
     </div>
 
-        <!-- Left and right controls -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
 </div>
 
 <div class="col-sm-6">
     <div class="jumbotron"><h1>   News   </h1></div>
-        <% news.forEach((article) => { %>
-        <div class="media">
-            <div class="media-left">
-                <img src="<%=article.urlToImage %>" class="media-object" style="width:150px">
-            </div>
-            <div class="media-body">
-                <a href="<%= article.url %>"><h4><%= article.title%></h4></a>
-                <h6>From: <%= article.source.name %></h6>
-                <br>
-                <p style="size:8px"> <%= article.description %> </p>
-                <br>
-            </div>
+    <% news.forEach((article, i) => { %>
+    <div class="media">
+        <div class="media-left">
+            <img src="<%=article.urlToImage %>" class="media-object" style="width:150px">
         </div>
-        <% }); %>
+        <div class="media-body">
+            <a href="<%= article.url %>"><h4><%= article.title%></h4></a>
+            <h6>From: <%= article.source.name %></h6>
+            <br>
+            <p style="size:8px"> <%= article.description %> </p>
+            <br>
+        </div>
+    </div>
+    <% }); %>
 </div>
 
 <div class="col-sm-6">
@@ -114,7 +114,7 @@
         <div class="media-body">
             <h3>Nintendo Switch</h3>
             <br>
-            <% top_rated_switch.forEach(() => { %>
+            <% top_rated_switch.forEach((game, i) => { %>
                 <%include partials/indexGame%>
             <% }); %>
         </div>
@@ -126,7 +126,7 @@
         <div class="media-body">
             <h3>PC</h3>
             <br>
-            <% top_rated_pc.forEach(() => { %>
+            <% top_rated_pc.forEach((game, i) => { %>
                 <%include partials/indexGame%>
             <% }); %>
         </div>
@@ -138,7 +138,7 @@
         <div class="media-body">
             <h3>Playstation 4</h3>
             <br>
-            <% top_rated_ps4.forEach(() => { %>
+            <% top_rated_ps4.forEach((game, i) => { %>
                 <%include partials/indexGame%>
             <% }); %>
         </div>
@@ -150,7 +150,7 @@
         <div class="media-body">
             <h3>XBox One</h3>
             <br>
-            <% top_rated_ps4.forEach(() => { %>
+            <% top_rated_ps4.forEach((game, i) => { %>
                 <%include partials/indexGame%>
             <% }); %>
         </div>
