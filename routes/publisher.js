@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const UniqueSet = require('../UniqueSet.js');
+const CreatorFactory = require('../models/creatorFactory');
 
 function checkCached(resolve, req, res, id){
     req.app.locals.db.collection('cachedpublishers').findOne({_id: id})
@@ -22,60 +22,11 @@ function checkCached(resolve, req, res, id){
 /* GET games listing. */
 router.get('/', function(req, res, next) {
     let id = require('mongodb').ObjectID(req.query.id);
-    //let reviews = null;
 
-    let developerList = new UniqueSet();
-
-    const cachePromise = new Promise(finish => checkCached(finish, req, res, id))
-
-    // Get publisher
-    req.app.locals.db.collection('publishers').findOne({_id : id}).then((publisher) => {
-
-        let gameIds = [];
-        publisher.games.forEach((game) => {
-            gameIds.push(game.id);
-        });
-
-        // Get games objects for publisher
-        req.app.locals.db.collection('games').find({id: {$in: gameIds}}, {name: 1, background_image: 1, released: 1, reviews_count: 1}).toArray().then( (games) => {
-            let gamesDevelopersPromises = [];
-
-            // Get developers for each game
-            games.forEach((game) => {
-                let gamesDevelopersPromise = req.app.locals.db.collection('developers').aggregate([{$unwind: "$games"}, {$match: {"games.id": game.id}}, {$project: {name: 1, games_count: 1, image_background: 1}}]).toArray();
-                gamesDevelopersPromises.push(gamesDevelopersPromise);
-            });
-
-            return Promise.all(gamesDevelopersPromises).then((gamesDevelopersPromises) => {
-                gamesDevelopersPromises.forEach((gamesDevelopersPromises) => {
-                    gamesDevelopersPromises.forEach((developer) => {
-                        developerList.add(developer);
-                    })
-                });
-
-                return games;
-            });
-        }).then((games) => {
-            let reviews = req.app.locals.db.collection('reviews').find({id:id.toLocaleString()}).toArray();
-            return Promise.all([reviews]).then(([reviews]) => {
-                games.reviews = reviews;
-                return games;
-            });
-        }).then((games) => {
-            cachePromise.then(cached => {
-                let developers = developerList.values();
-                let pubRender  = {title: publisher.name, page: req.baseUrl, publisher: publisher, games: games, developers: developers, reviews: games.reviews};
-                if(cached == false){
-                    res.render('publisher', pubRender);
-                }
-                req.app.locals.db.collection('cachedpublishers').replaceOne({_id: id}, pubRender, {upsert:true});
-                return pubRender;
-            });
-        });
-
-
-
+    new Promise(data => { new CreatorFactory('publisher', id, req, data)}).then( data => {
+        res.render('publisher', data);
     });
+
 
 });
 
