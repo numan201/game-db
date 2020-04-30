@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
     let id = require('mongodb').ObjectID(req.query.id);
 
     new Promise(data => { new CreatorFactory('developer', id, req, data)}).then( data => {
-        res.render('developers', data);
+        res.render('developer', data);
     });
 
 
