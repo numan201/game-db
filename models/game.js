@@ -329,6 +329,7 @@ function getGameData(promise, req, res) {
             Promise.all(hiddenPromises).then(output => {
                 let game = data;
                 output.forEach(entry => {
+                    if(game.hasOwnProperty(entry.key)) throw "You're trying to overwrite data";
                     game[entry.key] = entry.value;
                 });
                 game.date = new Date();
