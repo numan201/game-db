@@ -268,7 +268,7 @@ function getSteamAchievements(resolve, steamAppId){
 }
 
 //checks if the game is cached, returns 0 if we're up to date, 1 if cache is too old and 2 if game isn't cached
-function checkCached(promise, resolve, req, res, id){
+function checkCached(promise, resolve, req, id){
     req.app.locals.db.collection('cachedgames').findOne({_id: id})
         .then(game => {
             if(game == null){
@@ -291,10 +291,10 @@ function checkCached(promise, resolve, req, res, id){
 }
 
 /* GET games listing. */
-function getGameData(promise, req, res) {
+function getGameData(promise, req) {
     let id = require('mongodb').ObjectID(req.query.id);
     // Get Game
-    const cachePromise = new Promise(finish => checkCached(promise, finish, req, res, id))
+    const cachePromise = new Promise(finish => checkCached(promise, finish, req, id))
 
     //Used for adjusting the cache timing
     //req.app.locals.db.collection('cachedgames').createIndex({"date": 1}, {expireAfterSeconds: 60 * 5});
